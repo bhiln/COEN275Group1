@@ -15,7 +15,7 @@ public class AsteroidManager {
 		asteroidList.add(new Asteroid(xLoc, speed));
 	}
 	
-	public int updateAsteroids(Graphics g, int width, int height) {
+	public int updateAsteroids(int width, int height) {
 		ArrayList<Asteroid> toRemove = new ArrayList<Asteroid>();
 		for (Asteroid myAsteroid : asteroidList) {
 			// check for boundaries
@@ -26,7 +26,6 @@ public class AsteroidManager {
 			}
 			// adjust ball position
 			myAsteroid.y += myAsteroid.dy;
-			g.fillOval((int)((myAsteroid.x - myAsteroid.radius) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.radius) * myAsteroid.scale), myAsteroid.radius*2, myAsteroid.radius*2);
 		}
 		
 		for (Asteroid removeAsteroid : toRemove) {
@@ -36,5 +35,11 @@ public class AsteroidManager {
 		int removeSize = toRemove.size();
 		toRemove.clear();
 		return removeSize;
+	}
+	
+	public void drawAsteroids(Graphics g) {
+		for (Asteroid myAsteroid : asteroidList) {
+			g.fillOval((int)((myAsteroid.x - myAsteroid.radius) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.radius) * myAsteroid.scale), myAsteroid.radius*2, myAsteroid.radius*2);
+		}
 	}
 }

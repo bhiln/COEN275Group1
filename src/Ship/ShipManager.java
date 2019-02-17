@@ -6,7 +6,7 @@ import Asteroids.Asteroid;
 
 public class ShipManager {
 
-	Ship myShip;
+	Ship myShip;	
 	
 	public void createShip(int width) {
 		int xLoc = width/2;
@@ -14,13 +14,18 @@ public class ShipManager {
 		myShip = new Ship(xLoc, speed);
 	}
 	
-	public void updateShip(Graphics g, int width, int height) {
+	public void updateShip(int width, int height) {
 		// check for boundaries
-		if (myShip.x < myShip.radius) myShip.dx = Math.abs(myShip.dx);
-		if (myShip.x > width - myShip.radius) myShip.dx = -Math.abs(myShip.dx);
-
-		// adjust ball position
-		myShip.x += myShip.dx;
-		g.fillOval(myShip.x - myShip.radius, myShip.y - myShip.radius, myShip.radius*2, myShip.radius*2);
+		if (myShip.xVerts[0] == 0) myShip.dx = Math.abs(myShip.dx);
+		if (myShip.xVerts[0] + myShip.width > width) myShip.dx = -Math.abs(myShip.dx);
+		
+		// adjust ship position		
+		for (int i = 0; i < myShip.xVerts.length; ++i) {
+			myShip.xVerts[i] += myShip.dx;
+		}
+	}
+	
+	public void drawShip(Graphics g) {
+		g.fillPolygon(myShip.xVerts, myShip.yVerts, myShip.xVerts.length);
 	}
 }
