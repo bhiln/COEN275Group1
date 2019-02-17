@@ -2,7 +2,7 @@ package Main;
 
 import javax.swing.JFrame;
 
-import GameView.GameView;
+import Game.Game;
 
 public class Main {
 	// execute application
@@ -11,9 +11,11 @@ public class Main {
 			JFrame frame = new JFrame( "Avoid the Asteroid!" );
 			frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 
-			GameView g = new GameView(); 
-			frame.add( g );
+			// create game
+			Game g = new Game(); 
+			
+			frame.add( g );				// add graphics to frame
 			frame.setSize( 1280, 720 ); // set frame size
-			frame.setVisible( true ); // display frame
+			frame.setVisible( true ); 	// display frame
 		} // end main
 }

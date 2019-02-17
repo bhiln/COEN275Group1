@@ -8,9 +8,10 @@ public class Asteroid{
 
 	public int x = 0; // x position
 	public int y = 0; // y position
-	public int radius = 15; // ball radius
+	public int radius = 15; // asteroid radius
 
-	public int dx = 2; // increment amount (x coord)
+	public int dx = 0; // increment amount (x coord)
+					   // dx is set to 0 for now, this means that the asteroid will fall straight down
 	public int dy = 2; // increment amount (y coord)
 	
 	public double scale = 1;

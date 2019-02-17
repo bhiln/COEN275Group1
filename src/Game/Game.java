@@ -1,47 +1,52 @@
-package GameView;
+package Game;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Random;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import Asteroids.Asteroid;
 import Asteroids.AsteroidManager;
 import Ship.ShipManager;
 
-public class GameView extends JPanel implements ActionListener{
+public class Game extends JPanel implements ActionListener{
 	
 	private int delay = 16;
 	protected Timer timer;
 	
-	private int level = 1;
-	private int lastAsteroidIter = 0;
-	private int dodgeCount = 0;
+	private int level = 1;				// player level
+	private int lastAsteroidIter = 0;	// count how many frames passed since last asteroid was created
+	private int dodgeCount = 0;			// count score
 	
+	// level and score labels
 	JLabel lblLevel = new JLabel("Level " + level);
 	JLabel lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
 	
+	// create ship and asteroid managers
 	ShipManager m_ship = new ShipManager();
 	AsteroidManager m_asteroid = new AsteroidManager();
+	
 	Random rand = new Random();
 	
-	public GameView()
+	public Game()
 	{
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
+		
+		// add level and score labels to frame
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
+		
+		// set background to dark gray
 		setBackground(Color.DARK_GRAY);
-		m_ship.createShip(100);
+		
+		// create ship
+		m_ship.createShip(0);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -56,19 +61,30 @@ public class GameView extends JPanel implements ActionListener{
 		super.paintComponent( g ); // call superclass's paintComponent 
 		g.setColor(Color.red);
 		
+		// update and draw ship
+		// this takes into account the current size of the frame so it can dynamically scale
 		m_ship.updateShip(getWidth(), getHeight());
 		m_ship.drawShip(g);
+		
+		// randomly generate an asteroid
+		// likelihood of asteroid generation increases with level
+		// if no asteroid has been created lately, create a new asteroid (gets faster as level increases)
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
 			m_asteroid.createAsteroid(getWidth());
 			lastAsteroidIter = 0;
 		}
 		lastAsteroidIter++;
 
+		// update and draw all asteroids
 		int removed = m_asteroid.updateAsteroids(getWidth(), getHeight());
 		m_asteroid.drawAsteroids(g);
-		dodgeCount += removed;
 		
+		// update score
+		dodgeCount += removed;
 		lblDodge.setText("Dodged " + dodgeCount + " Asteroids!");
+		
+		// update level
+		// 10 dodges = 1 level increase
 		if (removed > 0 && dodgeCount > 0 && dodgeCount % 10 == 0) {
 			level++;
 			lblLevel.setText("Level " + level);
