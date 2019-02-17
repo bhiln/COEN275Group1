@@ -13,7 +13,7 @@ public class Main {
 
 			GameView g = new GameView(); 
 			frame.add( g );
-			frame.setSize( 300, 300 ); // set frame size
+			frame.setSize( 1280, 720 ); // set frame size
 			frame.setVisible( true ); // display frame
 //			g.createAsteroid(10);
 		} // end main
