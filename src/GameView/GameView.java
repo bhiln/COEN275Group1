@@ -1,5 +1,6 @@
 package GameView;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -19,6 +21,12 @@ public class GameView extends JPanel implements ActionListener{
 	private int delay = 16;
 	protected Timer timer;
 	
+	private int level = 1;
+	private int lastAsteroidIter = 0;
+	private int dodgeCount = 0;
+	
+	JLabel lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
+	
 	private ArrayList<Asteroid> asteroidList = new ArrayList<Asteroid>();
 	Random rand = new Random();
 	
@@ -26,6 +34,7 @@ public class GameView extends JPanel implements ActionListener{
 	{
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
+		super.add(lblDodge, BorderLayout.NORTH);
 	}
 	
 	public void createAsteroid(int num) {
@@ -46,6 +55,11 @@ public class GameView extends JPanel implements ActionListener{
 	// draw rectangles and arcs
 	public void paintComponent( Graphics g )
 	{
+		if (rand.nextInt(1000) > 1000-level*5 | lastAsteroidIter > 200-level*5) {
+			createAsteroid(1);
+			lastAsteroidIter = 0;
+		}
+		lastAsteroidIter++;
 		super.paintComponent( g ); // call superclass's paintComponent 
 		g.setColor(Color.red);
 
@@ -54,18 +68,18 @@ public class GameView extends JPanel implements ActionListener{
 			// check for boundaries
 			if (myAsteroid.x < myAsteroid.radius) myAsteroid.dx = Math.abs(myAsteroid.dx);
 			if (myAsteroid.x > getWidth() - myAsteroid.radius) myAsteroid.dx = -Math.abs(myAsteroid.dx);
-//			if (myAsteroid.y < myAsteroid.radius) myAsteroid.dy = Math.abs(myAsteroid.dy);
 			if (myAsteroid.y > getHeight() + myAsteroid.radius) {// - myAsteroid.radius) myAsteroid.dy = -Math.abs(myAsteroid.dy);
 				toRemove.add(myAsteroid);
 			}
 			// adjust ball position
-//			myAsteroid.x += myAsteroid.dx;
 			myAsteroid.y += myAsteroid.dy;
 			g.fillOval((int)((myAsteroid.x - myAsteroid.radius) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.radius) * myAsteroid.scale), myAsteroid.radius*2, myAsteroid.radius*2);
 	
 		}
 		for (Asteroid removeAsteroid : toRemove) {
 			asteroidList.remove(removeAsteroid);
+			dodgeCount++;
+			lblDodge.setText("Dodged " + dodgeCount + " Asteroids!");
 		}
 	}
 }

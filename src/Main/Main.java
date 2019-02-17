@@ -15,6 +15,6 @@ public class Main {
 			frame.add( g );
 			frame.setSize( 300, 300 ); // set frame size
 			frame.setVisible( true ); // display frame
-			g.createAsteroid(10);
+//			g.createAsteroid(10);
 		} // end main
 }
