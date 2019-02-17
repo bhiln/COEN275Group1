@@ -4,12 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import Asteroids.Asteroid;
+import Game.SpaceManager;
 
-public class ShipManager {
+public class ShipManager implements SpaceManager {
 
 	private Ship myShip;	
 	
-	public void createShip(int width) {
+	public void Create(int width) {
 		int xLoc = width/2;
 		int speed = 1;
 		myShip = new Ship(xLoc, speed);
@@ -17,7 +18,7 @@ public class ShipManager {
 	
 	// update ship location based on width and height of the frame
 	// TODO: update ship location based on user input
-	public void updateShip(int width, int height) {
+	public int Update(int width, int height) {
 		// check for boundaries
 		if (myShip.xVerts[0] == 0) myShip.dx = Math.abs(myShip.dx);
 		if (myShip.xVerts[0] + myShip.width > width) myShip.dx = -Math.abs(myShip.dx);
@@ -26,10 +27,11 @@ public class ShipManager {
 		for (int i = 0; i < myShip.xVerts.length; ++i) {
 			myShip.xVerts[i] += myShip.dx;
 		}
+		return 0; // int return not applicable to Ship
 	}
 	
 	// draw ship polygon
-	public void drawShip(Graphics g) {
+	public void Draw(Graphics g) {
 		g.fillPolygon(myShip.xVerts, myShip.yVerts, myShip.xVerts.length);
 	}
 	

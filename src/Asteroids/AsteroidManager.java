@@ -4,15 +4,15 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Ship.Ship;
+import Game.SpaceManager;
 
-public class AsteroidManager {
+public class AsteroidManager implements SpaceManager {
 
 	private ArrayList<Asteroid> asteroidList = new ArrayList<Asteroid>();
 	Random rand = new Random();
 	
 	// create an asteroid with random x location
-	public void createAsteroid(int width) {
+	public void Create(int width) {
 		int xLoc = rand.nextInt(width);
 		int speed = 1;//rand.nextInt(2);
 		
@@ -21,7 +21,7 @@ public class AsteroidManager {
 	}
 	
 	// update location of all tracked asteroids
-	public int updateAsteroids(int width, int height) {
+	public int Update(int width, int height) {
 		ArrayList<Asteroid> toRemove = new ArrayList<Asteroid>();
 		for (Asteroid myAsteroid : asteroidList) {
 			// check for boundaries
@@ -49,7 +49,7 @@ public class AsteroidManager {
 		return removeSize;
 	}
 	
-	public void drawAsteroids(Graphics g) {
+	public void Draw(Graphics g) {
 		for (Asteroid myAsteroid : asteroidList) {
 			g.fillOval((int)((myAsteroid.x - myAsteroid.width/2) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.width/2) * myAsteroid.scale), myAsteroid.width/2*2, myAsteroid.width/2*2);
 		}

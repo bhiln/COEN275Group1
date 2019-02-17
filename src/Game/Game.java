@@ -57,7 +57,7 @@ public class Game extends JPanel implements ActionListener{
 		setBackground(Color.DARK_GRAY);
 		
 		// create ship
-		m_ship.createShip(0);
+		m_ship.Create(0);
 		
 		startTime = System.currentTimeMillis();
 	}
@@ -83,21 +83,21 @@ public class Game extends JPanel implements ActionListener{
 		
 		// update and draw ship
 		// this takes into account the current size of the frame so it can dynamically scale
-		m_ship.updateShip(getWidth(), getHeight());
-		m_ship.drawShip(g);
+		m_ship.Update(getWidth(), getHeight());
+		m_ship.Draw(g);
 		
 		// randomly generate an asteroid
 		// likelihood of asteroid generation increases with level
 		// if no asteroid has been created lately, create a new asteroid (gets faster as level increases)
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
-			m_asteroid.createAsteroid(getWidth());
+			m_asteroid.Create(getWidth());
 			lastAsteroidIter = 0;
 		}
 		lastAsteroidIter++;
 
 		// update and draw all asteroids
-		int removed = m_asteroid.updateAsteroids(getWidth(), getHeight());
-		m_asteroid.drawAsteroids(g);
+		int removed = m_asteroid.Update(getWidth(), getHeight());
+		m_asteroid.Draw(g);
 		
 		// update score
 		dodgeCount += removed;
