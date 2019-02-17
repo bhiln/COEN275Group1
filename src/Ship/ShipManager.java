@@ -15,7 +15,6 @@ public class ShipManager {
 	}
 	
 	public void updateShip(Graphics g, int width, int height) {
-		System.out.println(myShip.x + "," + myShip.y);
 		// check for boundaries
 		if (myShip.x < myShip.radius) myShip.dx = Math.abs(myShip.dx);
 		if (myShip.x > width - myShip.radius) myShip.dx = -Math.abs(myShip.dx);

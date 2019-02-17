@@ -53,14 +53,15 @@ public class GameView extends JPanel implements ActionListener{
 	// draw rectangles and arcs
 	public void paintComponent( Graphics g )
 	{
+		super.paintComponent( g ); // call superclass's paintComponent 
+		g.setColor(Color.red);
+		
 		m_ship.updateShip(g, getWidth(), getHeight());
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
 			m_asteroid.createAsteroid(getWidth());
 			lastAsteroidIter = 0;
 		}
 		lastAsteroidIter++;
-		super.paintComponent( g ); // call superclass's paintComponent 
-		g.setColor(Color.red);
 
 		int removed = m_asteroid.updateAsteroids(g, getWidth(), getHeight());
 		dodgeCount += removed;
