@@ -17,31 +17,6 @@ public class Asteroid{
 	
 	public Asteroid(int xLoc, int speed) {
 		x = xLoc;
-//		dx = scale;
 		dy = speed;
 	}
-	
-//	public void actionPerformed(ActionEvent e)
-//	// will run when the timer fires
-//	{
-//		repaint();
-//	}
-	
-	// draw rectangles and arcs
-//	public void paintComponent( Graphics g )
-//	{
-//		super.paintComponent( g ); // call superclass's paintComponent 
-//		g.setColor(Color.red);
-//
-//		// check for boundaries
-//		if (x < radius) dx = Math.abs(dx);
-//		if (x > getWidth() - radius) dx = -Math.abs(dx);
-//		if (y < radius) dy = Math.abs(dy);
-//		if (y > getHeight() - radius) dy = -Math.abs(dy);
-//
-//		// adjust ball position
-//		x += dx;
-//		y += dy;
-//		g.fillOval(x - radius, y - radius, radius*2, radius*2);
-//	}
 }
