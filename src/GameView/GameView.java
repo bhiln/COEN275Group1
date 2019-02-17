@@ -16,6 +16,7 @@ import javax.swing.Timer;
 
 import Asteroids.Asteroid;
 import Asteroids.AsteroidManager;
+import Ship.ShipManager;
 
 public class GameView extends JPanel implements ActionListener{
 	
@@ -29,7 +30,8 @@ public class GameView extends JPanel implements ActionListener{
 	JLabel lblLevel = new JLabel("Level " + level);
 	JLabel lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
 	
-	AsteroidManager manager = new AsteroidManager();
+	ShipManager m_ship = new ShipManager();
+	AsteroidManager m_asteroid = new AsteroidManager();
 	Random rand = new Random();
 	
 	public GameView()
@@ -39,6 +41,7 @@ public class GameView extends JPanel implements ActionListener{
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
 		setBackground(Color.DARK_GRAY);
+		m_ship.createShip(100);
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -50,15 +53,16 @@ public class GameView extends JPanel implements ActionListener{
 	// draw rectangles and arcs
 	public void paintComponent( Graphics g )
 	{
+		m_ship.updateShip(g, getWidth(), getHeight());
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
-			manager.createAsteroid(getWidth());
+			m_asteroid.createAsteroid(getWidth());
 			lastAsteroidIter = 0;
 		}
 		lastAsteroidIter++;
 		super.paintComponent( g ); // call superclass's paintComponent 
 		g.setColor(Color.red);
 
-		int removed = manager.updateAsteroids(g, getWidth(), getHeight());
+		int removed = m_asteroid.updateAsteroids(g, getWidth(), getHeight());
 		dodgeCount += removed;
 		
 		lblDodge.setText("Dodged " + dodgeCount + " Asteroids!");
