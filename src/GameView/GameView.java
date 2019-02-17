@@ -25,6 +25,7 @@ public class GameView extends JPanel implements ActionListener{
 	private int lastAsteroidIter = 0;
 	private int dodgeCount = 0;
 	
+	JLabel lblLevel = new JLabel("Level " + level);
 	JLabel lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
 	
 	private ArrayList<Asteroid> asteroidList = new ArrayList<Asteroid>();
@@ -34,12 +35,12 @@ public class GameView extends JPanel implements ActionListener{
 	{
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
-		super.add(lblDodge, BorderLayout.NORTH);
+		add(lblLevel, BorderLayout.NORTH);
+		add(lblDodge, BorderLayout.NORTH);
 	}
 	
 	public void createAsteroid(int num) {
 		for (int i = 0; i < num; i++) {
-			System.out.println(getWidth());
 			int xLoc = rand.nextInt(getWidth());
 			int speed = 1;//rand.nextInt(2);
 			asteroidList.add(new Asteroid(xLoc, speed));
@@ -55,7 +56,7 @@ public class GameView extends JPanel implements ActionListener{
 	// draw rectangles and arcs
 	public void paintComponent( Graphics g )
 	{
-		if (rand.nextInt(1000) > 1000-level*5 | lastAsteroidIter > 200-level*5) {
+		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
 			createAsteroid(1);
 			lastAsteroidIter = 0;
 		}
@@ -80,6 +81,10 @@ public class GameView extends JPanel implements ActionListener{
 			asteroidList.remove(removeAsteroid);
 			dodgeCount++;
 			lblDodge.setText("Dodged " + dodgeCount + " Asteroids!");
+			if (dodgeCount > 0 && dodgeCount % 10 == 0) {
+				level++;
+				lblLevel.setText("Level " + level);
+			}
 		}
 	}
 }
