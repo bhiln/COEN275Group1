@@ -26,11 +26,11 @@ public class AsteroidManager {
 		for (Asteroid myAsteroid : asteroidList) {
 			// check for boundaries
 			// TODO: dx is set to 0 for now, asteroids fall straight down
-			if (myAsteroid.x < myAsteroid.radius) myAsteroid.dx = Math.abs(myAsteroid.dx);
-			if (myAsteroid.x > width - myAsteroid.radius) myAsteroid.dx = -Math.abs(myAsteroid.dx);
+			if (myAsteroid.x < myAsteroid.width/2) myAsteroid.dx = Math.abs(myAsteroid.dx);
+			if (myAsteroid.x > width - myAsteroid.width/2) myAsteroid.dx = -Math.abs(myAsteroid.dx);
 			
 			// if asteroid is below bottom of frame, prepare to remove from tracked list
-			if (myAsteroid.y > height + myAsteroid.radius) {
+			if (myAsteroid.y > height + myAsteroid.width/2) {
 				toRemove.add(myAsteroid);
 			}
 			
@@ -51,7 +51,7 @@ public class AsteroidManager {
 	
 	public void drawAsteroids(Graphics g) {
 		for (Asteroid myAsteroid : asteroidList) {
-			g.fillOval((int)((myAsteroid.x - myAsteroid.radius) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.radius) * myAsteroid.scale), myAsteroid.radius*2, myAsteroid.radius*2);
+			g.fillOval((int)((myAsteroid.x - myAsteroid.width/2) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.width/2) * myAsteroid.scale), myAsteroid.width/2*2, myAsteroid.width/2*2);
 		}
 	}
 }
