@@ -22,10 +22,13 @@ public class Game extends JPanel implements ActionListener{
 	private int level = 1;				// player level
 	private int lastAsteroidIter = 0;	// count how many frames passed since last asteroid was created
 	private int dodgeCount = 0;			// count score
+
+	private long startTime;
+	private long timeAlive = 0L;
+	private long lastTimeAlive = 0L;
 	
 	// level and score labels
-	JLabel lblLevel = new JLabel("Level " + level);
-	JLabel lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
+	JLabel lblLevel, lblDodge, lblTimeAlive;
 	
 	// create ship and asteroid managers
 	ShipManager m_ship = new ShipManager();
@@ -38,15 +41,25 @@ public class Game extends JPanel implements ActionListener{
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
 		
+		lblLevel = new JLabel("Level " + level);
+		lblLevel.setForeground(Color.WHITE);
+		lblDodge = new JLabel("Dodged " + dodgeCount + " Asteroids!");
+		lblDodge.setForeground(Color.WHITE);
+		lblTimeAlive = new JLabel("Time alive: " + timeAlive);
+		lblTimeAlive.setForeground(Color.WHITE);
+		
 		// add level and score labels to frame
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
+		add(lblTimeAlive, BorderLayout.NORTH);
 		
 		// set background to dark gray
 		setBackground(Color.DARK_GRAY);
 		
 		// create ship
 		m_ship.createShip(0);
+		
+		startTime = System.currentTimeMillis();
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -57,9 +70,16 @@ public class Game extends JPanel implements ActionListener{
 
 	// draw rectangles and arcs
 	public void paintComponent( Graphics g )
-	{
+	{		
 		super.paintComponent( g ); // call superclass's paintComponent 
 		g.setColor(Color.red);
+		
+		// calculate time alive. Only update label if it's a new second
+		timeAlive = (System.currentTimeMillis()-startTime)/1000L;
+		if (timeAlive > lastTimeAlive) {
+			lblTimeAlive.setText("Time alive: " + timeAlive);
+			lastTimeAlive = timeAlive;
+		}
 		
 		// update and draw ship
 		// this takes into account the current size of the frame so it can dynamically scale
