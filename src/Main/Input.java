@@ -14,8 +14,8 @@ public class Input {
     private  int mouseY;
     private KeyInput keyInput;
 
-    public Input(Canvas canvas){
-        this.keyInput = new KeyInput(this,canvas);
+    public Input(JFrame frame){
+        this.keyInput = new KeyInput(this,frame);
 
     }
 

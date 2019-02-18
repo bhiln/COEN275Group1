@@ -6,9 +6,9 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
     private Input input;
-    public KeyInput(Input input, Canvas canvas) {
+    public KeyInput(Input input, JFrame frame) {
         this.input = input;
-        canvas.addKeyListener(this);
+        frame.addKeyListener(this);
     }
 
     public void keyTyped(KeyEvent e) {
