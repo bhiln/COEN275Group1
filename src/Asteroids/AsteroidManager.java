@@ -4,20 +4,22 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Game.Position;
 import Game.SpaceManager;
 
 public class AsteroidManager implements SpaceManager {
 
 	private ArrayList<Asteroid> asteroidList = new ArrayList<Asteroid>();
 	Random rand = new Random();
-	
+		
 	// create an asteroid with random x location
-	public void Create(int width) {
-		int xLoc = rand.nextInt(width);
+	public void Create(Position bounds) {
 		int speed = 1;//rand.nextInt(2);
 		
+		Position pose = new Position(rand.nextInt(bounds.x), bounds.y);
+		
 		// add asteroid to tracked asteroid list
-		asteroidList.add(new Asteroid(xLoc, speed));
+		asteroidList.add(new Asteroid(pose, speed));
 	}
 	
 	// update location of all tracked asteroids
@@ -26,17 +28,17 @@ public class AsteroidManager implements SpaceManager {
 		for (Asteroid myAsteroid : asteroidList) {
 			// check for boundaries
 			// TODO: dx is set to 0 for now, asteroids fall straight down
-			if (myAsteroid.x < myAsteroid.width/2) myAsteroid.dx = Math.abs(myAsteroid.dx);
-			if (myAsteroid.x > width - myAsteroid.width/2) myAsteroid.dx = -Math.abs(myAsteroid.dx);
+			if (myAsteroid.getPosition().x < myAsteroid.width/2) myAsteroid.dx = Math.abs(myAsteroid.dx);
+			if (myAsteroid.getPosition().x > width - myAsteroid.width/2) myAsteroid.dx = -Math.abs(myAsteroid.dx);
 			
 			// if asteroid is below bottom of frame, prepare to remove from tracked list
-			if (myAsteroid.y > height + myAsteroid.width/2) {
+			if (myAsteroid.getPosition().y > height + myAsteroid.width/2) {
 				toRemove.add(myAsteroid);
 			}
 			
 			// adjust asteroid position
-			myAsteroid.x += myAsteroid.dx;
-			myAsteroid.y += myAsteroid.dy;
+			myAsteroid.moveX(myAsteroid.dx);
+			myAsteroid.moveY(myAsteroid.dy);
 		}
 		
 		// remove asteroid from tracked list
@@ -51,7 +53,7 @@ public class AsteroidManager implements SpaceManager {
 	
 	public void Draw(Graphics g) {
 		for (Asteroid myAsteroid : asteroidList) {
-			g.fillOval((int)((myAsteroid.x - myAsteroid.width/2) * myAsteroid.scale), (int)((myAsteroid.y - myAsteroid.width/2) * myAsteroid.scale), myAsteroid.width/2*2, myAsteroid.width/2*2);
+			g.fillPolygon(myAsteroid.xVerts, myAsteroid.yVerts, myAsteroid.xVerts.length);
 		}
 	}
 }
