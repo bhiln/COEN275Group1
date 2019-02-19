@@ -3,6 +3,7 @@ package Game;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -57,7 +58,7 @@ public class Game extends JPanel implements ActionListener{
 		setBackground(Color.DARK_GRAY);
 		
 		// create ship
-		Position originalPose = new Position(0,500);
+		Point originalPose = new Point(0,500);
 		m_ship.Create(originalPose);
 		
 		startTime = System.currentTimeMillis();
@@ -91,7 +92,7 @@ public class Game extends JPanel implements ActionListener{
 		// likelihood of asteroid generation increases with level
 		// if no asteroid has been created lately, create a new asteroid (gets faster as level increases)
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
-			Position asteroidBounds = new Position(getWidth(), 0);
+			Point asteroidBounds = new Point(getWidth(), 0);
 			m_asteroid.Create(asteroidBounds);
 			lastAsteroidIter = 0;
 		}

@@ -1,10 +1,10 @@
 package Asteroids;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-import Game.Position;
 import Game.SpaceManager;
 
 public class AsteroidManager implements SpaceManager {
@@ -13,10 +13,10 @@ public class AsteroidManager implements SpaceManager {
 	Random rand = new Random();
 		
 	// create an asteroid with random x location
-	public void Create(Position bounds) {
+	public void Create(Point bounds) {
 		int speed = 1;//rand.nextInt(2);
 		
-		Position pose = new Position(rand.nextInt(bounds.x), bounds.y);
+		Point pose = new Point(rand.nextInt(bounds.x), bounds.y);
 		
 		// add asteroid to tracked asteroid list
 		asteroidList.add(new Asteroid(pose, speed));
@@ -53,7 +53,7 @@ public class AsteroidManager implements SpaceManager {
 	
 	public void Draw(Graphics g) {
 		for (Asteroid myAsteroid : asteroidList) {
-			g.fillPolygon(myAsteroid.xVerts, myAsteroid.yVerts, myAsteroid.xVerts.length);
+			g.fillPolygon(myAsteroid.getShape());
 		}
 	}
 }

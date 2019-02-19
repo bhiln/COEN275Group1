@@ -1,17 +1,17 @@
 package Ship;
 
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import Asteroids.Asteroid;
-import Game.Position;
 import Game.SpaceManager;
 
 public class ShipManager implements SpaceManager {
 
 	private Ship myShip;	
 	
-	public void Create(Position pose) {
+	public void Create(Point pose) {
 		int speed = 1;
 		myShip = new Ship(pose, speed);
 	}
@@ -20,8 +20,8 @@ public class ShipManager implements SpaceManager {
 	// TODO: update ship location based on user input
 	public int Update(int width, int height) {
 		// check for boundaries
-		if (myShip.xVerts[0] == 0) myShip.dx = Math.abs(myShip.dx);
-		if (myShip.xVerts[0] + myShip.width > width) myShip.dx = -Math.abs(myShip.dx);
+		if (myShip.getShape().xpoints[0] == 0) myShip.dx = Math.abs(myShip.dx);
+		if (myShip.getShape().xpoints[0] + myShip.width > width) myShip.dx = -Math.abs(myShip.dx);
 		
 		// adjust ship position		
 		myShip.moveX(myShip.dx);
@@ -32,7 +32,7 @@ public class ShipManager implements SpaceManager {
 	
 	// draw ship polygon
 	public void Draw(Graphics g) {
-		g.fillPolygon(myShip.xVerts, myShip.yVerts, myShip.xVerts.length);
+		g.fillPolygon(myShip.getShape());
 	}
 	
 	// TODO: write collision detector

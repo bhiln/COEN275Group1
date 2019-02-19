@@ -1,37 +1,49 @@
 package Game;
 
+import java.awt.Point;
+
+import java.awt.Polygon;
+
 public abstract class SpaceObject {
 
-	private Position pose; // object location
-	public int[] xVerts, yVerts = {}; // object shape
+	private Point pose; // object location
+	private Polygon shape; // object shape
 	public int width = 0; // object width
 
 	public int dx = 0; // increment amount (x coord)
 	public int dy = 0; // increment amount (y coord)
 	
-	public SpaceObject(Position pose) {
+	public SpaceObject(Point pose) {
 		this.pose = pose;
 	}
 	
-	public void setPosition(Position pose) {
+	public void setShape(Polygon shape) {
+		this.shape = shape;
+	}
+	
+	public Polygon getShape() {
+		return shape;
+	}
+	
+	public void setPosition(Point pose) {
 		this.pose = pose;
 	}
 	
-	public Position getPosition() {
+	public Point getPosition() {
 		return pose;
 	}
 	
 	public void moveX(int pixels) {
 		pose.x += pixels;
-		for (int i = 0; i < xVerts.length; ++i) {
-			xVerts[i] += pixels;
+		for (int i = 0; i < shape.npoints; ++i) {
+			shape.xpoints[i] += pixels;
 		}
 	}
 	
 	public void moveY(int pixels) {
 		pose.y += pixels;
-		for (int i = 0; i < yVerts.length; ++i) {
-			yVerts[i] += pixels;
+		for (int i = 0; i < shape.npoints; ++i) {
+			shape.ypoints[i] += pixels;
 		}
 	}
 }
