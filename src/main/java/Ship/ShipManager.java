@@ -4,16 +4,16 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import Asteroids.Asteroid;
+import Game.Position;
 import Game.SpaceManager;
 
 public class ShipManager implements SpaceManager {
 
 	private Ship myShip;	
 	
-	public void Create(int width) {
-		int xLoc = width/2;
+	public void Create(Position pose) {
 		int speed = 1;
-		myShip = new Ship(xLoc, speed);
+		myShip = new Ship(pose, speed);
 	}
 	
 	// update ship location based on width and height of the frame
@@ -24,9 +24,9 @@ public class ShipManager implements SpaceManager {
 		if (myShip.xVerts[0] + myShip.width > width) myShip.dx = -Math.abs(myShip.dx);
 		
 		// adjust ship position		
-		for (int i = 0; i < myShip.xVerts.length; ++i) {
-			myShip.xVerts[i] += myShip.dx;
-		}
+		myShip.moveX(myShip.dx);
+		myShip.moveY(myShip.dy);
+		
 		return 0; // int return not applicable to Ship
 	}
 	
