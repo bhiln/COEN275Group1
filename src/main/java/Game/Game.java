@@ -112,5 +112,16 @@ public class Game extends JPanel implements ActionListener{
 			level++;
 			lblLevel.setText("Level " + level);
 		}
+		
+		if (m_ship.detectCollisions(m_asteroid.getAsteroids()).size() > 0) {
+			setBackground(Color.ORANGE);
+			timer.stop();
+			// TODO: popup menu with stats and restart
+		}
+		else {
+			if (getBackground() == Color.ORANGE) {
+				setBackground(Color.DARK_GRAY);
+			}
+		}
 	}
 }

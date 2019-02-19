@@ -56,4 +56,8 @@ public class AsteroidManager implements SpaceManager {
 			g.fillPolygon(myAsteroid.getShape());
 		}
 	}
+	
+	public ArrayList<Asteroid> getAsteroids(){
+		return asteroidList;
+	}
 }

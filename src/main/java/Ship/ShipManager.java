@@ -2,6 +2,7 @@ package Ship;
 
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.geom.Area;
 import java.util.ArrayList;
 
 import Asteroids.Asteroid;
@@ -35,8 +36,18 @@ public class ShipManager implements SpaceManager {
 		g.fillPolygon(myShip.getShape());
 	}
 	
-	// TODO: write collision detector
+	// collision detector
 	public ArrayList<Asteroid> detectCollisions(ArrayList<Asteroid> asteroids){
-		return new ArrayList<Asteroid>();
+		ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
+		for (Asteroid a : asteroids) {
+			Area asteroidArea = new Area(a.getShape());
+			Area intersectionArea = new Area(myShip.getShape());
+			intersectionArea.intersect(asteroidArea);
+			
+			if (!intersectionArea.isEmpty()) {
+				collisions.add(a);
+			}
+		}
+		return collisions;
 	}
 }
