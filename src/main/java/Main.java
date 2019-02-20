@@ -16,5 +16,8 @@ public class Main {
 			frame.add( g );				// add graphics to frame
 			frame.setSize( 1280, 720 ); // set frame size
 			frame.setVisible( true ); 	// display frame
+			frame.setResizable(false);
+			
+			g.init();
 		} // end main
 }
