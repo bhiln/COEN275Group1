@@ -14,6 +14,7 @@ import javax.swing.Timer;
 
 import Asteroids.AsteroidManager;
 import Ship.ShipManager;
+import Stars.StarManager;
 
 public class Game extends JPanel implements ActionListener{
 	
@@ -34,6 +35,7 @@ public class Game extends JPanel implements ActionListener{
 	// create ship and asteroid managers
 	ShipManager m_ship = new ShipManager();
 	AsteroidManager m_asteroid = new AsteroidManager();
+	StarManager m_star = new StarManager();
 	
 	Random rand = new Random();
 	
@@ -87,6 +89,14 @@ public class Game extends JPanel implements ActionListener{
 		// this takes into account the current size of the frame so it can dynamically scale
 		m_ship.Update(getWidth(), getHeight());
 		m_ship.Draw(g);
+		
+		// draw background stars
+		if (rand.nextInt(1000) > 950) {
+			Point starBounds = new Point(getWidth(), 0);
+			m_star.Create(starBounds);
+		}
+		m_star.Update(getWidth(), getHeight());
+		m_star.Draw(g);
 		
 		// randomly generate an asteroid
 		// likelihood of asteroid generation increases with level
