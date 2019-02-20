@@ -3,6 +3,7 @@ package Game;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -57,7 +58,8 @@ public class Game extends JPanel implements ActionListener{
 		setBackground(Color.DARK_GRAY);
 		
 		// create ship
-		m_ship.Create(0);
+		Point originalPose = new Point(0,500);
+		m_ship.Create(originalPose);
 		
 		startTime = System.currentTimeMillis();
 	}
@@ -90,7 +92,8 @@ public class Game extends JPanel implements ActionListener{
 		// likelihood of asteroid generation increases with level
 		// if no asteroid has been created lately, create a new asteroid (gets faster as level increases)
 		if (rand.nextInt(1000) > 1000-level*5 || lastAsteroidIter > 200-level*5) {
-			m_asteroid.Create(getWidth());
+			Point asteroidBounds = new Point(getWidth(), 0);
+			m_asteroid.Create(asteroidBounds);
 			lastAsteroidIter = 0;
 		}
 		lastAsteroidIter++;
@@ -108,6 +111,17 @@ public class Game extends JPanel implements ActionListener{
 		if (removed > 0 && dodgeCount > 0 && dodgeCount % 10 == 0) {
 			level++;
 			lblLevel.setText("Level " + level);
+		}
+		
+		if (m_ship.detectCollisions(m_asteroid.getAsteroids()).size() > 0) {
+			setBackground(Color.ORANGE);
+			timer.stop();
+			// TODO: popup menu with stats and restart
+		}
+		else {
+			if (getBackground() == Color.ORANGE) {
+				setBackground(Color.DARK_GRAY);
+			}
 		}
 	}
 }

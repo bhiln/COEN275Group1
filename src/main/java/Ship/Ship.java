@@ -1,17 +1,30 @@
 package Ship;
 
+import java.awt.Point;
+import java.awt.Polygon;
+
 import Game.SpaceObject;
 
 public class Ship extends SpaceObject{
 	
-	public Ship(int xLoc, int speed) {
-		y = 500;
-		xVerts = new int[]{0,10,20,10,0};
-		yVerts = new int[]{20+y,0+y,20+y,10+y,20+y};
+	public Ship(Point pose, int speed) {
+		
+		super(pose);
+		
+		// create ship shape
+		Polygon shipShape = new Polygon();
+		shipShape.addPoint(0, 20);
+		shipShape.addPoint(10, 0);
+		shipShape.addPoint(20, 20);
+		shipShape.addPoint(10, 10);
+		shipShape.addPoint(0, 20);
+		setShape(shipShape);
+		
 		width = 20; // ship widths
-		for (int i = 0; i < xVerts.length; ++i) {
-			xVerts[i] += xLoc;
-		}
+		
+		moveX(pose.x);
+		moveY(pose.y);
+		
 		dx = speed;
 	}
 }
