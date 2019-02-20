@@ -76,7 +76,6 @@ public class Game extends JPanel implements ActionListener{
 	public void paintComponent( Graphics g )
 	{		
 		super.paintComponent( g ); // call superclass's paintComponent 
-		g.setColor(Color.red);
 		
 		// calculate time alive. Only update label if it's a new second
 		timeAlive = (System.currentTimeMillis()-startTime)/1000L;

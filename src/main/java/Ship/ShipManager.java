@@ -1,5 +1,6 @@
 package Ship;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Area;
@@ -10,7 +11,9 @@ import Game.SpaceManager;
 
 public class ShipManager implements SpaceManager {
 
-	private Ship myShip;	
+	private Ship myShip;
+	
+	final Color drawColor = Color.CYAN;
 	
 	public void Create(Point pose) {
 		int speed = 1;
@@ -33,6 +36,7 @@ public class ShipManager implements SpaceManager {
 	
 	// draw ship polygon
 	public void Draw(Graphics g) {
+		g.setColor(drawColor);
 		g.fillPolygon(myShip.getShape());
 	}
 	

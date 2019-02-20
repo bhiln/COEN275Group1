@@ -5,13 +5,17 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import java.awt.Color;
+
 import Game.SpaceManager;
 
 public class AsteroidManager implements SpaceManager {
 
 	private ArrayList<Asteroid> asteroidList = new ArrayList<Asteroid>();
 	Random rand = new Random();
-		
+	
+	final Color drawColor = Color.RED;
+	
 	// create an asteroid with random x location
 	public void Create(Point bounds) {
 		int speed = 1;//rand.nextInt(2);
@@ -52,6 +56,7 @@ public class AsteroidManager implements SpaceManager {
 	}
 	
 	public void Draw(Graphics g) {
+		g.setColor(drawColor);
 		for (Asteroid myAsteroid : asteroidList) {
 			g.fillPolygon(myAsteroid.getShape());
 		}

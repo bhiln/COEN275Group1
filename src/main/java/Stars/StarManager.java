@@ -1,16 +1,20 @@
 package Stars;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import Game.SpaceManager;
 import Stars.Star;
 
-public class StarManager {
+public class StarManager implements SpaceManager {
 
 	private ArrayList<Star> starList = new ArrayList<Star>();
 	Random rand = new Random();
+	
+	final Color drawColor = Color.LIGHT_GRAY;
 		
 	// create an asteroid with random x location
 	public void Create(Point bounds) {
@@ -52,6 +56,7 @@ public class StarManager {
 	}
 	
 	public void Draw(Graphics g) {
+		g.setColor(drawColor);
 		for (Star myStar : starList) {
 			g.fillPolygon(myStar.getShape());
 		}
