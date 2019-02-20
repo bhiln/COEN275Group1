@@ -14,7 +14,7 @@ public class AsteroidManager implements SpaceManager {
 		
 	// create an asteroid with random x location
 	public void Create(Point bounds) {
-		int speed = 1;//rand.nextInt(2);
+		int speed = rand.nextInt(3)+1;
 		
 		Point pose = new Point(rand.nextInt(bounds.x), bounds.y);
 		
