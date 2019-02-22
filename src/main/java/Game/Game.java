@@ -58,9 +58,11 @@ public class Game extends JPanel implements ActionListener{
 		
 		// set background to dark gray
 		setBackground(Color.DARK_GRAY);
-		
+	}
+	
+	public void init() {
 		// create ship
-		Point originalPose = new Point(0,500);
+		Point originalPose = new Point(0,(int)(getHeight()*0.8));
 		m_ship.Create(originalPose);
 		
 		startTime = System.currentTimeMillis();
