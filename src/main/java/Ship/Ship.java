@@ -10,9 +10,6 @@ public class Ship extends SpaceObject{
 	public Ship(Point pose, int speed) {
 		
 		super(pose);
-		//TEST
-		//ok
-		//test this should not appear in master!
 		// create ship shape
 		Polygon shipShape = new Polygon();
 		shipShape.addPoint(0, 20);
