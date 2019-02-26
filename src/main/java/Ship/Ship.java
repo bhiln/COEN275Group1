@@ -12,7 +12,7 @@ public class Ship extends SpaceObject{
 		super(pose);
 		//TEST
 		//ok
-		//test this should not appear in master
+		//test this should not appear in master!
 		// create ship shape
 		Polygon shipShape = new Polygon();
 		shipShape.addPoint(0, 20);
