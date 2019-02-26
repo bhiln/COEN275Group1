@@ -30,7 +30,7 @@ public class Game extends JPanel implements ActionListener{
 	private long lastTimeAlive = 0L;
 	
 	// level and score labels
-	JLabel lblLevel, lblDodge, lblTimeAlive;
+	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
 	
 	// create ship and asteroid managers
 	ShipManager m_ship = new ShipManager();
@@ -50,11 +50,14 @@ public class Game extends JPanel implements ActionListener{
 		lblDodge.setForeground(Color.WHITE);
 		lblTimeAlive = new JLabel("Time alive: " + timeAlive);
 		lblTimeAlive.setForeground(Color.WHITE);
+		lblHealth = new JLabel("Health: ");
+		lblHealth.setForeground(Color.GREEN);
 		
 		// add level and score labels to frame
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
 		add(lblTimeAlive, BorderLayout.NORTH);
+		add(lblHealth, BorderLayout.NORTH);
 		
 		// set background to dark gray
 		setBackground(Color.DARK_GRAY);
@@ -85,6 +88,13 @@ public class Game extends JPanel implements ActionListener{
 			lblTimeAlive.setText("Time alive: " + timeAlive);
 			lastTimeAlive = timeAlive;
 		}
+		
+		// updates health label and changes color if low health
+		lblHealth.setText("Health: " + m_ship.getShipHealth());
+		if(m_ship.getShipHealth() < 10) {
+			lblHealth.setForeground(Color.RED);
+		}
+
 		
 		// update and draw ship
 		// this takes into account the current size of the frame so it can dynamically scale
@@ -124,7 +134,7 @@ public class Game extends JPanel implements ActionListener{
 			lblLevel.setText("Level " + level);
 		}
 		
-		if (m_ship.detectCollisions(m_asteroid.getAsteroids()).size() > 0) {
+		if (m_ship.detectCollisions(m_asteroid.getAsteroids()) == true) {
 			setBackground(Color.ORANGE);
 			timer.stop();
 			// TODO: popup menu with stats and restart

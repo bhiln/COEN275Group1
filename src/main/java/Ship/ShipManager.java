@@ -17,7 +17,8 @@ public class ShipManager implements SpaceManager {
 	
 	public void Create(Point pose) {
 		int speed = 1;
-		myShip = new Ship(pose, speed);
+		int initialHealth = 10;
+		myShip = new Ship(pose, speed, initialHealth);
 	}
 	
 	// update ship location based on width and height of the frame
@@ -40,18 +41,36 @@ public class ShipManager implements SpaceManager {
 		g.fillPolygon(myShip.getShape());
 	}
 	
+	
+	//needed to get ship health for the top bar
+	public int getShipHealth() {
+		return myShip.health;
+	}
+	
 	// collision detector
-	public ArrayList<Asteroid> detectCollisions(ArrayList<Asteroid> asteroids){
-		ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
+	public boolean detectCollisions(ArrayList<Asteroid> asteroids){
 		for (Asteroid a : asteroids) {
 			Area asteroidArea = new Area(a.getShape());
 			Area intersectionArea = new Area(myShip.getShape());
 			intersectionArea.intersect(asteroidArea);
 			
+			//collision detected
 			if (!intersectionArea.isEmpty()) {
-				collisions.add(a);
+			
+				//how much damage each asteroid does
+				myShip.decreaseHealth(5);
+				
+				//check if ship is destroyed
+				if (myShip.health <= 0){
+					return true;
+				}
+				else {
+					asteroids.remove(a);
+					return false;
+				}
+				
 			}
 		}
-		return collisions;
+		return false;
 	}
 }
