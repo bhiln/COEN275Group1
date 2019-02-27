@@ -1,7 +1,6 @@
 package Stars;
 
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.*;
 import java.util.Random;
 
 import Game.SpaceObject;
@@ -9,6 +8,14 @@ import Game.SpaceObject;
 public class Star extends SpaceObject {
 	
 	Random rand = new Random();
+
+
+	public Color getDrawColor() {
+		return drawColor;
+	}
+
+	private Color drawColor = Color.LIGHT_GRAY;
+
 
 	public Star(Point pose, int speed) {
 		super(pose);

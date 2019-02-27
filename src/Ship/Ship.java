@@ -1,12 +1,15 @@
 package Ship;
 
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.*;
 
 import Game.SpaceObject;
 
 public class Ship extends SpaceObject{
-	
+
+
+
+	private Color drawColor = Color.CYAN;
+
 	public Ship(Point pose, int speed) {
 		
 		super(pose);
@@ -26,5 +29,8 @@ public class Ship extends SpaceObject{
 		moveY(pose.y);
 		
 		dx = speed;
+	}
+	public Color getDrawColor() {
+		return drawColor;
 	}
 }
