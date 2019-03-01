@@ -27,20 +27,17 @@ public class Physics implements Runnable, ActionListener {
         timer = new Timer(delay, this);
         timer.start(); // start the timer
         System.out.println("test");
-
-
     }
+    
     public void actionPerformed(ActionEvent e){
         if(state.getState().equals("game")){
             update();
-
         }
-
     }
+    
     private void update(){
         int width = game.getSize().width;
         int height = game.getSize().height;
-
 
         Ship ship = state.getShip();
         if (ship.getShape().xpoints[0] == 0) ship.dx = Math.abs(ship.dx);
@@ -49,7 +46,6 @@ public class Physics implements Runnable, ActionListener {
         // adjust ship position
         ship.moveX(ship.dx);
         ship.moveY(ship.dy);
-
 
         ArrayList<Star> stars = state.getStars();
         ArrayList<Star> toRemove = new ArrayList<Star>();
@@ -76,12 +72,9 @@ public class Physics implements Runnable, ActionListener {
         }
 
         if (rand.nextInt(1000) > 950) {
-
             int speed = rand.nextInt(5)+1;
             Point pose = new Point(rand.nextInt(game.getSize().width), 0);
             stars.add(new Star(pose, speed));
-
-
         }
 
         ArrayList<Asteroid> asteroids = state.getAsteroids();
@@ -89,11 +82,8 @@ public class Physics implements Runnable, ActionListener {
         if (rand.nextInt(1000) > 1000-state.getLevel()*5 || state.lastAsteroidIter > 200-state.getLevel()*5) {
             Point asteroidBounds = new Point(width, 0);
             int speed = rand.nextInt(3)+1;
-
             Point pose = new Point(rand.nextInt(width),0);
-
             asteroids.add(new Asteroid(pose, speed));
-
             state.lastAsteroidIter = 0;
         }
         state.lastAsteroidIter++;
@@ -139,11 +129,8 @@ public class Physics implements Runnable, ActionListener {
             game.endGame();
             // TODO: popup menu with stats and restart
         }
-
-
-
-
     }
+    
     private boolean detectCollisions(Ship ship, ArrayList<Asteroid> asteroids){
         ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
         for (Asteroid a : asteroids) {

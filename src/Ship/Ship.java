@@ -6,8 +6,6 @@ import Game.SpaceObject;
 
 public class Ship extends SpaceObject{
 
-
-
 	private Color drawColor = Color.CYAN;
 
 	public Ship(Point pose, int speed) {
@@ -30,6 +28,7 @@ public class Ship extends SpaceObject{
 		
 		dx = speed;
 	}
+	
 	public Color getDrawColor() {
 		return drawColor;
 	}

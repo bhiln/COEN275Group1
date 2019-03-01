@@ -13,10 +13,7 @@ public class GameState {
 
     public int level;
 
-
     private ArrayList<Asteroid> asteroids;
-
-
     private ArrayList<Star> stars;
     private Ship ship;
 
@@ -56,7 +53,6 @@ public class GameState {
     public int getLevel() {
         return level;
     }
-
 
     //state manager, mirrors the one in game
 

@@ -14,7 +14,6 @@ public class Asteroid extends SpaceObject {
 
 	private Color drawColor = Color.RED;
 
-
 	public Asteroid(Point pose, int speed) {
 		super(pose);
 		

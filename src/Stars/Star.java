@@ -9,13 +9,11 @@ public class Star extends SpaceObject {
 	
 	Random rand = new Random();
 
-
 	public Color getDrawColor() {
 		return drawColor;
 	}
 
 	private Color drawColor = Color.LIGHT_GRAY;
-
 
 	public Star(Point pose, int speed) {
 		super(pose);
@@ -35,5 +33,4 @@ public class Star extends SpaceObject {
 		dy = speed;
 		width = 2;
 	}
-
 }

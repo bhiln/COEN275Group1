@@ -14,16 +14,11 @@ public class Renderer extends JPanel implements ActionListener {
     private GameState state;
 
     private int delay = 16;
-
     protected Timer timer;
-
-
 
     private long startTime;
     private long timeAlive = 0L;
     private long lastTimeAlive = 0L;
-
-
 
     JLabel lblLevel, lblDodge, lblTimeAlive;
 
@@ -31,7 +26,6 @@ public class Renderer extends JPanel implements ActionListener {
     public Renderer(Game game, GameState state){
         this.game = game;
         this.state = state;
-
 
         timer = new Timer(delay, this);
         timer.start(); // start the timer
@@ -54,14 +48,14 @@ public class Renderer extends JPanel implements ActionListener {
         startTime = System.currentTimeMillis();
 
     }
+    
     public void init() {
-        // create ship
-
+        // initialize start time
         startTime = System.currentTimeMillis();
     }
-    public void actionPerformed(ActionEvent e)
-    // will run when the timer fires
-    {
+    
+    public void actionPerformed(ActionEvent e) {
+    	// will run when the timer fires
         repaint();
     }
 
@@ -75,31 +69,21 @@ public class Renderer extends JPanel implements ActionListener {
             lastTimeAlive = timeAlive;
         }
 
-
         Ship ship = state.getShip();
         g.setColor(ship.getDrawColor());
         g.fillPolygon(ship.getShape());
 
-
-
         ArrayList<Star> stars = state.getStars();
         for (Star s : stars) {
-
             g.setColor(s.getDrawColor());
-
             g.fillPolygon(s.getShape());
-
         }
 
         ArrayList<Asteroid> asteroids = state.getAsteroids();
         for (Asteroid a : asteroids) {
-
             g.setColor(a.getDrawColor());
-
             g.fillPolygon(a.getShape());
-
         }
-
 
         lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
         lblLevel.setText("Level " + state.level);

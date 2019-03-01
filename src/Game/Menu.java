@@ -21,6 +21,7 @@ public class Menu extends JPanel implements ActionListener{
         this.add(startGameButton);
         startGameButton.addActionListener(this);
     }
+    
     public void actionPerformed(ActionEvent e){
         if (e.getSource() == startGameButton) {
             game.startGame();
