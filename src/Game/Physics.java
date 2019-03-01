@@ -35,6 +35,10 @@ public class Physics implements Runnable, ActionListener {
         }
     }
     
+    private void checkBoundaries() {
+    	
+    }
+    
     private void update(){
         int width = game.getSize().width;
         int height = game.getSize().height;
