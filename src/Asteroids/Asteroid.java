@@ -8,6 +8,7 @@ import Game.SpaceObject;
 public class Asteroid extends SpaceObject {
 
 	public double scale = 1;
+	public boolean wall = false;
 
 	public Color getDrawColor() {
 		return drawColor;

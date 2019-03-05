@@ -29,7 +29,7 @@ public class Ship extends SpaceObject {
 
 		dx = speed;
 
-		setHealth(10);
+		setHealth(100);
 	}
 	public void applyForce(int forceX, int forceY){
 		dx += acceleration * forceX;

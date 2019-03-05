@@ -17,10 +17,6 @@ public class Renderer extends JPanel implements ActionListener {
 	private int delay = 20;
 	protected Timer timer;
 
-	private long startTime;
-	private long timeAlive = 0L;
-	private long lastTimeAlive = 0L;
-
 	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
 
 	public Renderer(Game game, GameState state) {
@@ -28,13 +24,13 @@ public class Renderer extends JPanel implements ActionListener {
 		this.state = state;
 
 		timer = new Timer(delay, this);
-		timer.start(); // start the timer
+		restartTimer();
 
-		lblLevel = new JLabel("Level " + state.level);
+		lblLevel = new JLabel("Level " + state.getLevel());
 		lblLevel.setForeground(Color.WHITE);
 		lblDodge = new JLabel("Dodged " + state.dodgeCount + " Asteroids!");
 		lblDodge.setForeground(Color.WHITE);
-		lblTimeAlive = new JLabel("Time alive: " + timeAlive);
+		lblTimeAlive = new JLabel("Time alive: " + state.getTimeAlive());
 		lblTimeAlive.setForeground(Color.WHITE);
 		lblHealth = new JLabel("Health: ");
 		lblHealth.setForeground(Color.GREEN);
@@ -47,14 +43,6 @@ public class Renderer extends JPanel implements ActionListener {
 
 		// set background to dark gray
 		setBackground(Color.DARK_GRAY);
-		init();
-		startTime = System.currentTimeMillis();
-
-	}
-
-	public void init() {
-		// initialize start time
-		startTime = System.currentTimeMillis();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -67,11 +55,8 @@ public class Renderer extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 
 		// calculate time alive. Only update label if it's a new second
-		timeAlive = (System.currentTimeMillis() - startTime) / 1000L;
-		if (timeAlive > lastTimeAlive) {
-			lblTimeAlive.setText("Time alive: " + timeAlive);
-			lastTimeAlive = timeAlive;
-		}
+		state.setTimeAlive((System.currentTimeMillis() - state.getStartTime()) / 1000L);
+		lblTimeAlive.setText("Time alive: " + state.getTimeAlive());
 
 		Ship ship = state.getShip();
 		g2d.setColor(ship.getDrawColor());
@@ -91,12 +76,25 @@ public class Renderer extends JPanel implements ActionListener {
 		}
 
 		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
-		lblLevel.setText("Level " + state.level);
+		lblLevel.setText("Level " + state.getLevel());
 
 		// updates health label and changes color if low health
-		lblHealth.setText("Health: " + ship.getHealth());
-		if (ship.getHealth() < 10) {
+		int shipHealth = ship.getHealth();
+		lblHealth.setText("Health: " + shipHealth);
+		if (shipHealth >= 10) {
+			lblHealth.setForeground(Color.GREEN);
+		} else if (ship.getHealth() < 10) {
 			lblHealth.setForeground(Color.RED);
+		} else if (ship.getHealth() < 20) {
+			lblHealth.setForeground(Color.ORANGE);
 		}
+	}
+
+	public void stopTimer() {
+		timer.stop();
+	}
+
+	public void restartTimer() {
+		timer.restart();
 	}
 }
