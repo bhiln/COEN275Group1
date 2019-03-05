@@ -127,16 +127,23 @@ public class Physics implements Runnable, ActionListener {
             }
         }
 
-        if (detectCollisions(ship,asteroids)) {
-            //setBackground(Color.ORANGE);
+        AsteroidsToRemove = detectCollisions(ship,asteroids);
+        if (ship.getHealth() <= 0) {
+//            setBackground(Color.ORANGE);
             timer.stop();
             game.endGame();
             // TODO: popup menu with stats and restart
         }
+        
+        // remove asteroid from tracked list
+        for (Asteroid removeAsteroid : AsteroidsToRemove) {
+            asteroids.remove(removeAsteroid);
+        }
     }
     
-    private boolean detectCollisions(Ship ship, ArrayList<Asteroid> asteroids){
+    private ArrayList<Asteroid> detectCollisions(Ship ship, ArrayList<Asteroid> asteroids){
         ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
+        ArrayList<Asteroid> AsteroidsToRemove = new ArrayList<Asteroid>();
         for (Asteroid a : asteroids) {
             Area asteroidArea = new Area(a.getShape());
             Area intersectionArea = new Area(ship.getShape());
@@ -144,9 +151,11 @@ public class Physics implements Runnable, ActionListener {
 
             if (!intersectionArea.isEmpty()) {
                 collisions.add(a);
+                ship.setHealth(ship.getHealth()-5);
+                AsteroidsToRemove.add(a);
             }
         }
 
-        return collisions.size() != 0;
+        return AsteroidsToRemove;
     }
 }
