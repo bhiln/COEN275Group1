@@ -1,6 +1,7 @@
 package Game;
 
 import Asteroids.Asteroid;
+import Asteroids.AsteroidWall;
 import Game.GameState.State;
 import Ship.Ship;
 import Stars.Star;
@@ -117,17 +118,28 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		// remove asteroid from tracked list
+		int removed = 0;
+		boolean passedWall = false;
 		for (Asteroid removeAsteroid : AsteroidsToRemove) {
 			asteroids.remove(removeAsteroid);
+			if (!removeAsteroid.wall) {
+				removed++;
+			}
+			else {
+				passedWall = true;
+			}
+		}
+		
+		if (passedWall) {
+			state.setLevel(state.getLevel() + 1);
 		}
 
-		int removed = AsteroidsToRemove.size();
 		state.dodgeCount += removed;
 		AsteroidsToRemove.clear();
 
 		// 10 dodges = 1 level increase
 		if (removed > 0 && state.dodgeCount > 0 && state.dodgeCount % 10 == 0) {
-			state.setLevel(state.getLevel() + 1);
+			asteroids.addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
 			if (state.getLevel() == 10) {
 				game.finishGame();
 			}
