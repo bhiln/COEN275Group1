@@ -16,14 +16,12 @@ import java.util.Random;
 
 public class Physics implements Runnable, ActionListener {
 	private Game game;
-	private GameState state;
 	private Timer timer;
 	private final int delay = 10;
 	private Random rand = new Random();
 
-	public Physics(Game game, GameState state) {
+	public Physics(Game game) {
 		this.game = game;
-		this.state = state;
 	}
 
 	public void run() {
@@ -32,7 +30,7 @@ public class Physics implements Runnable, ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (state.getState() == State.GAME) {
+		if (this.game.getState().getState() == State.GAME) {
 			update();
 		}
 	}
@@ -45,7 +43,7 @@ public class Physics implements Runnable, ActionListener {
 		int width = game.getSize().width;
 		int height = game.getSize().height;
 
-		Ship ship = state.getShip();
+		Ship ship = this.game.getState().getShip();
 		if (ship.getShape().xpoints[0] == 0)
 			ship.dx = Math.abs(ship.dx);
 		if (ship.getShape().xpoints[0] + ship.width > game.getSize().width)
@@ -55,7 +53,7 @@ public class Physics implements Runnable, ActionListener {
 		ship.moveX(ship.dx);
 		ship.moveY(ship.dy);
 
-		ArrayList<Star> stars = state.getStars();
+		ArrayList<Star> stars = this.game.getState().getStars();
 		ArrayList<Star> toRemove = new ArrayList<Star>();
 
 		for (Star s : stars) {
@@ -87,16 +85,16 @@ public class Physics implements Runnable, ActionListener {
 			stars.add(new Star(pose, speed));
 		}
 
-		ArrayList<Asteroid> asteroids = state.getAsteroids();
+		ArrayList<Asteroid> asteroids = this.game.getState().getAsteroids();
 
-		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
+		if (rand.nextInt(1000) > 1000 - this.game.getState().getLevel() * 5 || this.game.getState().lastAsteroidIter > 200 - this.game.getState().getLevel() * 5) {
 			Point asteroidBounds = new Point(width, 0);
 			int speed = rand.nextInt(3) + 1;
 			Point pose = new Point(rand.nextInt(width), 0);
 			asteroids.add(new Asteroid(pose, speed));
-			state.lastAsteroidIter = 0;
+			this.game.getState().lastAsteroidIter = 0;
 		}
-		state.lastAsteroidIter++;
+		this.game.getState().lastAsteroidIter++;
 
 		ArrayList<Asteroid> AsteroidsToRemove = new ArrayList<Asteroid>();
 		for (Asteroid myAsteroid : asteroids) {
@@ -118,12 +116,12 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		// remove asteroid from tracked list
-		int removed = 0;
 		boolean passedWall = false;
 		for (Asteroid removeAsteroid : AsteroidsToRemove) {
 			asteroids.remove(removeAsteroid);
 			if (!removeAsteroid.wall) {
-				removed++;
+				this.game.getState().dodgeCount++;
+				game.evaluateWall();
 			}
 			else {
 				passedWall = true;
@@ -131,20 +129,10 @@ public class Physics implements Runnable, ActionListener {
 		}
 		
 		if (passedWall) {
-			state.setLevel(state.getLevel() + 1);
+			game.passLevel();
 		}
 
-		state.dodgeCount += removed;
 		AsteroidsToRemove.clear();
-
-		// 10 dodges = 1 level increase
-		if (removed > 0 && state.dodgeCount > 0 && state.dodgeCount % 10 == 0) {
-			asteroids.addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
-			if (state.getLevel() == 10) {
-				game.finishGame();
-			}
-		}
-
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
 		if (ship.getHealth() <= 0) {
 			

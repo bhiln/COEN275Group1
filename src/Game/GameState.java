@@ -26,8 +26,7 @@ public class GameState {
 
 	private long startTime;
 	private long timeAlive = 0L;
-	private long lastTimeAlive = 0L;
-
+	
 	public GameState(Game game) {
 		this.game = game;
 		gameState = State.MENU;
