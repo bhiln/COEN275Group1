@@ -14,7 +14,7 @@ public class Renderer extends JPanel implements ActionListener {
 	private Game game;
 	private GameState state;
 
-	private int delay = 16;
+	private int delay = 20;
 	protected Timer timer;
 
 	private long startTime;
@@ -64,6 +64,7 @@ public class Renderer extends JPanel implements ActionListener {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g); // call superclass's paintComponent
+		Graphics2D g2d = (Graphics2D) g.create();
 
 		// calculate time alive. Only update label if it's a new second
 		timeAlive = (System.currentTimeMillis() - startTime) / 1000L;
@@ -73,19 +74,20 @@ public class Renderer extends JPanel implements ActionListener {
 		}
 
 		Ship ship = state.getShip();
-		g.setColor(ship.getDrawColor());
-		g.fillPolygon(ship.getShape());
+		g2d.setColor(ship.getDrawColor());
+
+		g2d.fill(ship.getShape());
 
 		ArrayList<Star> stars = state.getStars();
 		for (Star s : stars) {
-			g.setColor(s.getDrawColor());
-			g.fillPolygon(s.getShape());
+			g2d.setColor(s.getDrawColor());
+			g2d.fill(s.getShape());
 		}
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 		for (Asteroid a : asteroids) {
-			g.setColor(a.getDrawColor());
-			g.fillPolygon(a.getShape());
+			g2d.setColor(a.getDrawColor());
+			g2d.fill(a.getShape());
 		}
 
 		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");

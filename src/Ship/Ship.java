@@ -1,36 +1,45 @@
 package Ship;
 
 import java.awt.*;
+import java.awt.geom.Path2D;
 
 import Game.SpaceObject;
 
 public class Ship extends SpaceObject {
 
 	private Color drawColor = Color.CYAN;
-
-	public Ship(Point pose, int speed) {
+	private double maxSpeed = 5;
+	private double acceleration = .5;
+	public Ship(Point.Double pose, double speed) {
 
 		super(pose);
 		// create ship shape
-		Polygon shipShape = new Polygon();
-		shipShape.addPoint(0, 20);
-		shipShape.addPoint(10, 0);
-		shipShape.addPoint(20, 20);
-		shipShape.addPoint(10, 10);
-		shipShape.addPoint(0, 20);
+		Path2D.Double shipShape = new Path2D.Double();
+		shipShape.moveTo(0, 20);
+		shipShape.lineTo(10, 0);
+		shipShape.lineTo(20, 20);
+		shipShape.lineTo(10, 10);
+		shipShape.lineTo(0, 20);
 		setShape(shipShape);
 
 		width = 20; // ship widths
 
-		moveX(pose.x);
-		moveY(pose.y);
+
+
 
 		dx = speed;
 
 		setHealth(10);
 	}
+	public void applyForce(int direction){
+		dx += acceleration * direction;
+		dx *= .99;//slow down over time
+		if(Math.abs(dx) > maxSpeed){
+			dx = (maxSpeed * Integer.signum(direction) );
+		}
+	}
 
-	public Ship(Point pose, int speed, int initialHealth) {
+	public Ship(Point.Double pose, double speed, int initialHealth) {
 		this(pose, speed);
 		setHealth(initialHealth);
 	}

@@ -27,13 +27,13 @@ public class GameState {
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
 
-		ship = new Ship(new Point(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
+		ship = new Ship(new Point.Double(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
 	}
 
 	private void clearState() {
 		asteroids.clear();
 		stars.clear();
-		ship = new Ship(new Point(0, 0), 0);
+		ship = new Ship(new Point.Double(0, 0), 0);
 	}
 
 	public String getState() {

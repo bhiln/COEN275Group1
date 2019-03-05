@@ -1,6 +1,7 @@
 package Asteroids;
 
 import java.awt.*;
+import java.awt.geom.Path2D;
 
 import Game.SpaceObject;
 
@@ -14,23 +15,22 @@ public class Asteroid extends SpaceObject {
 
 	private Color drawColor = Color.RED;
 
-	public Asteroid(Point pose, int speed) {
+	public Asteroid(Point.Double pose, int speed) {
 		super(pose);
 
 		// create ship shape
-		Polygon asteroidShape = new Polygon();
-		asteroidShape.addPoint(0, 10);
-		asteroidShape.addPoint(10, 0);
-		asteroidShape.addPoint(20, 0);
-		asteroidShape.addPoint(30, 10);
-		asteroidShape.addPoint(30, 20);
-		asteroidShape.addPoint(20, 30);
-		asteroidShape.addPoint(10, 30);
-		asteroidShape.addPoint(0, 20);
+		Path2D.Double asteroidShape = new Path2D.Double();
+		asteroidShape.moveTo(0, 10);
+		asteroidShape.lineTo(10, 0);
+		asteroidShape.lineTo(20, 0);
+		asteroidShape.lineTo(30, 10);
+		asteroidShape.lineTo(30, 20);
+		asteroidShape.lineTo(20, 30);
+		asteroidShape.lineTo(10, 30);
+		asteroidShape.lineTo(0, 20);
 		setShape(asteroidShape);
 
-		moveX(pose.x);
-		moveY(pose.y);
+
 
 		dy = speed;
 		width = 15 * 2;

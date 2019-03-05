@@ -15,11 +15,15 @@ public class Game {
 	private Menu menu;
 	private Renderer renderer;
 	private Thread physics;
+	private KeyInput input;
 
 	public Game() {
 		frame = new JFrame("Avoid the Asteroid!");
 		frame.setSize(1280, 720); // set frame size
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		input = new KeyInput(frame);
+
+
 		cl = new CardLayout();
 		panel = new JPanel(cl);
 
@@ -30,13 +34,15 @@ public class Game {
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
 
-		physics = new Thread(new Physics(this, state));
+		physics = new Thread(new Physics(this, state, input));
 		physics.start();
 
 		frame.add(panel);
 		// add Graphics to frame
 		frame.setVisible(true); // display frame
 		frame.setResizable(false);
+		frame.setFocusable(true);
+
 	}
 
 	public GameState getState() {
