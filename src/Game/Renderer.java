@@ -1,4 +1,5 @@
 package Game;
+
 import Asteroids.Asteroid;
 import Ship.Ship;
 import Stars.Star;
@@ -10,91 +11,90 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel implements ActionListener {
-    private Game game;
-    private GameState state;
+	private Game game;
+	private GameState state;
 
-    private int delay = 16;
-    protected Timer timer;
+	private int delay = 16;
+	protected Timer timer;
 
-    private long startTime;
-    private long timeAlive = 0L;
-    private long lastTimeAlive = 0L;
+	private long startTime;
+	private long timeAlive = 0L;
+	private long lastTimeAlive = 0L;
 
-    JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
+	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
 
+	public Renderer(Game game, GameState state) {
+		this.game = game;
+		this.state = state;
 
-    public Renderer(Game game, GameState state){
-        this.game = game;
-        this.state = state;
+		timer = new Timer(delay, this);
+		timer.start(); // start the timer
 
-        timer = new Timer(delay, this);
-        timer.start(); // start the timer
-
-        lblLevel = new JLabel("Level " + state.level);
-        lblLevel.setForeground(Color.WHITE);
-        lblDodge = new JLabel("Dodged " + state.dodgeCount + " Asteroids!");
-        lblDodge.setForeground(Color.WHITE);
-        lblTimeAlive = new JLabel("Time alive: " + timeAlive);
-        lblTimeAlive.setForeground(Color.WHITE);
-        lblHealth = new JLabel("Health: ");
+		lblLevel = new JLabel("Level " + state.level);
+		lblLevel.setForeground(Color.WHITE);
+		lblDodge = new JLabel("Dodged " + state.dodgeCount + " Asteroids!");
+		lblDodge.setForeground(Color.WHITE);
+		lblTimeAlive = new JLabel("Time alive: " + timeAlive);
+		lblTimeAlive.setForeground(Color.WHITE);
+		lblHealth = new JLabel("Health: ");
 		lblHealth.setForeground(Color.GREEN);
 
-        // add level and score labels to frame
-        add(lblLevel, BorderLayout.NORTH);
-        add(lblDodge, BorderLayout.NORTH);
-        add(lblTimeAlive, BorderLayout.NORTH);
-        add(lblHealth, BorderLayout.NORTH);
+		// add level and score labels to frame
+		add(lblLevel, BorderLayout.NORTH);
+		add(lblDodge, BorderLayout.NORTH);
+		add(lblTimeAlive, BorderLayout.NORTH);
+		add(lblHealth, BorderLayout.NORTH);
 
-        // set background to dark gray
-        setBackground(Color.DARK_GRAY);
-        init();
-        startTime = System.currentTimeMillis();
+		// set background to dark gray
+		setBackground(Color.DARK_GRAY);
+		init();
+		startTime = System.currentTimeMillis();
 
-    }
-    
-    public void init() {
-        // initialize start time
-        startTime = System.currentTimeMillis();
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-    	// will run when the timer fires
-        repaint();
-    }
+	}
 
-    public void paintComponent( Graphics g ) {
-        super.paintComponent(g); // call superclass's paintComponent
+	public void init() {
+		// initialize start time
+		startTime = System.currentTimeMillis();
+	}
 
-        // calculate time alive. Only update label if it's a new second
-        timeAlive = (System.currentTimeMillis() - startTime) / 1000L;
-        if (timeAlive > lastTimeAlive) {
-            lblTimeAlive.setText("Time alive: " + timeAlive);
-            lastTimeAlive = timeAlive;
-        }
+	public void actionPerformed(ActionEvent e) {
+		// will run when the timer fires
+		repaint();
+	}
 
-        Ship ship = state.getShip();
-        g.setColor(ship.getDrawColor());
-        g.fillPolygon(ship.getShape());
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g); // call superclass's paintComponent
 
-        ArrayList<Star> stars = state.getStars();
-        for (Star s : stars) {
-            g.setColor(s.getDrawColor());
-            g.fillPolygon(s.getShape());
-        }
+		// calculate time alive. Only update label if it's a new second
+		timeAlive = (System.currentTimeMillis() - startTime) / 1000L;
+		if (timeAlive > lastTimeAlive) {
+			lblTimeAlive.setText("Time alive: " + timeAlive);
+			lastTimeAlive = timeAlive;
+		}
 
-        ArrayList<Asteroid> asteroids = state.getAsteroids();
-        for (Asteroid a : asteroids) {
-            g.setColor(a.getDrawColor());
-            g.fillPolygon(a.getShape());
-        }
+		Ship ship = state.getShip();
+		g.setColor(ship.getDrawColor());
+		g.fillPolygon(ship.getShape());
 
-        lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
-        lblLevel.setText("Level " + state.level);
-        
-        // updates health label and changes color if low health
-        lblHealth.setText("Health: " + ship.getHealth());
-        if(ship.getHealth() < 10) {
-        	lblHealth.setForeground(Color.RED);
-        }
-    }
+		ArrayList<Star> stars = state.getStars();
+		for (Star s : stars) {
+			g.setColor(s.getDrawColor());
+			g.fillPolygon(s.getShape());
+		}
+
+		ArrayList<Asteroid> asteroids = state.getAsteroids();
+		for (Asteroid a : asteroids) {
+			g.setColor(a.getDrawColor());
+			g.fillPolygon(a.getShape());
+		}
+
+		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
+		lblLevel.setText("Level " + state.level);
+
+		// updates health label and changes color if low health
+		lblHealth.setText("Health: " + ship.getHealth());
+		if (ship.getHealth() < 10) {
+			lblHealth.setForeground(Color.RED);
+		}
+	}
 }
