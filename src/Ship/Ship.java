@@ -11,7 +11,6 @@ public class Ship extends SpaceObject{
 	public Ship(Point pose, int speed) {
 		
 		super(pose);
-		
 		// create ship shape
 		Polygon shipShape = new Polygon();
 		shipShape.addPoint(0, 20);
@@ -27,6 +26,13 @@ public class Ship extends SpaceObject{
 		moveY(pose.y);
 		
 		dx = speed;
+		
+		setHealth(10);
+	}
+
+	public Ship(Point pose, int speed, int initialHealth) {
+		this(pose, speed);
+		setHealth(initialHealth);
 	}
 	
 	public Color getDrawColor() {

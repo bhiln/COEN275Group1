@@ -20,7 +20,7 @@ public class Renderer extends JPanel implements ActionListener {
     private long timeAlive = 0L;
     private long lastTimeAlive = 0L;
 
-    JLabel lblLevel, lblDodge, lblTimeAlive;
+    JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
 
 
     public Renderer(Game game, GameState state){
@@ -36,11 +36,14 @@ public class Renderer extends JPanel implements ActionListener {
         lblDodge.setForeground(Color.WHITE);
         lblTimeAlive = new JLabel("Time alive: " + timeAlive);
         lblTimeAlive.setForeground(Color.WHITE);
+        lblHealth = new JLabel("Health: ");
+		lblHealth.setForeground(Color.GREEN);
 
         // add level and score labels to frame
         add(lblLevel, BorderLayout.NORTH);
         add(lblDodge, BorderLayout.NORTH);
         add(lblTimeAlive, BorderLayout.NORTH);
+        add(lblHealth, BorderLayout.NORTH);
 
         // set background to dark gray
         setBackground(Color.DARK_GRAY);
@@ -87,5 +90,11 @@ public class Renderer extends JPanel implements ActionListener {
 
         lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
         lblLevel.setText("Level " + state.level);
+        
+        // updates health label and changes color if low health
+        lblHealth.setText("Health: " + ship.getHealth());
+        if(ship.getHealth() < 10) {
+        	lblHealth.setForeground(Color.RED);
+        }
     }
 }

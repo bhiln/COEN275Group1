@@ -35,4 +35,5 @@ public class Asteroid extends SpaceObject {
 		dy = speed;
 		width = 15*2;
 	}
+
 }
