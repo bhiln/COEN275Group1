@@ -1,14 +1,19 @@
 package Asteroids;
 
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.*;
 
 import Game.SpaceObject;
 
 public class Asteroid extends SpaceObject {
 	
 	public double scale = 1;
-	
+
+	public Color getDrawColor() {
+		return drawColor;
+	}
+
+	private Color drawColor = Color.RED;
+
 	public Asteroid(Point pose, int speed) {
 		super(pose);
 		
