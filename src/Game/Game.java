@@ -85,15 +85,29 @@ public class Game {
 				exitGame();
 			}
 		});
+		
+		btnRestart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frame.remove(pnlButtons);
+				startGame();
+			}
+		});
+		
 		frame.add(pnlButtons, BorderLayout.SOUTH);
 		frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
+		
+		//TODO: set stats on menu
 	}
 
 	// return to menu
 	public void exitGame() {
 		state.exitGame();
 		cl.show(panel, "Menu");
+	}
+	
+	public void setBackground(Color backgroundColor) {
+		renderer.setBackground(backgroundColor);
 	}
 }

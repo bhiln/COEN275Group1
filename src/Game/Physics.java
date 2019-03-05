@@ -135,10 +135,9 @@ public class Physics implements Runnable, ActionListener {
 
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
 		if (ship.getHealth() <= 0) {
-//            setBackground(Color.ORANGE);
-//			timer.stop();
+			
+//            game.setBackground(Color.ORANGE);
 			game.endGame();
-			// TODO: popup menu with stats and restart
 		} else {
 			// remove asteroid from tracked list
 			for (Asteroid removeAsteroid : AsteroidsToRemove) {
