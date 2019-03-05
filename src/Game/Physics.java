@@ -47,20 +47,35 @@ public class Physics implements Runnable, ActionListener {
 
 		Ship ship = state.getShip();
 
+		int forceX = 0;
+		int forceY = 0;
 		if(input.getKey("Left")){
-			ship.applyForce(-1);
+
+			forceX = -1;
 		}
 		else if(input.getKey("Right")){
-			ship.applyForce(1);
+
+			forceX = 1;
 		}
-		else{
-			ship.applyForce(0);
+		if(input.getKey("Up")){
+
+			forceY = -1;
 		}
+		else if(input.getKey("Down")){
+
+			forceY = 1;
+		}
+
+		ship.applyForce(forceX,forceY);
 
 		if (ship.getPosition().x < 0)
 			ship.dx = Math.abs(ship.dx);
-		if (ship.getPosition().x + ship.width > game.getSize().width)
+		else if (ship.getPosition().x + ship.width > game.getSize().width)
 			ship.dx = -Math.abs(ship.dx);
+		if (ship.getPosition().y < game.getSize().height * 2 / 3)
+			ship.dy = Math.abs(ship.dy);
+		else if (ship.getPosition().y + ship.width*2 > game.getSize().height)
+			ship.dy = -Math.abs(ship.dy);
 
 		// adjust ship position
 		ship.moveX(ship.dx);

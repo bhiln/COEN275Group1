@@ -31,12 +31,18 @@ public class Ship extends SpaceObject {
 
 		setHealth(10);
 	}
-	public void applyForce(int direction){
-		dx += acceleration * direction;
+	public void applyForce(int forceX, int forceY){
+		dx += acceleration * forceX;
 		dx *= .99;//slow down over time
+		dy += acceleration * forceY;
+		dy *= .99;//slow down over time
 		if(Math.abs(dx) > maxSpeed){
-			dx = (maxSpeed * Integer.signum(direction) );
+			dx = (maxSpeed * Integer.signum(forceX) );
 		}
+		if(Math.abs(dy) > maxSpeed){
+			dy = (maxSpeed * Integer.signum(forceY) );
+		}
+
 	}
 
 	public Ship(Point.Double pose, double speed, int initialHealth) {
