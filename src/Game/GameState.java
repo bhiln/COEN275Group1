@@ -9,35 +9,39 @@ import java.util.ArrayList;
 
 public class GameState {
 
-	private enum State{
+	public enum State {
 		MENU, GAME, PAUSED, DEATH, WIN, EXIT
 	}
-	
-	private State gameState;
 
-	public int level;
+	private State gameState;
+	private Game game;
+
+	private int level;
 
 	private ArrayList<Asteroid> asteroids;
 	private ArrayList<Star> stars;
 	private Ship ship;
 
-	public int lastAsteroidIter = 0;// count how many frames passed since last asteroid was created
-	public int dodgeCount = 0;
+	public int lastAsteroidIter, dodgeCount;
+
+	private long startTime;
+	private long timeAlive = 0L;
+	private long lastTimeAlive = 0L;
 
 	public GameState(Game game) {
-		game = game;
+		this.game = game;
 		gameState = State.MENU;
+		resetState();
+	}
+
+	private void resetState() {
 		level = 0;
+		lastAsteroidIter = 0;
+		dodgeCount = 0;
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
 
 		ship = new Ship(new Point(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
-	}
-
-	private void clearState() {
-		asteroids.clear();
-		stars.clear();
-		ship = new Ship(new Point(0, 0), 0);
 	}
 
 	public State getState() {
@@ -60,10 +64,28 @@ public class GameState {
 		return level;
 	}
 
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public long getTimeAlive() {
+		return timeAlive;
+	}
+
+	public void setTimeAlive(long time) {
+		timeAlive = time;
+	}
+
+	public long getStartTime() {
+		return startTime;
+	}
+
 	// state manager, mirrors the one in game
 
 	// starts a new game
 	public void startGame() {
+		resetState();
+		startTime = System.currentTimeMillis();
 		gameState = State.GAME;
 	}
 
