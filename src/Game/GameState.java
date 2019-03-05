@@ -9,7 +9,11 @@ import java.util.ArrayList;
 
 public class GameState {
 
-	private String state;// menu, game, paused, death, win
+	private enum State{
+		MENU, GAME, PAUSED, DEATH, WIN, EXIT
+	}
+	
+	private State gameState;
 
 	public int level;
 
@@ -22,7 +26,7 @@ public class GameState {
 
 	public GameState(Game game) {
 		game = game;
-		state = "menu";
+		gameState = State.MENU;
 		level = 0;
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
@@ -36,8 +40,8 @@ public class GameState {
 		ship = new Ship(new Point(0, 0), 0);
 	}
 
-	public String getState() {
-		return this.state;
+	public State getState() {
+		return gameState;
 	}
 
 	public Ship getShip() {
@@ -60,26 +64,26 @@ public class GameState {
 
 	// starts a new game
 	public void startGame() {
-		this.state = "game";
+		gameState = State.GAME;
 	}
 
 	// if game is paused, resume game
 	public void resumeGame() {
-
+		gameState = State.GAME;
 	}
 
 	// game has been won, switch to win state
 	public void finishGame() {
-
+		gameState = State.WIN;
 	}
 
 	// game has been lost, switch to lose state
 	public void endGame() {
-
+		gameState = State.DEATH;
 	}
 
 	// return to menu
 	public void exitGame() {
-
+		gameState = State.EXIT;
 	}
 }
