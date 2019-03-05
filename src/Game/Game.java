@@ -15,10 +15,11 @@ public class Game {
 	private Menu menu;
 	private Renderer renderer;
 	private Thread physics;
-	public Game(){
-		frame = new JFrame( "Avoid the Asteroid!" );
-		frame.setSize( 1280, 720 ); // set frame size
-		frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+
+	public Game() {
+		frame = new JFrame("Avoid the Asteroid!");
+		frame.setSize(1280, 720); // set frame size
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cl = new CardLayout();
 		panel = new JPanel(cl);
 
@@ -33,42 +34,42 @@ public class Game {
 		physics.start();
 
 		frame.add(panel);
-		//add Graphics to frame
-		frame.setVisible( true ); 	// display frame
+		// add Graphics to frame
+		frame.setVisible(true); // display frame
 		frame.setResizable(false);
 	}
-	
-	public GameState getState(){
+
+	public GameState getState() {
 		return this.state;
 	}
-	
-	public Dimension getSize(){
+
+	public Dimension getSize() {
 		return frame.getSize();
 	}
 
-	//starts a new game
-	public void startGame(){
+	// starts a new game
+	public void startGame() {
 		state.startGame();
-		cl.show(panel,"Game");
+		cl.show(panel, "Game");
 	}
-	
-	//if game is paused, resume game
-	public void resumeGame(){
+
+	// if game is paused, resume game
+	public void resumeGame() {
 
 	}
-	
-	//game has been won, switch to win state
-	public void finishGame(){
+
+	// game has been won, switch to win state
+	public void finishGame() {
 
 	}
-	
-	//game has been lost, switch to lose state
-	public void endGame(){
+
+	// game has been lost, switch to lose state
+	public void endGame() {
 
 	}
-	
-	//return to menu
-	public void exitGame(){
+
+	// return to menu
+	public void exitGame() {
 
 	}
 }

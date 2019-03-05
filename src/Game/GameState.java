@@ -9,71 +9,77 @@ import java.util.ArrayList;
 
 public class GameState {
 
-    private String state;//menu, game, paused, death, win
+	private String state;// menu, game, paused, death, win
 
-    public int level;
+	public int level;
 
-    private ArrayList<Asteroid> asteroids;
-    private ArrayList<Star> stars;
-    private Ship ship;
+	private ArrayList<Asteroid> asteroids;
+	private ArrayList<Star> stars;
+	private Ship ship;
 
-    public int lastAsteroidIter = 0;// count how many frames passed since last asteroid was created
-    public int dodgeCount = 0;
+	public int lastAsteroidIter = 0;// count how many frames passed since last asteroid was created
+	public int dodgeCount = 0;
 
-    public GameState(Game game){
-        game = game;
-        state = "menu";
-        level = 0;
-        asteroids = new ArrayList<Asteroid>();
-        stars = new ArrayList<Star>();
+	public GameState(Game game) {
+		game = game;
+		state = "menu";
+		level = 0;
+		asteroids = new ArrayList<Asteroid>();
+		stars = new ArrayList<Star>();
 
-        ship = new Ship(new Point(game.getSize().width/2,(int)(game.getSize().height*0.8)),2);
-    }
-    private void clearState(){
-        asteroids.clear();
-        stars.clear();
-        ship = new Ship(new Point(0,0),0);
-    }
-    public String getState(){
-        return this.state;
-    }
+		ship = new Ship(new Point(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
+	}
 
-    public Ship getShip(){
-        return this.ship;
-    }
+	private void clearState() {
+		asteroids.clear();
+		stars.clear();
+		ship = new Ship(new Point(0, 0), 0);
+	}
 
-    public ArrayList<Asteroid> getAsteroids() {
-        return asteroids;
-    }
+	public String getState() {
+		return this.state;
+	}
 
-    public ArrayList<Star> getStars() {
-        return stars;
-    }
+	public Ship getShip() {
+		return this.ship;
+	}
 
-    public int getLevel() {
-        return level;
-    }
+	public ArrayList<Asteroid> getAsteroids() {
+		return asteroids;
+	}
 
-    //state manager, mirrors the one in game
+	public ArrayList<Star> getStars() {
+		return stars;
+	}
 
-    //starts a new game
-    public void startGame(){
-        this.state = "game";
-    }
-    //if game is paused, resume game
-    public void resumeGame(){
+	public int getLevel() {
+		return level;
+	}
 
-    }
-    //game has been won, switch to win state
-    public void finishGame(){
+	// state manager, mirrors the one in game
 
-    }
-    //game has been lost, switch to lose state
-    public void endGame(){
+	// starts a new game
+	public void startGame() {
+		this.state = "game";
+	}
 
-    }
-    //return to menu
-    public void exitGame(){
+	// if game is paused, resume game
+	public void resumeGame() {
 
-    }
+	}
+
+	// game has been won, switch to win state
+	public void finishGame() {
+
+	}
+
+	// game has been lost, switch to lose state
+	public void endGame() {
+
+	}
+
+	// return to menu
+	public void exitGame() {
+
+	}
 }
