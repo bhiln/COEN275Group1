@@ -1,6 +1,7 @@
 package Game;
 
 import Asteroids.Asteroid;
+import Game.GameState.State;
 import Ship.Ship;
 import Stars.Star;
 
@@ -27,11 +28,10 @@ public class Physics implements Runnable, ActionListener {
 	public void run() {
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
-		System.out.println("test");
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (state.getState().equals("game")) {
+		if (state.getState() == State.GAME) {
 			update();
 		}
 	}
@@ -127,23 +127,22 @@ public class Physics implements Runnable, ActionListener {
 
 		// 10 dodges = 1 level increase
 		if (removed > 0 && state.dodgeCount > 0 && state.dodgeCount % 10 == 0) {
-			state.level++;
-			if (state.level == 10) {
+			state.setLevel(state.getLevel() + 1);
+			if (state.getLevel() == 10) {
 				game.finishGame();
 			}
 		}
 
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
 		if (ship.getHealth() <= 0) {
-//            setBackground(Color.ORANGE);
-			timer.stop();
+			
+//            game.setBackground(Color.ORANGE);
 			game.endGame();
-			// TODO: popup menu with stats and restart
-		}
-
-		// remove asteroid from tracked list
-		for (Asteroid removeAsteroid : AsteroidsToRemove) {
-			asteroids.remove(removeAsteroid);
+		} else {
+			// remove asteroid from tracked list
+			for (Asteroid removeAsteroid : AsteroidsToRemove) {
+				asteroids.remove(removeAsteroid);
+			}
 		}
 	}
 
@@ -163,5 +162,13 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		return AsteroidsToRemove;
+	}
+
+	public void restartTimer() {
+		timer.restart();
+	}
+
+	public void stopTimer() {
+		timer.stop();
 	}
 }

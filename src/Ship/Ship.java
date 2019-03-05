@@ -27,7 +27,7 @@ public class Ship extends SpaceObject {
 
 		dx = speed;
 
-		setHealth(10);
+		setHealth(100);
 	}
 
 	public Ship(Point pose, int speed, int initialHealth) {
