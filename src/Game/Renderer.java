@@ -1,6 +1,7 @@
 package Game;
 
 import Asteroids.Asteroid;
+import Projectiles.Bullet;
 import Ship.Ship;
 import Stars.Star;
 
@@ -77,6 +78,12 @@ public class Renderer extends JPanel implements ActionListener {
 			g2d.setColor(a.getDrawColor());
 			g2d.fill(a.getShape());
 		}
+		
+		ArrayList<Bullet> bullets = state.getBullets();
+		for (Bullet b : bullets) {
+			g2d.setColor(b.getDrawColor());
+			g2d.fill(b.getShape());
+		}
 
 		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
 		lblLevel.setText("Level " + state.getLevel());
@@ -95,6 +102,9 @@ public class Renderer extends JPanel implements ActionListener {
 		if(input.getKey("Escape")){
 			game.pauseGame();
 			game.getState().pauseGame();
+		}
+		else if (input.getKey("Space")) {
+			game.getState().addBullet();
 		}
 	}
 
