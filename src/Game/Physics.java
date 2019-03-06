@@ -206,6 +206,7 @@ public class Physics implements Runnable, ActionListener {
 		} else {
 			// remove asteroid from tracked list
 			for (Asteroid removeAsteroid : AsteroidsToRemove) {
+				removeAsteroid.playSound();
 				asteroids.remove(removeAsteroid);
 			}
 		}
