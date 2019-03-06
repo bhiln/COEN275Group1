@@ -1,6 +1,9 @@
 package Game;
 
 import javax.swing.JPanel;
+
+import Game.GameState.State;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
@@ -26,7 +29,12 @@ public class Menu extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == startGameButton) {
-			game.startGame();
+			if (game.getState().getState() == State.MENU) {
+				game.startGame();
+			}
+			else if (game.getState().getState() == State.PAUSED) {
+				game.resumeGame();
+			}
 		}
 	}
 }
