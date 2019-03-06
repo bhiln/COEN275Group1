@@ -3,8 +3,12 @@ package Game;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
+
+import Asteroids.AsteroidWall;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -20,6 +24,8 @@ public class Game {
 	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
+	
+	private Random rand = new Random();
 
 	public Game() {
 		frame = new JFrame("Avoid the Asteroid!");
@@ -38,9 +44,7 @@ public class Game {
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
 
-		//physics = new Thread(new Physics(this, state, input));
-		//physics.start();
-		physics = new Physics(this, state, input);
+		physics = new Physics(this, input);
 		physicsThread = new Thread(physics);
 		physicsThread.start();
 
@@ -126,5 +130,19 @@ public class Game {
 
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
+	}
+	
+	public void passLevel() {
+		state.setLevel(state.getLevel() + 1);
+	}
+	
+	public void evaluateWall() {
+		// 10 dodges = 1 level increase
+		if (state.dodgeCount % 10 == 0) {
+			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
+			if (state.getLevel() == 10) {
+				finishGame();
+			}
+		}
 	}
 }
