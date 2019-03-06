@@ -18,8 +18,6 @@ public class Renderer extends JPanel implements ActionListener {
 	private Game game;
 	private GameState state;
 	
-	private BufferedImage asteroidTexture;
-	private BufferedImage in;
 	private int delay = 20;
 	protected Timer timer;
 
@@ -27,18 +25,7 @@ public class Renderer extends JPanel implements ActionListener {
 
 	public Renderer(Game game, GameState state) {
 		this.game = game;
-		this.state = state;
-		
-		try {
-		    File pathToFile = new File("assets/asteroid.png");
-		    in = ImageIO.read(pathToFile);
-		} catch (IOException ex) {
-		    ex.printStackTrace();
-		}
-		
-		asteroidTexture = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		
-		
+		this.state = state;		
 
 		timer = new Timer(delay, this);
 		restartTimer();
@@ -90,13 +77,14 @@ public class Renderer extends JPanel implements ActionListener {
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 		for (Asteroid a : asteroids) {
-			//g2d.setColor(a.getDrawColor());
-			//g2d.fill(a.getShape());
+//			g2d.setColor(a.getDrawColor());
+//			g2d.fill(a.getShape());
+			g2d.drawImage(a.getTexture(), (int)a.getPosition().x, (int)a.getPosition().y, null);
 			
-			TexturePaint tp = new TexturePaint(asteroidTexture, new Rectangle(0,0,16,16));
-			g2d.setPaint(tp);
-			//BufferedImage img1 = in.filter(in,null);
-			g2d.drawRenderedImage(in, null);
+//			TexturePaint tp = new TexturePaint(asteroidTexture, new Rectangle(0,0,16,16));
+//			g2d.setPaint(tp);
+//			//BufferedImage img1 = in.filter(in,null);
+//			g2d.drawRenderedImage(in, null);
 			
 			//g2d.setPaint(new Color(0, 0, 0));
 			//g2d = asteroidTexture.createGraphics();
