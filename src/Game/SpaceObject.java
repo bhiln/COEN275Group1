@@ -102,7 +102,7 @@ public abstract class SpaceObject {
 			soundThread.start();
 		}
 		catch(Exception e) {
-			System.out.println("ERROR: no sound");
+			System.out.println("SOUND ERROR");
 		}
 	}
 }

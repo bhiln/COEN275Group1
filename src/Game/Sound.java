@@ -23,7 +23,6 @@ public class Sound implements Runnable {
 	public void play() {
 		soundPlayer.seek(Duration.ZERO);
 		soundPlayer.play();
-		System.out.println("sound");
 	}
 
 	public void run() {
