@@ -128,7 +128,6 @@ public class Physics implements Runnable, ActionListener {
 					b.dx = -Math.abs(b.dx);
 	
 				// if asteroid is below bottom of frame, prepare to remove from tracked list
-				System.out.println(b.getPosition().y);
 				if (b.getPosition().y < 0) {
 					bulletsToRemove.add(b);
 				}
@@ -138,17 +137,15 @@ public class Physics implements Runnable, ActionListener {
 				b.moveY(b.dy);
 			}
 	
-			// remove asteroid from tracked list
+			// remove bullets from tracked list
 			for (Bullet removeBullet : bulletsToRemove) {
 				bullets.remove(removeBullet);
-				System.out.println("REMOVING");
 			}
 		}
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 
 		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
-			Point asteroidBounds = new Point(width, 0);
 			int speed = rand.nextInt(3) + 1;
 			Point.Double pose = new Point.Double(rand.nextInt(width), 0);
 			asteroids.add(new Asteroid(pose, speed));
@@ -204,11 +201,19 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
-		
+		bulletsToRemove.clear();
 		if (bullets != null) {
 			for (Bullet bullet : bullets) {
-				AsteroidsToRemove.addAll(detectCollisions(bullet, asteroids));
+				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
+				if (asteroidsHit.size() > 0) {
+					bulletsToRemove.add(bullet);
+				}
+				AsteroidsToRemove.addAll(asteroidsHit);
 			}
+		}
+		// remove bullets from tracked list
+		for (Bullet removeBullet : bulletsToRemove) {
+			bullets.remove(removeBullet);
 		}
 		
 		if (ship.getHealth() <= 0) {

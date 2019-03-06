@@ -28,6 +28,7 @@ public class GameState {
 
 	private long startTime;
 	private long timeAlive = 0L;
+	private long lastBulletTime = 0L;
 
 	public GameState(Game game) {
 		this.game = game;
@@ -118,10 +119,15 @@ public class GameState {
 	}
 	
 	public void addBullet() {
-		Point.Double shipPose = (Double) ship.getPosition().clone();
-		bullets.add(new Bullet(shipPose, -20));
-		System.out.println("ADDED BULLET: " + ship.getPosition().x + "," + ship.getPosition().y);
-		System.out.println(bullets.size());
+		long curTime = System.currentTimeMillis();
+		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
+			Point.Double shipPose = (Double) ship.getPosition().clone();
+			shipPose.x += ship.width/2;
+			bullets.add(new Bullet(shipPose, -10, ship.dx));
+			System.out.println("ADDED BULLET: " + ship.getPosition().x + "," + ship.getPosition().y);
+			System.out.println(bullets.size());
+			lastBulletTime = curTime;
+		}
 	}
 	
 	public ArrayList<Bullet> getBullets() {
