@@ -49,10 +49,10 @@ public class Asteroid extends SpaceObject {
 		
 		//randomly set rotation direction, rotation speed is relative to dy
 		if (rand.nextInt(2)%2 == 0) {
-			dr = -0.03 * dy;
+			dr = -0.015 * dy;
 		}
 		else {
-			dr = 0.03* dy;
+			dr = 0.015* dy;
 		}
 		
 		
