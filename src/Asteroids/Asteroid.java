@@ -31,8 +31,6 @@ public class Asteroid extends SpaceObject {
 		asteroidShape.lineTo(0, 20);
 		setShape(asteroidShape);
 
-
-
 		dy = speed;
 		width = 15 * 2;
 	}

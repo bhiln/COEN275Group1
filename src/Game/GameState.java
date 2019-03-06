@@ -125,8 +125,6 @@ public class GameState {
 			Point.Double shipPose = (Double) ship.getPosition().clone();
 			shipPose.x += ship.width/2;
 			bullets.add(new Bullet(shipPose, -10, ship.dx));
-			System.out.println("ADDED BULLET: " + ship.getPosition().x + "," + ship.getPosition().y);
-			System.out.println(bullets.size());
 			lastBulletTime = curTime;
 		}
 	}
