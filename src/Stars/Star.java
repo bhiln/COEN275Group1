@@ -16,6 +16,14 @@ public class Star extends SpaceObject {
 
 	private Color drawColor = Color.LIGHT_GRAY;
 
+	
+	
+	public void setDrawColor(Color drawColor) {
+		this.drawColor = drawColor;
+	}
+
+
+
 	public Star(Point.Double pose, int speed) {
 		super(pose);
 

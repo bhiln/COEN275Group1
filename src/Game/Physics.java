@@ -159,6 +159,7 @@ public class Physics implements Runnable, ActionListener {
 		
 		if (passedWall) {
 			state.setLevel(state.getLevel() + 1);
+			//stars.drawColor(Color.BLUE);
 		}
 
 		state.dodgeCount += removed;
