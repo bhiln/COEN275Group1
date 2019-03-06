@@ -18,12 +18,13 @@ public class Physics implements Runnable, ActionListener {
 	private Game game;
 	private GameState state;
 	private Timer timer;
-	private final int delay = 10;
+	private final int delay = 20;
 	private Random rand = new Random();
-
-	public Physics(Game game, GameState state) {
+	private KeyInput input;
+	public Physics(Game game, GameState state, KeyInput input) {
 		this.game = game;
 		this.state = state;
+		this.input = input;
 	}
 
 	public void run() {
@@ -46,10 +47,36 @@ public class Physics implements Runnable, ActionListener {
 		int height = game.getSize().height;
 
 		Ship ship = state.getShip();
-		if (ship.getShape().xpoints[0] == 0)
+
+		int forceX = 0;
+		int forceY = 0;
+		if(input.getKey("Left")){
+
+			forceX = -1;
+		}
+		else if(input.getKey("Right")){
+
+			forceX = 1;
+		}
+		if(input.getKey("Up")){
+
+			forceY = -1;
+		}
+		else if(input.getKey("Down")){
+
+			forceY = 1;
+		}
+
+		ship.applyForce(forceX,forceY);
+
+		if (ship.getPosition().x + ship.dx < 0)
 			ship.dx = Math.abs(ship.dx);
-		if (ship.getShape().xpoints[0] + ship.width > game.getSize().width)
-			ship.dx = -(ship.dx);
+		else if (ship.getPosition().x + ship.width + ship.dx > game.getSize().width)
+			ship.dx = -Math.abs(ship.dx);
+		if (ship.getPosition().y + ship.dy < game.getSize().height /2)
+			ship.dy = Math.abs(ship.dy)/10;
+		else if (ship.getPosition().y + ship.width*2 + ship.dy > game.getSize().height)
+			ship.dy = -Math.abs(ship.dy)/10;
 
 		// adjust ship position
 		ship.moveX(ship.dx);
@@ -83,7 +110,7 @@ public class Physics implements Runnable, ActionListener {
 
 		if (rand.nextInt(1000) > 950) {
 			int speed = rand.nextInt(5) + 1;
-			Point pose = new Point(rand.nextInt(game.getSize().width), 0);
+			Point.Double pose = new Point.Double(rand.nextInt(game.getSize().width), 0);
 			stars.add(new Star(pose, speed));
 		}
 
@@ -92,7 +119,7 @@ public class Physics implements Runnable, ActionListener {
 		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
 			Point asteroidBounds = new Point(width, 0);
 			int speed = rand.nextInt(3) + 1;
-			Point pose = new Point(rand.nextInt(width), 0);
+			Point.Double pose = new Point.Double(rand.nextInt(width), 0);
 			asteroids.add(new Asteroid(pose, speed));
 			state.lastAsteroidIter = 0;
 		}
@@ -113,8 +140,8 @@ public class Physics implements Runnable, ActionListener {
 			}
 
 			// adjust asteroid position
-			myAsteroid.moveX(myAsteroid.dx);
-			myAsteroid.moveY(myAsteroid.dy);
+			myAsteroid.moveX((int)myAsteroid.dx);
+			myAsteroid.moveY((int)myAsteroid.dy);
 		}
 
 		// remove asteroid from tracked list

@@ -41,7 +41,7 @@ public class GameState {
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
 
-		ship = new Ship(new Point(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
+		ship = new Ship(new Point.Double(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
 	}
 
 	public State getState() {
