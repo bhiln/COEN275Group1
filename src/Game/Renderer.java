@@ -4,16 +4,21 @@ import Asteroids.Asteroid;
 import Ship.Ship;
 import Stars.Star;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel implements ActionListener {
 	private Game game;
 	private GameState state;
-
+	
 	private int delay = 20;
 	protected Timer timer;
 
@@ -45,7 +50,7 @@ public class Renderer extends JPanel implements ActionListener {
 		add(lblHealth, BorderLayout.NORTH);
 
 		// set background to dark gray
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.BLACK);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -68,14 +73,21 @@ public class Renderer extends JPanel implements ActionListener {
 
 		ArrayList<Star> stars = state.getStars();
 		for (Star s : stars) {
+			
 			g2d.setColor(s.getDrawColor());
+			
 			g2d.fill(s.getShape());
 		}
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 		for (Asteroid a : asteroids) {
-			g2d.setColor(a.getDrawColor());
-			g2d.fill(a.getShape());
+			g2d.rotate(a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
+			g2d.drawImage(a.getTexture(), (int)a.getPosition().x, (int)a.getPosition().y, null);
+			//have to undo rotation for x/y translation otherwise velocity vector will be rotated too
+			g2d.rotate(-a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
+			
+
+			
 		}
 
 		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
@@ -84,7 +96,7 @@ public class Renderer extends JPanel implements ActionListener {
 		// updates health label and changes color if low health
 		int shipHealth = ship.getHealth();
 		lblHealth.setText("Health: " + shipHealth);
-		if (shipHealth >= 10) {
+		if (shipHealth >= 20) {
 			lblHealth.setForeground(Color.GREEN);
 		} else if (ship.getHealth() < 10) {
 			lblHealth.setForeground(Color.RED);

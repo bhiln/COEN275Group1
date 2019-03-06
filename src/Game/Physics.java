@@ -119,7 +119,7 @@ public class Physics implements Runnable, ActionListener {
 		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
 			Point asteroidBounds = new Point(width, 0);
 			int speed = rand.nextInt(3) + 1;
-			Point.Double pose = new Point.Double(rand.nextInt(width), 0);
+			Point.Double pose = new Point.Double(rand.nextInt(width/2), 0);
 			asteroids.add(new Asteroid(pose, speed));
 			state.lastAsteroidIter = 0;
 		}
@@ -142,6 +142,8 @@ public class Physics implements Runnable, ActionListener {
 			// adjust asteroid position
 			myAsteroid.moveX((int)myAsteroid.dx);
 			myAsteroid.moveY((int)myAsteroid.dy);
+			myAsteroid.rotate(myAsteroid.dr);
+		
 		}
 
 		// remove asteroid from tracked list
