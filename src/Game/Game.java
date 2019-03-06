@@ -40,7 +40,7 @@ public class Game {
 		state = new GameState(this);
 
 		menu = new Menu(this, state);
-		renderer = new Renderer(this, state);
+		renderer = new Renderer(this, state, input);
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
 
@@ -67,14 +67,22 @@ public class Game {
 	// starts a new game
 	public void startGame() {
 		state.startGame();
-		physics.restartTimer();
-		renderer.restartTimer();
-		cl.show(panel, "Game");
+		resumeGame();
+	}
+	
+	public void pauseGame() {
+		cl.show(panel, "Menu");
+		frame.repaint();
+		physics.stopTimer();
+		renderer.stopTimer();
 	}
 
 	// if game is paused, resume game
 	public void resumeGame() {
-
+		state.resumeGame();
+		physics.restartTimer();
+		renderer.restartTimer();
+		cl.show(panel, "Game");
 	}
 
 	// game has been won, switch to win state
