@@ -4,16 +4,22 @@ import Asteroids.Asteroid;
 import Ship.Ship;
 import Stars.Star;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Renderer extends JPanel implements ActionListener {
 	private Game game;
 	private GameState state;
-
+	
+	private BufferedImage asteroidTexture;
+	private BufferedImage in;
 	private int delay = 20;
 	protected Timer timer;
 
@@ -22,6 +28,17 @@ public class Renderer extends JPanel implements ActionListener {
 	public Renderer(Game game, GameState state) {
 		this.game = game;
 		this.state = state;
+		
+		try {
+		    File pathToFile = new File("assets/asteroid.png");
+		    in = ImageIO.read(pathToFile);
+		} catch (IOException ex) {
+		    ex.printStackTrace();
+		}
+		
+		asteroidTexture = new BufferedImage(in.getWidth(), in.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		
+		
 
 		timer = new Timer(delay, this);
 		restartTimer();
@@ -65,14 +82,26 @@ public class Renderer extends JPanel implements ActionListener {
 
 		ArrayList<Star> stars = state.getStars();
 		for (Star s : stars) {
+			
 			g2d.setColor(s.getDrawColor());
+			
 			g2d.fill(s.getShape());
 		}
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 		for (Asteroid a : asteroids) {
-			g2d.setColor(a.getDrawColor());
-			g2d.fill(a.getShape());
+			//g2d.setColor(a.getDrawColor());
+			//g2d.fill(a.getShape());
+			
+			TexturePaint tp = new TexturePaint(asteroidTexture, new Rectangle(0,0,16,16));
+			g2d.setPaint(tp);
+			//BufferedImage img1 = in.filter(in,null);
+			g2d.drawRenderedImage(in, null);
+			
+			//g2d.setPaint(new Color(0, 0, 0));
+			//g2d = asteroidTexture.createGraphics();
+			//g2d.fillRect(0,0,asteroidTexture.getWidth(), asteroidTexture.getHeight());
+			
 		}
 
 		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
@@ -81,7 +110,7 @@ public class Renderer extends JPanel implements ActionListener {
 		// updates health label and changes color if low health
 		int shipHealth = ship.getHealth();
 		lblHealth.setText("Health: " + shipHealth);
-		if (shipHealth >= 10) {
+		if (shipHealth >= 20) {
 			lblHealth.setForeground(Color.GREEN);
 		} else if (ship.getHealth() < 10) {
 			lblHealth.setForeground(Color.RED);
