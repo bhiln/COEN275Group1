@@ -121,6 +121,7 @@ public class GameState {
 	public void addBullet() {
 		long curTime = System.currentTimeMillis();
 		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
+			ship.laserSound();
 			Point.Double shipPose = (Double) ship.getPosition().clone();
 			shipPose.x += ship.width/2;
 			bullets.add(new Bullet(shipPose, -10, ship.dx));

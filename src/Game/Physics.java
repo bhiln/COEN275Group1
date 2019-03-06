@@ -120,12 +120,6 @@ public class Physics implements Runnable, ActionListener {
 		
 		if (bullets != null) {
 			for (Bullet b : bullets) {
-				// check for boundaries
-				// TODO: dx is set to 0 for now, asteroids fall straight down
-				if (b.getPosition().x < b.width / 2)
-					b.dx = Math.abs(b.dx);
-				if (b.getPosition().x > width - b.width / 2)
-					b.dx = -Math.abs(b.dx);
 	
 				// if asteroid is below bottom of frame, prepare to remove from tracked list
 				if (b.getPosition().y < 0) {

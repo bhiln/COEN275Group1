@@ -13,7 +13,7 @@ public class Bullet extends SpaceObject {
 	}
 
 	private Color drawColor = Color.YELLOW;
-	static public final int RELOAD_TIME_MS = 250;
+	static public final int RELOAD_TIME_MS = 100;
 	
 	public Bullet(Point.Double pose, int speed, double lateralSpeed) {
 		super(pose);
