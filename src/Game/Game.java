@@ -20,6 +20,8 @@ public class Game {
 	private GameState state;
 	private Menu menu;
 	private Renderer renderer;
+	//private Thread physics;
+	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
 	
@@ -29,6 +31,9 @@ public class Game {
 		frame = new JFrame("Avoid the Asteroid!");
 		frame.setSize(1280, 720); // set frame size
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		input = new KeyInput(frame);
+
+
 		cl = new CardLayout();
 		panel = new JPanel(cl);
 
@@ -39,7 +44,7 @@ public class Game {
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
 
-		physics = new Physics(this);
+		physics = new Physics(this, input);
 		physicsThread = new Thread(physics);
 		physicsThread.start();
 
@@ -47,6 +52,8 @@ public class Game {
 		// add Graphics to frame
 		frame.setVisible(true); // display frame
 		frame.setResizable(false);
+		frame.setFocusable(true);
+
 	}
 
 	public GameState getState() {
@@ -91,19 +98,19 @@ public class Game {
 				exitGame();
 			}
 		});
-		
+
 		btnRestart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
 				frame.remove(pnlButtons);
 				startGame();
 			}
 		});
-		
+
 		frame.add(pnlButtons, BorderLayout.SOUTH);
 		frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
-		
+
 		//TODO: set stats on menu
 	}
 
@@ -112,7 +119,7 @@ public class Game {
 		state.exitGame();
 		cl.show(panel, "Menu");
 	}
-	
+
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
 	}
