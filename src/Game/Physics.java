@@ -121,12 +121,12 @@ public class Physics implements Runnable, ActionListener {
 		if (bullets != null) {
 			for (Bullet b : bullets) {
 	
-				// if asteroid is below bottom of frame, prepare to remove from tracked list
+				// if bullet is above top of frame, prepare to remove from tracked list
 				if (b.getPosition().y < 0) {
 					bulletsToRemove.add(b);
 				}
 	
-				// adjust asteroid position
+				// adjust bullet position
 				b.moveX(b.dx);
 				b.moveY(b.dy);
 			}
@@ -203,9 +203,12 @@ public class Physics implements Runnable, ActionListener {
 				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
 				if (asteroidsHit.size() > 0) {
 					bulletsToRemove.add(bullet);
+					//add to dodgecount so levels increment
+					state.dodgeCount+=asteroidsHit.size();
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
 			}
+			
 		}
 		// remove bullets from tracked list
 		for (Bullet removeBullet : bulletsToRemove) {

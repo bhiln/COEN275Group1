@@ -68,9 +68,9 @@ public class Renderer extends JPanel implements ActionListener {
 		lblTimeAlive.setText("Time alive: " + state.getTimeAlive()/1000L);
 
 		Ship ship = state.getShip();
-		g2d.setColor(ship.getDrawColor());
-
-		g2d.fill(ship.getShape());
+		//g2d.setColor(ship.getDrawColor());
+		g2d.drawImage(ship.getTexture(), (int)ship.getPosition().x, (int)ship.getPosition().y, null);
+		//g2d.fill(ship.getShape());
 
 		ArrayList<Star> stars = state.getStars();
 		for (Star s : stars) {

@@ -1,5 +1,6 @@
 package Game;
 
+import java.awt.Image;
 import java.awt.Point;
 
 import java.awt.Polygon;
@@ -18,7 +19,7 @@ public abstract class SpaceObject {
 	
 
 
-
+	protected Image texture;
 	public double dr = 0; //increment amount of rotation
 	public double dx = 0; // increment amount (x coord)
 	public double dy = 0; // increment amount (y coord)
@@ -59,6 +60,10 @@ public abstract class SpaceObject {
 
 	public void setHealth(int newHealth) {
 		health = newHealth;
+	}
+	
+	public Image getTexture() {
+		return texture;
 	}
 
 	public int getHealth() {

@@ -15,7 +15,7 @@ public class Asteroid extends SpaceObject {
 	public double scale = 1;
 	public boolean wall = false;
 	private Random rand = new Random();
-	private Image texture;
+
 	
 	public Color getDrawColor() {
 		return drawColor;
@@ -59,8 +59,5 @@ public class Asteroid extends SpaceObject {
 		width = 15 * 2;
 	}
 	
-	public Image getTexture() {
-		return texture;
-	}
 
 }
