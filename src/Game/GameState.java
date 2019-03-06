@@ -1,10 +1,11 @@
 package Game;
 
 import Asteroids.Asteroid;
+import Projectiles.Bullet;
 import Ship.Ship;
 import Stars.Star;
 import java.awt.Point;
-
+import java.awt.geom.Point2D.Double;
 import java.util.ArrayList;
 
 public class GameState {
@@ -20,12 +21,14 @@ public class GameState {
 
 	private ArrayList<Asteroid> asteroids;
 	private ArrayList<Star> stars;
+	private ArrayList<Bullet> bullets;
 	private Ship ship;
 
 	public int lastAsteroidIter, dodgeCount;
 
 	private long startTime;
 	private long timeAlive = 0L;
+	private long lastBulletTime = 0L;
 
 	public GameState(Game game) {
 		this.game = game;
@@ -40,6 +43,7 @@ public class GameState {
 		dodgeCount = 0;
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
+		bullets = new ArrayList<Bullet>();
 
 		ship = new Ship(new Point.Double(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
 	}
@@ -112,5 +116,22 @@ public class GameState {
 	// return to menu
 	public void exitGame() {
 		gameState = State.EXIT;
+	}
+	
+	public void addBullet() {
+		long curTime = System.currentTimeMillis();
+		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
+			ship.laserSound();
+			Point.Double shipPose = (Double) ship.getPosition().clone();
+			shipPose.x += ship.width/2;
+			bullets.add(new Bullet(shipPose, -10, ship.dx));
+			System.out.println("ADDED BULLET: " + ship.getPosition().x + "," + ship.getPosition().y);
+			System.out.println(bullets.size());
+			lastBulletTime = curTime;
+		}
+	}
+	
+	public ArrayList<Bullet> getBullets() {
+		return bullets;
 	}
 }

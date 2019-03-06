@@ -2,7 +2,18 @@ package Ship;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
+import java.io.File;
+import java.io.IOException;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import Game.SpaceObject;
 
 public class Ship extends SpaceObject {
@@ -10,6 +21,7 @@ public class Ship extends SpaceObject {
 	private Color drawColor = Color.CYAN;
 	private double maxSpeed = 5;
 	private double acceleration = .5;
+	MediaPlayer laserPlayer;
 	public Ship(Point.Double pose, double speed) {
 
 		super(pose);
@@ -24,12 +36,14 @@ public class Ship extends SpaceObject {
 
 		width = 20; // ship widths
 
-
-
-
 		dx = speed;
 
 		setHealth(100);
+		
+		new javafx.embed.swing.JFXPanel();
+	    String uriString = new File("assets/laser.mp3").toURI().toString();
+	    laserPlayer = new MediaPlayer(new Media(uriString));
+	    laserPlayer.setRate(2);
 	}
 	public void applyForce(int forceX, int forceY){
 		dx += acceleration * forceX;
@@ -52,5 +66,10 @@ public class Ship extends SpaceObject {
 
 	public Color getDrawColor() {
 		return drawColor;
+	}
+	
+	public void laserSound() {
+		laserPlayer.seek(Duration.ZERO);
+		laserPlayer.play();
 	}
 }

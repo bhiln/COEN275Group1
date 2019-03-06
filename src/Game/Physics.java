@@ -3,6 +3,7 @@ package Game;
 import Asteroids.Asteroid;
 import Asteroids.AsteroidWall;
 import Game.GameState.State;
+import Projectiles.Bullet;
 import Ship.Ship;
 import Stars.Star;
 
@@ -83,7 +84,7 @@ public class Physics implements Runnable, ActionListener {
 		ship.moveY(ship.dy);
 
 		ArrayList<Star> stars = state.getStars();
-		ArrayList<Star> toRemove = new ArrayList<Star>();
+		ArrayList<Star> starsToRemove = new ArrayList<Star>();
 
 		for (Star s : stars) {
 			// check for boundaries
@@ -95,7 +96,7 @@ public class Physics implements Runnable, ActionListener {
 
 			// if asteroid is below bottom of frame, prepare to remove from tracked list
 			if (s.getPosition().y > height + s.width / 2) {
-				toRemove.add(s);
+				starsToRemove.add(s);
 			}
 
 			// adjust asteroid position
@@ -104,7 +105,7 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		// remove asteroid from tracked list
-		for (Star removeAsteroid : toRemove) {
+		for (Star removeAsteroid : starsToRemove) {
 			stars.remove(removeAsteroid);
 		}
 
@@ -113,11 +114,32 @@ public class Physics implements Runnable, ActionListener {
 			Point.Double pose = new Point.Double(rand.nextInt(game.getSize().width), 0);
 			stars.add(new Star(pose, speed));
 		}
+		
+		ArrayList<Bullet> bullets = state.getBullets();
+		ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>();
+		
+		if (bullets != null) {
+			for (Bullet b : bullets) {
+	
+				// if asteroid is below bottom of frame, prepare to remove from tracked list
+				if (b.getPosition().y < 0) {
+					bulletsToRemove.add(b);
+				}
+	
+				// adjust asteroid position
+				b.moveX(b.dx);
+				b.moveY(b.dy);
+			}
+	
+			// remove bullets from tracked list
+			for (Bullet removeBullet : bulletsToRemove) {
+				bullets.remove(removeBullet);
+			}
+		}
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 
 		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
-			Point asteroidBounds = new Point(width, 0);
 			int speed = rand.nextInt(3) + 1;
 			Point.Double pose = new Point.Double(rand.nextInt(width/2), 0);
 			asteroids.add(new Asteroid(pose, speed));
@@ -175,6 +197,21 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
+		bulletsToRemove.clear();
+		if (bullets != null) {
+			for (Bullet bullet : bullets) {
+				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
+				if (asteroidsHit.size() > 0) {
+					bulletsToRemove.add(bullet);
+				}
+				AsteroidsToRemove.addAll(asteroidsHit);
+			}
+		}
+		// remove bullets from tracked list
+		for (Bullet removeBullet : bulletsToRemove) {
+			bullets.remove(removeBullet);
+		}
+		
 		if (ship.getHealth() <= 0) {
 			
 //            game.setBackground(Color.ORANGE);
@@ -187,17 +224,17 @@ public class Physics implements Runnable, ActionListener {
 		}
 	}
 
-	private ArrayList<Asteroid> detectCollisions(Ship ship, ArrayList<Asteroid> asteroids) {
+	private ArrayList<Asteroid> detectCollisions(SpaceObject object, ArrayList<Asteroid> asteroids) {
 		ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
 		ArrayList<Asteroid> AsteroidsToRemove = new ArrayList<Asteroid>();
 		for (Asteroid a : asteroids) {
 			Area asteroidArea = new Area(a.getShape());
-			Area intersectionArea = new Area(ship.getShape());
+			Area intersectionArea = new Area(object.getShape());
 			intersectionArea.intersect(asteroidArea);
 
 			if (!intersectionArea.isEmpty()) {
 				collisions.add(a);
-				ship.setHealth(ship.getHealth() - 5);
+				object.setHealth(object.getHealth() - 5);
 				AsteroidsToRemove.add(a);
 			}
 		}
