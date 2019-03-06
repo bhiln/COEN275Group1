@@ -58,7 +58,7 @@ public class Asteroid extends SpaceObject {
 		
 		width = 15 * 2;
 		
-		setSound("assets/explosion.mp3", 1);
+		setSound("assets/explosion2.mp3", 2.5);
 	}
 	
 	public Image getTexture() {
