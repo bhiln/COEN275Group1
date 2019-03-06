@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class Renderer extends JPanel implements ActionListener {
 		add(lblHealth, BorderLayout.NORTH);
 
 		// set background to dark gray
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.BLACK);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -77,18 +78,12 @@ public class Renderer extends JPanel implements ActionListener {
 
 		ArrayList<Asteroid> asteroids = state.getAsteroids();
 		for (Asteroid a : asteroids) {
-//			g2d.setColor(a.getDrawColor());
-//			g2d.fill(a.getShape());
+			g2d.rotate(a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
 			g2d.drawImage(a.getTexture(), (int)a.getPosition().x, (int)a.getPosition().y, null);
+			//have to undo rotation for x/y translation otherwise velocity vector will be rotated too
+			g2d.rotate(-a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
 			
-//			TexturePaint tp = new TexturePaint(asteroidTexture, new Rectangle(0,0,16,16));
-//			g2d.setPaint(tp);
-//			//BufferedImage img1 = in.filter(in,null);
-//			g2d.drawRenderedImage(in, null);
-			
-			//g2d.setPaint(new Color(0, 0, 0));
-			//g2d = asteroidTexture.createGraphics();
-			//g2d.fillRect(0,0,asteroidTexture.getWidth(), asteroidTexture.getHeight());
+
 			
 		}
 

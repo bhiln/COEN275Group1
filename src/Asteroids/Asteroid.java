@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -13,6 +14,7 @@ public class Asteroid extends SpaceObject {
 
 	public double scale = 1;
 	public boolean wall = false;
+	private Random rand = new Random();
 	private Image texture;
 	
 	public Color getDrawColor() {
@@ -44,6 +46,16 @@ public class Asteroid extends SpaceObject {
 		setShape(asteroidShape);
 
 		dy = speed;
+		
+		//randomly set rotation direction, rotation speed is relative to dy
+		if (rand.nextInt(2)%2 == 0) {
+			dr = -0.03 * dy;
+		}
+		else {
+			dr = 0.03* dy;
+		}
+		
+		
 		width = 15 * 2;
 	}
 	

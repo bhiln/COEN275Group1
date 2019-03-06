@@ -5,15 +5,21 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
+import java.util.Random;
 
 public abstract class SpaceObject {
 
 	private Point.Double pose; // object location
+	private Double rotation = 0.0; //objects rotation
+	
 	private Path2D.Double shape; // object shape
 	public int width = 0; // object width
+	
+	
 
 
 
+	public double dr = 0; //increment amount of rotation
 	public double dx = 0; // increment amount (x coord)
 	public double dy = 0; // increment amount (y coord)
 
@@ -24,6 +30,14 @@ public abstract class SpaceObject {
 		this.pose = pose;
 	}
 
+	public void setRotation(Double theta) {
+		this.rotation = theta;
+	}
+	
+	public Double getRotation() {
+		return rotation;
+	}
+	
 	public void setShape(Path2D.Double shape) {
 		this.shape = shape;
 		AffineTransform translation = new AffineTransform();
@@ -51,6 +65,10 @@ public abstract class SpaceObject {
 		return health;
 	}
 
+	
+	public void rotate(double angle) {
+		rotation += angle;
+	}
 
 	public void moveX(double pixels) {
 		//System.out.println("pixels" + pixels);
