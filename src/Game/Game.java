@@ -138,7 +138,7 @@ public class Game {
 	
 	public void evaluateWall() {
 		// 10 dodges = 1 level increase
-		if (state.dodgeCount % 20 == 0) {
+		if (state.dodgeCount % 10 == 0) {
 			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
 			if (state.getLevel() == 10) {
 				finishGame();
