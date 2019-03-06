@@ -26,7 +26,6 @@ public class GameState {
 
 	private long startTime;
 	private long timeAlive = 0L;
-	private long lastTimeAlive = 0L;
 
 	public GameState(Game game) {
 		this.game = game;
@@ -37,6 +36,7 @@ public class GameState {
 	private void resetState() {
 		level = 0;
 		lastAsteroidIter = 0;
+		startTime = 0L;
 		dodgeCount = 0;
 		asteroids = new ArrayList<Asteroid>();
 		stars = new ArrayList<Star>();
@@ -88,9 +88,14 @@ public class GameState {
 		startTime = System.currentTimeMillis();
 		gameState = State.GAME;
 	}
+	
+	public void pauseGame() {
+		gameState = State.PAUSED;
+	}
 
 	// if game is paused, resume game
 	public void resumeGame() {
+		startTime = System.currentTimeMillis()-timeAlive;
 		gameState = State.GAME;
 	}
 

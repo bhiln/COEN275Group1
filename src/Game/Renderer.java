@@ -18,10 +18,13 @@ public class Renderer extends JPanel implements ActionListener {
 	protected Timer timer;
 
 	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
+	
+	KeyInput input;
 
-	public Renderer(Game game, GameState state) {
+	public Renderer(Game game, GameState state, KeyInput input) {
 		this.game = game;
 		this.state = state;
+		this.input = input;
 
 		timer = new Timer(delay, this);
 		restartTimer();
@@ -55,8 +58,8 @@ public class Renderer extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 
 		// calculate time alive. Only update label if it's a new second
-		state.setTimeAlive((System.currentTimeMillis() - state.getStartTime()) / 1000L);
-		lblTimeAlive.setText("Time alive: " + state.getTimeAlive());
+		state.setTimeAlive(System.currentTimeMillis() - state.getStartTime());
+		lblTimeAlive.setText("Time alive: " + state.getTimeAlive()/1000L);
 
 		Ship ship = state.getShip();
 		g2d.setColor(ship.getDrawColor());
@@ -87,6 +90,11 @@ public class Renderer extends JPanel implements ActionListener {
 			lblHealth.setForeground(Color.RED);
 		} else if (ship.getHealth() < 20) {
 			lblHealth.setForeground(Color.ORANGE);
+		}
+		
+		if(input.getKey("Escape")){
+			game.pauseGame();
+			game.getState().pauseGame();
 		}
 	}
 
