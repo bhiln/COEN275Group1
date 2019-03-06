@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -40,8 +41,6 @@ public class Ship extends SpaceObject {
 		dx = speed;
 
 		setHealth(100);
-		
-		setSound("assets/laser.mp3", 2);
 	}
 	
 	public void applyForce(int forceX, int forceY){
