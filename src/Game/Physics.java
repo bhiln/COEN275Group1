@@ -44,7 +44,7 @@ public class Physics implements Runnable, ActionListener {
 		int width = game.getSize().width;
 		int height = game.getSize().height;
 
-		Ship ship = state.getShip();
+		Ship ship = this.game.getState().getShip();
 
 		int forceX = 0;
 		int forceY = 0;
