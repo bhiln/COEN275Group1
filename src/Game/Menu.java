@@ -24,6 +24,7 @@ public class Menu extends JPanel implements ActionListener {
 
 	private Game game;
 	private GameState state;
+	
 	private JButton startButton;
 	private JButton stopButton;
 	private JButton creditsButton;
@@ -52,8 +53,8 @@ public class Menu extends JPanel implements ActionListener {
 
 		JPanel body = new JPanel();
 		body.setSize(game.getSize().width*2/3, 240);
-		body.setPreferredSize(new Dimension(game.getSize().width*2/3, 240));
-		body.setMaximumSize(new Dimension(game.getSize().width*2/3, 240));
+		body.setPreferredSize(new Dimension(game.getSize().width*2/3, 150));
+		body.setMaximumSize(new Dimension(game.getSize().width*2/10, 150));
 		body.setLayout(new BoxLayout(body,BoxLayout.LINE_AXIS));
 		body.add(Box.createHorizontalGlue());
 		body.setOpaque(true);
@@ -73,7 +74,7 @@ public class Menu extends JPanel implements ActionListener {
         menuOptionPanel.add(creditsButton);
         menuOptionPanel.add(stopButton);
         menuOptionPanel.add(Box.createVerticalGlue());
-        menuOptionPanel.setSize(new Dimension(game.getSize().width/4,240));
+        menuOptionPanel.setSize(new Dimension(game.getSize().width/4,150));
 		menuOptionPanel.setPreferredSize(new Dimension(game.getSize().width/4,240));
 		menuOptionPanel.setMaximumSize(new Dimension(game.getSize().width/4,240));
 
@@ -138,9 +139,8 @@ public class Menu extends JPanel implements ActionListener {
 		  System.exit(0);
 		} 
 		if (e.getSource() == creditsButton) {
-		  JOptionPane.showMessageDialog(this, "C R E D I T S   "
-              + "\n"
-              + "Eugene\n"
+		  JOptionPane.showMessageDialog(this, "C R E D I T S \n"
+              + "Eugene \n"
               + "Jackson \n"
               + "Brian \n"
               + "Ryan \n"
