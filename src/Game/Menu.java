@@ -1,6 +1,7 @@
 package Game;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -84,20 +85,18 @@ public class Menu extends JPanel implements ActionListener {
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
 
-//        BoxLayout boxLayout = new BoxLayout(menuOptionPanel, BoxLayout.Y_AXIS);
-
 		JLabel easyLabel = new JLabel("B E G I N N E R");
-		easyLabel.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		easyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		easy = new JRadioButton();
-		easy.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		easy.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel mediumLabel= new JLabel("R E G U L A R");
-		mediumLabel.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		mediumLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		medium = new JRadioButton();
-		medium.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		medium.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel hardLabel = new JLabel("P R O");
-		hardLabel.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		hardLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		hard = new JRadioButton();
-		hard.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
+		hard.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		selectDifficultyButtons = new ButtonGroup();
 		selectDifficultyButtons.add(easy);
