@@ -91,7 +91,7 @@ public class Game {
 		state.endGame();
 		JButton btnRestart = new JButton("Restart");
 		JButton btnExitToMenu = new JButton("Exit to menu");
-		JPanel pnlButtons = new JPanel();
+		final JPanel pnlButtons = new JPanel();
 		pnlButtons.setLayout(new FlowLayout());
 		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
 		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
