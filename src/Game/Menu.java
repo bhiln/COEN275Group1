@@ -13,6 +13,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
@@ -29,14 +30,13 @@ public class Menu extends JPanel implements ActionListener {
 	private JRadioButton medium;
 	private JRadioButton hard;
 	private ButtonGroup selectDifficultyButtons;
-  private Image backgroundImg;
+	private Image backGround;
 
 
 	public Menu(Game game, GameState state) {
 		this.game = game;
 		this.state = state;
-		backgroundImg = new ImageIcon("C:\\Users\\klobin\\Pictures\\game2.png").getImage().getScaledInstance(500,600,Image.SCALE_SMOOTH);
-
+		backGround=new ImageIcon("C:\\Users\\klobin\\Pictures\\game2.png").getImage();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBackground(Color.cyan);
 		JPanel titlePanel = new JPanel();
@@ -79,9 +79,12 @@ public class Menu extends JPanel implements ActionListener {
 		menuOptionPanel.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
 		body.add(menuOptionPanel);
 
+
 		JPanel difficultyPanel = new JPanel();
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
+
+//        BoxLayout boxLayout = new BoxLayout(menuOptionPanel, BoxLayout.Y_AXIS);
 
 		JLabel easyLabel = new JLabel("B E G I N N E R");
 		easyLabel.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
@@ -129,14 +132,20 @@ public class Menu extends JPanel implements ActionListener {
 
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
-	    g.drawImage(backgroundImg, 0, 0, this);
+	    g.drawImage(backGround, 0, 0, this);
 	  }
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == stopButton) {
 		  System.exit(0);
 		} 
 		if (e.getSource() == creditsButton) {
-          
+		  JOptionPane.showMessageDialog(this, "C R E D I T S   "
+              + "\n"
+              + "Eugene\n"
+              + "Jackson \n"
+              + "Brian \n"
+              + "Ryan \n"
+              + "Thomas ");
         }
 		
 	  if (e.getSource() == startButton) {
