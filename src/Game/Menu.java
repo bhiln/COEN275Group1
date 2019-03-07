@@ -79,12 +79,9 @@ public class Menu extends JPanel implements ActionListener {
 		menuOptionPanel.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
 		body.add(menuOptionPanel);
 
-
 		JPanel difficultyPanel = new JPanel();
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
-
-//        BoxLayout boxLayout = new BoxLayout(menuOptionPanel, BoxLayout.Y_AXIS);
 
 		JLabel easyLabel = new JLabel("B E G I N N E R");
 		easyLabel.setAlignmentX(difficultyPanel.CENTER_ALIGNMENT);
