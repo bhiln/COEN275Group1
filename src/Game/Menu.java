@@ -37,7 +37,7 @@ public class Menu extends JPanel implements ActionListener {
 	public Menu(Game game, GameState state) {
 		this.game = game;
 		this.state = state;
-		backGround=new ImageIcon("C:\\Users\\klobin\\Pictures\\game2.png").getImage();
+		backGround=new ImageIcon("assets/game2.png").getImage();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBackground(Color.cyan);
 		JPanel titlePanel = new JPanel();
@@ -141,9 +141,9 @@ public class Menu extends JPanel implements ActionListener {
 		  JOptionPane.showMessageDialog(this, "C R E D I T S   "
               + "\n"
               + "Eugene\n"
-              + "Jackson \n"
-              + "Brian \n"
-              + "Ryan \n"
+              + "Jackson\n"
+              + "Brian\n"
+              + "Ryan\n"
               + "Thomas ");
         }
 		
