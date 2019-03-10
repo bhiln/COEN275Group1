@@ -115,7 +115,7 @@ public class GameState {
 
 	// return to menu
 	public void exitGame() {
-		gameState = State.EXIT;
+		gameState = State.MENU;
 	}
 	
 	public void addBullet() {
