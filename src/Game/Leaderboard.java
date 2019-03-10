@@ -28,8 +28,9 @@ public class Leaderboard extends JPanel implements ActionListener {
     private Game game;
     private JButton returnToMenu;
     private URL url;
-    private String urlString = "http://localhost:8081/getleaderboard";
-    private String recordScoreURL = "http://localhost:8081/recordScore?";
+    private String urlBase = "https://blog.jacksonjw.com";//a subdomain jackson no longer uses
+    private String urlString = urlBase + "/getleaderboard";
+    private String recordScoreURL = urlBase + "/recordScore?";
     private boolean goodURL;
     private boolean validLeaderboard;
     private JSONObject leaderboard;
@@ -48,15 +49,20 @@ public class Leaderboard extends JPanel implements ActionListener {
     private JTextField name;
     private JButton submitScore;
 
+    private Image backGround;
+
+
 
     public Leaderboard(Game game) {
         this.game = game;
         validLeaderboard = false;
+        backGround=new ImageIcon("assets/game2.png").getImage();
 
 
 
         JLabel leaderboardTitle = new JLabel("Leaderboard");
         leaderboardTitle.setFont(titleFont);
+        leaderboardTitle.setForeground(Color.red);
         returnToMenu = new JButton("Back to menu");
         this.add(leaderboardTitle);
 
@@ -64,15 +70,21 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         leaderboardBody = new JPanel();
         leaderboardBody.setPreferredSize(new Dimension(game.getSize().width,game.getSize().height/2+75));
+        //leaderboardBody.setBackground(new Color(Color.TRANSLUCENT));
+        leaderboardBody.setOpaque(false);
+
 
         leaderboardTable = new JPanel();
         leaderboardTable.setPreferredSize(new Dimension(game.getSize().width/2+20,game.getSize().height/2+75));
-
+        leaderboardTable.setOpaque(false);
         leaderboardHeader = getRowPanel();
+        leaderboardHeader.setOpaque(false);
         leaderboardHeader.setPreferredSize(new Dimension(game.getSize().width/2,50));
         leaderboardHeader.setMinimumSize(leaderboardHeader.getPreferredSize());
         JLabel nameHeader = new JLabel("Name");
+        nameHeader.setForeground(Color.red);
         JLabel scoreHeader = new JLabel("Score");
+        scoreHeader.setForeground(Color.red);
         nameHeader.setFont(headerFont);
         scoreHeader.setFont(headerFont);
 
@@ -108,7 +120,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         name.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if (name.getText().length() >= 4 ) // limit to 3 characters
+                if (name.getText().length() >= 4 ) // limit to 4 characters
                     e.consume();
             }
         });
@@ -130,6 +142,10 @@ public class Leaderboard extends JPanel implements ActionListener {
         refresh();
 
 
+    }
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(backGround, 0, 0, this);
     }
     private JPanel getRowPanel(){
         JPanel row = new JPanel();
