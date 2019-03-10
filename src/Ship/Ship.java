@@ -34,8 +34,8 @@ public class Ship extends SpaceObject {
 
 		super(pose);
 		// create ship shape
-		xCord = new int[]{10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1, 0, 0, 3, 3, 4, 4, 5, 5, 8, 8, 9, 9, 10, 10, 10, 12, 12, 13, 13, 16, 16, 17, 17, 18, 18, 21, 21, 20, 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 11,11, 10, 10, 11, 11, 11, 10};
-		yCord = new int[]{0, 1, 1, 3, 3, 5, 5, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 17, 17, 16 ,16 ,15, 15, 14, 14, 15, 15, 18, 18, 19, 18, 18, 15, 15, 14, 14, 15, 15, 16, 16, 17, 17, 13, 13, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7, 5, 5, 3, 3, 1, 1,0, 1, 0, 0, 1, 0,0} ; 
+		xCord = new int[]{10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4,  4,  3,  3,  2,  2,  1,  1,  0,  0,  3,  3,  4,  4,  5,  5,  8,  8,  9,  9, 10, 10, 10, 12, 12, 13, 13, 16, 16, 17, 17, 18, 18, 21, 21, 20, 20, 19, 19, 18, 18, 17, 17, 16, 16, 15, 15, 14, 14, 13, 13, 12, 12, 11, 11, 11, 10};
+		yCord = new int[]{ 0,  1, 1, 3, 3, 5, 5, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 17, 17, 16, 16, 15, 15, 14, 14, 15, 15, 18, 18, 19, 18, 18, 15, 15, 14, 14, 15, 15, 16, 16, 17, 17, 13, 13, 12, 12, 11, 11, 10, 10,  9,  9,  8,  8,  7,  7,  5,  5,  3,  3,  1,  1,  1,  0,  0} ; 
 		Path2D.Double shipShape = new Path2D.Double();
 		shipShape.moveTo(10, 0);
 		for (int i = 0; i< xCord.length; i++) {
@@ -60,10 +60,16 @@ public class Ship extends SpaceObject {
 
 		
 		new javafx.embed.swing.JFXPanel();
+<<<<<<< HEAD
 	    //String uriString = new File("assets/laser.mp3").toURI().toString();
 	    //laserPlayer = new MediaPlayer(new Media(uriString));
 	    //laserPlayer.setRate(2);
 
+=======
+	    String uriString = new File("assets/laser.mp3").toURI().toString();
+	    laserPlayer = new MediaPlayer(new Media(uriString));
+	    laserPlayer.setRate(2);
+>>>>>>> 1f1e06fdd05b7d4cb6639a1c6693885f92394c10
 	}
 	
 	public void applyForce(int forceX, int forceY){
@@ -90,8 +96,8 @@ public class Ship extends SpaceObject {
 	}
 	
 	public void laserSound() {
-		//laserPlayer.seek(Duration.ZERO);
-		//laserPlayer.play();
+		laserPlayer.seek(Duration.ZERO);
+		laserPlayer.play();
 	}
 
 }
