@@ -88,12 +88,10 @@ public class Ship extends SpaceObject {
 	public Color getDrawColor() {
 		return drawColor;
 	}
-<<<<<<< HEAD
 	
 	public void laserSound() {
 		//laserPlayer.seek(Duration.ZERO);
 		//laserPlayer.play();
 	}
-=======
->>>>>>> master
+
 }
