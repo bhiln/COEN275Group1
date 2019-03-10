@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Score</th>
+    </tr>
+    <tbody id="scoreTable">
+
+    </tbody>
+</table>
+</body>
+<script>
+
+    let xmlHttp = new XMLHttpRequest();
+	xmlHttp.onreadystatechange = function() {
+		if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
+			let scores = JSON.parse(xmlHttp.responseText).scores;
+			let scoreTable = document.getElementById("scoreTable")
+			for(let s = 0; s< scores.length; s++){
+                let row=document.createElement("tr");
+                let name = document.createElement("td");
+                let score = document.createElement("td");
+                let nameText=document.createTextNode(scores[s].name);
+                let scoreText=document.createTextNode(scores[s].score);
+                name.appendChild(nameText);
+                score.appendChild(scoreText);
+                row.appendChild(name);
+                row.appendChild(score);
+                scoreTable.appendChild(row);
+            }
+
+
+
+        }
+
+    }
+	xmlHttp.open("GET", "getleaderboard", true); // true for asynchronous
+	xmlHttp.send({});
+</script>
+</html>

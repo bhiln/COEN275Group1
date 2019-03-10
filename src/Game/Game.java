@@ -3,8 +3,12 @@ package Game;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JPanel;
+
+import Asteroids.AsteroidWall;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -16,10 +20,13 @@ public class Game {
 	private GameState state;
 	private Menu menu;
 	private Renderer renderer;
+	private Leaderboard leaderboard;
 	//private Thread physics;
 	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
+	
+	private Random rand = new Random();
 
 	public Game() {
 		frame = new JFrame("Avoid the Asteroid!");
@@ -35,12 +42,12 @@ public class Game {
 
 		menu = new Menu(this, state);
 		renderer = new Renderer(this, state, input);
+		leaderboard = new Leaderboard(this);
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
+		panel.add(leaderboard, "Leaderboard");
 
-		//physics = new Thread(new Physics(this, state, input));
-		//physics.start();
-		physics = new Physics(this, state, input);
+		physics = new Physics(this, input);
 		physicsThread = new Thread(physics);
 		physicsThread.start();
 
@@ -89,35 +96,46 @@ public class Game {
 	// game has been lost, switch to lose state
 	public void endGame() {
 		state.endGame();
-		JButton btnRestart = new JButton("Restart");
-		JButton btnExitToMenu = new JButton("Exit to menu");
-		JPanel pnlButtons = new JPanel();
-		pnlButtons.setLayout(new FlowLayout());
-		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
-		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
+//		JButton btnRestart = new JButton("Restart");
+//		JButton btnExitToMenu = new JButton("Exit to menu");
+//		JPanel pnlButtons = new JPanel();
+//		pnlButtons.setLayout(new FlowLayout());
+//		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
+//		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
+//
+//		btnExitToMenu.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent event) {
+//				frame.remove(pnlButtons);
+//				exitGame();
+//			}
+//		});
+//
+//		btnRestart.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent event) {
+//				frame.remove(pnlButtons);
+//				startGame();
+//			}
+//		});
 
-		btnExitToMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				frame.remove(pnlButtons);
-				exitGame();
-			}
-		});
-
-		btnRestart.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				frame.remove(pnlButtons);
-				startGame();
-			}
-		});
-
-		frame.add(pnlButtons, BorderLayout.SOUTH);
-		frame.repaint();
+		//frame.add(pnlButtons, BorderLayout.SOUTH);
+		//frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
+
+		leaderboard.refresh();
+		cl.show(panel, "Leaderboard");
+
 
 		//TODO: set stats on menu
 	}
 
+	public void showLeaderboard(){
+		if(getState().getState() == GameState.State.MENU){
+			leaderboard.refresh();
+			cl.show(panel, "Leaderboard");
+		}
+
+	}
 	// return to menu
 	public void exitGame() {
 		state.exitGame();
@@ -126,5 +144,19 @@ public class Game {
 
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
+	}
+	
+	public void passLevel() {
+		state.setLevel(state.getLevel() + 1);
+	}
+	
+	public void evaluateWall() {
+		// 10 dodges = 1 level increase
+		if (state.dodgeCount % 10 == 0) {
+			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
+			if (state.getLevel() == 10) {
+				finishGame();
+			}
+		}
 	}
 }
