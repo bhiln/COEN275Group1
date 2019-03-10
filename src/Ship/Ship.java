@@ -60,16 +60,11 @@ public class Ship extends SpaceObject {
 
 		
 		new javafx.embed.swing.JFXPanel();
-<<<<<<< HEAD
 	    //String uriString = new File("assets/laser.mp3").toURI().toString();
 	    //laserPlayer = new MediaPlayer(new Media(uriString));
 	    //laserPlayer.setRate(2);
 
-=======
-	    String uriString = new File("assets/laser.mp3").toURI().toString();
-	    laserPlayer = new MediaPlayer(new Media(uriString));
-	    laserPlayer.setRate(2);
->>>>>>> 1f1e06fdd05b7d4cb6639a1c6693885f92394c10
+
 	}
 	
 	public void applyForce(int forceX, int forceY){
