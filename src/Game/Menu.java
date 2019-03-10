@@ -27,6 +27,7 @@ public class Menu extends JPanel implements ActionListener {
 	private JButton startButton;
 	private JButton stopButton;
 	private JButton creditsButton;
+	private JButton leaderboardButton;
 	private JRadioButton easy;
 	private JRadioButton medium;
 	private JRadioButton hard;
@@ -65,12 +66,15 @@ public class Menu extends JPanel implements ActionListener {
 		startButton.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
         creditsButton = new JButton("C R E D I T S");
 		creditsButton.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
+		leaderboardButton = new JButton("L E A D E R B O A R D");
+		leaderboardButton.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
         stopButton = new JButton(" E X I T  ");
         stopButton.setAlignmentX(menuOptionPanel.CENTER_ALIGNMENT);
 
 		menuOptionPanel.add(Box.createVerticalGlue());
         menuOptionPanel.add(startButton);
         menuOptionPanel.add(creditsButton);
+        menuOptionPanel.add(leaderboardButton);
         menuOptionPanel.add(stopButton);
         menuOptionPanel.add(Box.createVerticalGlue());
         menuOptionPanel.setSize(new Dimension(game.getSize().width/4,240));
@@ -127,6 +131,7 @@ public class Menu extends JPanel implements ActionListener {
         stopButton.addActionListener(this);
         startButton.addActionListener(this);
         creditsButton.addActionListener(this);
+        leaderboardButton.addActionListener(this);
 	}
 
 	public void paintComponent(Graphics g) {
