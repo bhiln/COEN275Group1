@@ -17,9 +17,9 @@ public abstract class SpaceObject {
 	public int width = 0; // object width
 	
 	
-
-
 	protected Image texture;
+	private Sound sound;
+
 	public double dr = 0; //increment amount of rotation
 	public double dx = 0; // increment amount (x coord)
 	public double dy = 0; // increment amount (y coord)
@@ -94,5 +94,21 @@ public abstract class SpaceObject {
 		AffineTransform translation = new AffineTransform();
 		translation.translate(0,pixels);
 		shape.transform(translation);
+	}
+	
+	public void setSound(String filename, double rate) {
+		 // initialize a new Thread using Counter as the task
+        sound = new Sound(filename);
+        sound.setRate(rate);
+	}
+	
+	public void playSound() {
+		try {
+			Thread soundThread = new Thread(sound);
+			soundThread.start();
+		}
+		catch(Exception e) {
+			System.out.println("SOUND ERROR");
+		}
 	}
 }

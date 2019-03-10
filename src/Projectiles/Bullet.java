@@ -3,6 +3,7 @@ package Projectiles;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Path2D;
+import java.util.Random;
 
 import Game.SpaceObject;
 
@@ -14,6 +15,9 @@ public class Bullet extends SpaceObject {
 
 	private Color drawColor = Color.YELLOW;
 	static public final int RELOAD_TIME_MS = 100;
+	
+	private Random rand = new Random();
+	private String[] soundFiles = {"pewb.wav","pewe.wav","pewr.wav","pew_word.wav"};
 	
 	public Bullet(Point.Double pose, int speed, double lateralSpeed) {
 		super(pose);
@@ -30,5 +34,7 @@ public class Bullet extends SpaceObject {
 		dy = speed;
 		dx = lateralSpeed;
 		width = 5;
+		
+		setSound("assets/"+soundFiles[rand.nextInt(4)], 1);
 	}
 }

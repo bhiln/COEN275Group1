@@ -17,6 +17,8 @@ public class Asteroid extends SpaceObject {
 	private Random rand = new Random();
 
 	
+	private String[] soundFiles = {"boomb.wav","boome.wav","boomr.wav","boom_word.wav","boom_big.wav"};
+	
 	public Color getDrawColor() {
 		return drawColor;
 	}
@@ -57,6 +59,8 @@ public class Asteroid extends SpaceObject {
 		
 		
 		width = 15 * 2;
+		
+		setSound("assets/"+soundFiles[rand.nextInt(5)], 1);
 	}
 	
 

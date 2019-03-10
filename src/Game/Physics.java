@@ -1,7 +1,6 @@
 package Game;
 
 import Asteroids.Asteroid;
-import Asteroids.AsteroidWall;
 import Game.GameState.State;
 import Projectiles.Bullet;
 import Ship.Ship;
@@ -17,14 +16,12 @@ import java.util.Random;
 
 public class Physics implements Runnable, ActionListener {
 	private Game game;
-	private GameState state;
 	private Timer timer;
 	private final int delay = 20;
 	private Random rand = new Random();
 	private KeyInput input;
-	public Physics(Game game, GameState state, KeyInput input) {
+	public Physics(Game game, KeyInput input) {
 		this.game = game;
-		this.state = state;
 		this.input = input;
 	}
 
@@ -34,7 +31,7 @@ public class Physics implements Runnable, ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (state.getState() == State.GAME) {
+		if (game.getState().getState() == State.GAME) {
 			update();
 		}
 	}
@@ -47,7 +44,7 @@ public class Physics implements Runnable, ActionListener {
 		int width = game.getSize().width;
 		int height = game.getSize().height;
 
-		Ship ship = state.getShip();
+		Ship ship = game.getState().getShip();
 
 		int forceX = 0;
 		int forceY = 0;
@@ -83,7 +80,7 @@ public class Physics implements Runnable, ActionListener {
 		ship.moveX(ship.dx);
 		ship.moveY(ship.dy);
 
-		ArrayList<Star> stars = state.getStars();
+		ArrayList<Star> stars = game.getState().getStars();
 		ArrayList<Star> starsToRemove = new ArrayList<Star>();
 
 		for (Star s : stars) {
@@ -115,7 +112,7 @@ public class Physics implements Runnable, ActionListener {
 			stars.add(new Star(pose, speed));
 		}
 		
-		ArrayList<Bullet> bullets = state.getBullets();
+		ArrayList<Bullet> bullets = game.getState().getBullets();
 		ArrayList<Bullet> bulletsToRemove = new ArrayList<Bullet>();
 		
 		if (bullets != null) {
@@ -137,15 +134,15 @@ public class Physics implements Runnable, ActionListener {
 			}
 		}
 
-		ArrayList<Asteroid> asteroids = state.getAsteroids();
+		ArrayList<Asteroid> asteroids = game.getState().getAsteroids();
 
-		if (rand.nextInt(1000) > 1000 - state.getLevel() * 5 || state.lastAsteroidIter > 200 - state.getLevel() * 5) {
+		if (rand.nextInt(1000) > 1000 - game.getState().getLevel() * 5 || game.getState().lastAsteroidIter > 200 - game.getState().getLevel() * 5) {
 			int speed = rand.nextInt(3) + 1;
 			Point.Double pose = new Point.Double(rand.nextInt(width/2), 0);
 			asteroids.add(new Asteroid(pose, speed));
-			state.lastAsteroidIter = 0;
+			game.getState().lastAsteroidIter = 0;
 		}
-		state.lastAsteroidIter++;
+		game.getState().lastAsteroidIter++;
 
 		ArrayList<Asteroid> AsteroidsToRemove = new ArrayList<Asteroid>();
 		for (Asteroid myAsteroid : asteroids) {
@@ -169,12 +166,12 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		// remove asteroid from tracked list
-		int removed = 0;
 		boolean passedWall = false;
 		for (Asteroid removeAsteroid : AsteroidsToRemove) {
 			asteroids.remove(removeAsteroid);
 			if (!removeAsteroid.wall) {
-				removed++;
+				game.getState().dodgeCount++;
+				game.evaluateWall();
 			}
 			else {
 				passedWall = true;
@@ -182,20 +179,10 @@ public class Physics implements Runnable, ActionListener {
 		}
 		
 		if (passedWall) {
-			state.setLevel(state.getLevel() + 1);
+			game.passLevel();
 		}
 
-		state.dodgeCount += removed;
 		AsteroidsToRemove.clear();
-
-		// 10 dodges = 1 level increase
-		if (removed > 0 && state.dodgeCount > 0 && state.dodgeCount % 10 == 0) {
-			asteroids.addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
-			if (state.getLevel() == 10) {
-				game.finishGame();
-			}
-		}
-
 		AsteroidsToRemove = detectCollisions(ship, asteroids);
 		bulletsToRemove.clear();
 		if (bullets != null) {
@@ -203,8 +190,8 @@ public class Physics implements Runnable, ActionListener {
 				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
 				if (asteroidsHit.size() > 0) {
 					bulletsToRemove.add(bullet);
-					//add to dodgecount so levels increment
-					state.dodgeCount+=asteroidsHit.size();
+
+					game.getState().dodgeCount += asteroidsHit.size();
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
 			}
@@ -222,6 +209,7 @@ public class Physics implements Runnable, ActionListener {
 		} else {
 			// remove asteroid from tracked list
 			for (Asteroid removeAsteroid : AsteroidsToRemove) {
+				removeAsteroid.playSound();
 				asteroids.remove(removeAsteroid);
 			}
 		}
