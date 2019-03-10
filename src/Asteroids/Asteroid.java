@@ -15,7 +15,7 @@ public class Asteroid extends SpaceObject {
 	public double scale = 1;
 	public boolean wall = false;
 	private Random rand = new Random();
-	private Image texture;
+
 	
 	private String[] soundFiles = {"boomb.wav","boome.wav","boomr.wav","boom_word.wav","boom_big.wav"};
 	
@@ -63,8 +63,5 @@ public class Asteroid extends SpaceObject {
 		setSound("assets/"+soundFiles[rand.nextInt(5)], 1);
 	}
 	
-	public Image getTexture() {
-		return texture;
-	}
 
 }
