@@ -15,6 +15,7 @@ public class Menu extends JPanel implements ActionListener {
 	private Game game;
 	private GameState state;
 	private JButton startGameButton;
+	private JButton showLeaderboard;
 
 	public Menu(Game game, GameState state) {
 		this.game = game;
@@ -22,9 +23,12 @@ public class Menu extends JPanel implements ActionListener {
 
 		JLabel dummyMenuItem = new JLabel("Menu");
 		startGameButton = new JButton("start the game");
+		showLeaderboard = new JButton("Show leaderboard");
+		showLeaderboard.addActionListener(this);
+		startGameButton.addActionListener(this);
 		this.add(dummyMenuItem);
 		this.add(startGameButton);
-		startGameButton.addActionListener(this);
+		this.add(showLeaderboard);
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -35,6 +39,9 @@ public class Menu extends JPanel implements ActionListener {
 			else if (game.getState().getState() == State.PAUSED) {
 				game.resumeGame();
 			}
+		}
+		else if(e.getSource() == showLeaderboard){
+			game.showLeaderboard();
 		}
 	}
 }

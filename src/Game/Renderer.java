@@ -26,6 +26,7 @@ public class Renderer extends JPanel implements ActionListener {
 	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
 	
 	KeyInput input;
+	private JButton endGameTest;
 
 	public Renderer(Game game, GameState state, KeyInput input) {
 		this.game = game;
@@ -43,7 +44,9 @@ public class Renderer extends JPanel implements ActionListener {
 		lblTimeAlive.setForeground(Color.WHITE);
 		lblHealth = new JLabel("Health: ");
 		lblHealth.setForeground(Color.GREEN);
-
+		endGameTest = new JButton("End Game ");
+		endGameTest.addActionListener(this);
+		add(endGameTest);
 		// add level and score labels to frame
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
@@ -56,7 +59,15 @@ public class Renderer extends JPanel implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		// will run when the timer fires
-		repaint();
+		if(e.getSource() == endGameTest){
+			game.endGame();
+
+		}
+		else{
+			repaint();
+		}
+
+
 	}
 
 	public void paintComponent(Graphics g) {
