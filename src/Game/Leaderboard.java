@@ -66,7 +66,6 @@ public class Leaderboard extends JPanel implements ActionListener {
         leaderboardBody.setPreferredSize(new Dimension(game.getSize().width,game.getSize().height/2+75));
 
         leaderboardTable = new JPanel();
-        //leaderboardTable.setBorder(LineBorder.createBlackLineBorder());
         leaderboardTable.setPreferredSize(new Dimension(game.getSize().width/2+20,game.getSize().height/2+75));
 
         leaderboardHeader = getRowPanel();
