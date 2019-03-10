@@ -135,30 +135,33 @@ public class Menu extends JPanel implements ActionListener {
 	}
 
 	public void paintComponent(Graphics g) {
-	    super.paintComponent(g);
-	    g.drawImage(backGround, 0, 0, this);
-	  }
+		super.paintComponent(g);
+		g.drawImage(backGround, 0, 0, this);
+	}
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == stopButton) {
-		  System.exit(0);
-		} 
-		if (e.getSource() == creditsButton) {
-		  JOptionPane.showMessageDialog(this, "C R E D I T S   "
-              + "\n"
-              + "Eugene\n"
-              + "Jackson\n"
-              + "Brian\n"
-              + "Ryan\n"
-              + "Thomas ");
-        }
-		
-	  if (e.getSource() == startButton) {
+			System.exit(0);
+		}
+		else if (e.getSource() == creditsButton) {
+			JOptionPane.showMessageDialog(this, "C R E D I T S   "
+			+ "\n"
+			+ "Eugene\n"
+			+ "Jackson\n"
+			+ "Brian\n"
+			+ "Ryan\n"
+			+ "Thomas ");
+		}
+
+		else if (e.getSource() == startButton) {
 			if (game.getState().getState() == State.MENU) {
 				game.startGame();
 			}
 			else if (game.getState().getState() == State.PAUSED) {
 				game.resumeGame();
 			}
+		}
+		else if(e.getSource() == leaderboardButton){
+			game.showLeaderboard();
 		}
 	}
 }
