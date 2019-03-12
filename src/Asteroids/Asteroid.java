@@ -14,10 +14,11 @@ public class Asteroid extends SpaceObject {
 
 	public double scale = 1;
 	public boolean wall = false;
+	public static int width = 30; //asteroid width
 	private Random rand = new Random();
 
 	
-	private String[] soundFiles = {"boomb.wav","boome.wav","boomr.wav","boom_word.wav","boom_big.wav"};
+	private String[] soundFiles = {"boomb","boome","boomr","boomj","boomt","boom_word","boom_big","adios","bubye","bye","seeya"};
 	
 	public Color getDrawColor() {
 		return drawColor;
@@ -29,7 +30,7 @@ public class Asteroid extends SpaceObject {
 		super(pose);
 		
 		try {
-		    File pathToFile = new File("assets/asteroid.png");
+		    File pathToFile = new File("assets/asteroid/asteroid.png");
 		    texture = ImageIO.read(pathToFile);
 		} catch (IOException ex) {
 		    ex.printStackTrace();
@@ -58,9 +59,8 @@ public class Asteroid extends SpaceObject {
 		}
 		
 		
-		width = 15 * 2;
 		
-		setSound("assets/"+soundFiles[rand.nextInt(5)], 1);
+		setSound("assets/asteroid/"+soundFiles[rand.nextInt(11)]+".wav", 1);
 	}
 	
 

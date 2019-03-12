@@ -22,10 +22,12 @@ public abstract class SpaceObject {
 
 	public double dr = 0; //increment amount of rotation
 	public double dx = 0; // increment amount (x coord)
-	public double dy = 0; // increment amount (y coord)
+	public double dy = 0; // increment amount (y cord)
 
 	private int health = 0; // health of object, left here in superclass in case we want to make asteroids
-							// have health for shooting later
+	private int collisionDamage = 0; //health removed everytime the ship is hit
+	private int ammo = 0; // ammo the ship has
+	private int levelIncreaseAmmo = 0; // ammo given per level increase
 
 	public SpaceObject(Point.Double pose) {
 		this.pose = pose;
@@ -69,6 +71,35 @@ public abstract class SpaceObject {
 	public int getHealth() {
 		return health;
 	}
+	
+	public int getAmmo() {
+		return ammo;
+	}
+	
+	public void setAmmo(int newAmmo) {
+		ammo = newAmmo;
+	}
+	
+	public void useAmmo() {
+		ammo -= 1;
+	}
+	
+	public void setCollisionDamage(int damageDone) {
+		collisionDamage = damageDone;
+	}
+	
+	public int getCollisionDamage() {
+		return collisionDamage;
+	}
+	
+	public int getLevelIncreaseAmmo() {
+		return levelIncreaseAmmo;
+	}
+	
+	public void setLevelIncreaseAmmo(int ammoIncrease) {
+		levelIncreaseAmmo = ammoIncrease;
+	}
+
 
 	
 	public void rotate(double angle) {
@@ -99,7 +130,6 @@ public abstract class SpaceObject {
 	public void setSound(String filename, double rate) {
 		 // initialize a new Thread using Counter as the task
         sound = new Sound(filename);
-        sound.setRate(rate);
 	}
 	
 	public void playSound() {

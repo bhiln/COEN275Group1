@@ -17,6 +17,10 @@ import java.util.Random;
 public class Physics implements Runnable, ActionListener {
 	private Game game;
 	private Timer timer;
+	public static int randomDyMax = 3;//int for random generator max
+	public static int randomDyMin = 1; //int for minimum asteroid speed
+	public static int difficultyMult = 5; //multiplier for difficulty; 5 was default before
+	
 	private final int delay = 20;
 	private Random rand = new Random();
 	private KeyInput input;
@@ -136,9 +140,9 @@ public class Physics implements Runnable, ActionListener {
 
 		ArrayList<Asteroid> asteroids = game.getState().getAsteroids();
 
-		if (rand.nextInt(1000) > 1000 - game.getState().getLevel() * 5 || game.getState().lastAsteroidIter > 200 - game.getState().getLevel() * 5) {
-			int speed = rand.nextInt(3) + 1;
-			Point.Double pose = new Point.Double(rand.nextInt(width/2), 0);
+		if (rand.nextInt(1000) > 1000 - game.getState().getLevel() * difficultyMult || game.getState().lastAsteroidIter > 200 - game.getState().getLevel() * difficultyMult) {
+			int speed = rand.nextInt(randomDyMax) + randomDyMin;
+			Point.Double pose = new Point.Double(rand.nextInt(width), -Asteroid.width);//asteroid loads off screen
 			asteroids.add(new Asteroid(pose, speed));
 			game.getState().lastAsteroidIter = 0;
 		}
@@ -195,6 +199,7 @@ public class Physics implements Runnable, ActionListener {
 							game.getState().dodgeCount += asteroidsHit.size();
 						}
 					}
+					game.evaluateWall();
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
 			}
@@ -228,7 +233,7 @@ public class Physics implements Runnable, ActionListener {
 
 			if (!intersectionArea.isEmpty()) {
 				collisions.add(a);
-				object.setHealth(object.getHealth() - 5);
+				object.setHealth(object.getHealth() - object.getCollisionDamage());
 				AsteroidsToRemove.add(a);
 			}
 		}
