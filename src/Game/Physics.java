@@ -194,8 +194,11 @@ public class Physics implements Runnable, ActionListener {
 				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
 				if (asteroidsHit.size() > 0) {
 					bulletsToRemove.add(bullet);
-
-					game.getState().dodgeCount++;
+					for (Asteroid a : asteroidsHit) {
+						if (!a.wall) {
+							game.getState().dodgeCount += asteroidsHit.size();
+						}
+					}
 					game.evaluateWall();
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
