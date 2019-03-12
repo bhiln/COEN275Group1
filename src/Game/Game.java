@@ -66,6 +66,7 @@ public class Game {
 	public Dimension getSize() {
 		return frame.getSize();
 	}
+	
 
 	// starts a new game
 	public void startGame() {
@@ -74,6 +75,7 @@ public class Game {
 	}
 	
 	public void pauseGame() {
+		menu.pause();
 		cl.show(panel, "Menu");
 		frame.repaint();
 		physics.stopTimer();
@@ -82,6 +84,7 @@ public class Game {
 
 	// if game is paused, resume game
 	public void resumeGame() {
+		menu.resume();
 		state.resumeGame();
 		physics.restartTimer();
 		renderer.restartTimer();
@@ -137,6 +140,10 @@ public class Game {
 
 	}
 	// return to menu
+	
+
+	
+	
 	public void exitGame() {
 		state.exitGame();
 		cl.show(panel, "Menu");
@@ -148,6 +155,7 @@ public class Game {
 	
 	public void passLevel() {
 		state.setLevel(state.getLevel() + 1);
+		state.getShip().setAmmo(state.getShip().getAmmo() + state.getShip().getLevelIncreaseAmmo());
 	}
 	
 	public void evaluateWall() {

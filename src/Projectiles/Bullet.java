@@ -14,7 +14,7 @@ public class Bullet extends SpaceObject {
 	}
 
 	private Color drawColor = Color.YELLOW;
-	static public final int RELOAD_TIME_MS = 100;
+	static public int RELOAD_TIME_MS = 200;
 	
 	private Random rand = new Random();
 	private String[] soundFiles = {"pewb.wav","pewe.wav","pewr.wav","pew_word.wav"};

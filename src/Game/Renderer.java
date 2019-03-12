@@ -23,7 +23,7 @@ public class Renderer extends JPanel implements ActionListener {
 	private int delay = 20;
 	protected Timer timer;
 
-	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth;
+	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth, lblAmmo;
 	
 	KeyInput input;
 
@@ -41,14 +41,17 @@ public class Renderer extends JPanel implements ActionListener {
 		lblDodge.setForeground(Color.WHITE);
 		lblTimeAlive = new JLabel("Time alive: " + state.getTimeAlive());
 		lblTimeAlive.setForeground(Color.WHITE);
-		lblHealth = new JLabel("Health: ");
+		lblHealth = new JLabel("Health: " + state.getShip().getHealth());
 		lblHealth.setForeground(Color.GREEN);
+		lblAmmo = new JLabel("Ammo: " + state.getShip().getAmmo());
+		lblAmmo.setForeground(Color.WHITE);
 
 		// add level and score labels to frame
 		add(lblLevel, BorderLayout.NORTH);
 		add(lblDodge, BorderLayout.NORTH);
 		add(lblTimeAlive, BorderLayout.NORTH);
 		add(lblHealth, BorderLayout.NORTH);
+		add(lblAmmo, BorderLayout.NORTH);
 
 		// set background to dark gray
 		setBackground(Color.BLACK);
@@ -108,12 +111,23 @@ public class Renderer extends JPanel implements ActionListener {
 		// updates health label and changes color if low health
 		int shipHealth = ship.getHealth();
 		lblHealth.setText("Health: " + shipHealth);
-		if (shipHealth >= 20) {
+		if (shipHealth > 50) {
 			lblHealth.setForeground(Color.GREEN);
-		} else if (ship.getHealth() < 10) {
+		} else if (shipHealth <= 25) {
 			lblHealth.setForeground(Color.RED);
-		} else if (ship.getHealth() < 20) {
+		} else if (shipHealth <= 50) {
 			lblHealth.setForeground(Color.ORANGE);
+		}
+		
+		lblAmmo.setText("Ammo: " + ship.getAmmo());
+		if(ship.getAmmo() < 1) {
+			lblAmmo.setForeground(Color.RED);
+		}
+		else if(ship.getAmmo() < 10) {
+			lblAmmo.setForeground(Color.ORANGE);
+		}
+		else {
+			lblAmmo.setForeground(Color.WHITE);
 		}
 		
 		if(input.getKey("Escape")){

@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.LineBorder;
+
+import Game.GameState.Difficulty;
 import Game.GameState.State;
 
 public class Menu extends JPanel implements ActionListener {
@@ -33,6 +35,7 @@ public class Menu extends JPanel implements ActionListener {
 	private JRadioButton hard;
 	private ButtonGroup selectDifficultyButtons;
 	private Image backGround;
+	private JPanel difficultyPanel;
 
 
 	public Menu(Game game, GameState state) {
@@ -85,7 +88,7 @@ public class Menu extends JPanel implements ActionListener {
 		body.add(menuOptionPanel);
 
 
-		JPanel difficultyPanel = new JPanel();
+		difficultyPanel = new JPanel();
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
 
@@ -132,6 +135,19 @@ public class Menu extends JPanel implements ActionListener {
         startButton.addActionListener(this);
         creditsButton.addActionListener(this);
         leaderboardButton.addActionListener(this);
+        easy.addActionListener(this);
+        medium.addActionListener(this);
+        hard.addActionListener(this);
+	}
+	
+	public void pause() {
+		difficultyPanel.setVisible(false);
+		startButton.setText("R E S U M E");
+	}
+	
+	public void resume() {
+		startButton.setText("S T A R T");
+		difficultyPanel.setVisible(true);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -162,6 +178,15 @@ public class Menu extends JPanel implements ActionListener {
 		}
 		else if(e.getSource() == leaderboardButton){
 			game.showLeaderboard();
+		}
+		else if(easy.isSelected()) {
+			state.gameDifficulty = Difficulty.EASY;
+		}
+		else if(medium.isSelected()) {
+			state.gameDifficulty = Difficulty.MEDIUM;
+		}
+		else if(hard.isSelected()) {
+			state.gameDifficulty = Difficulty.HARD;
 		}
 	}
 }

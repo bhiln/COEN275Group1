@@ -14,6 +14,7 @@ public class Asteroid extends SpaceObject {
 
 	public double scale = 1;
 	public boolean wall = false;
+	public static int width = 30; //asteroid width
 	private Random rand = new Random();
 
 	
@@ -58,7 +59,6 @@ public class Asteroid extends SpaceObject {
 		}
 		
 		
-		width = 15 * 2;
 		
 		setSound("assets/"+soundFiles[rand.nextInt(5)], 1);
 	}

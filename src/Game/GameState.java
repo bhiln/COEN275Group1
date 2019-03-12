@@ -13,7 +13,13 @@ public class GameState {
 	public enum State {
 		MENU, GAME, PAUSED, DEATH, WIN, EXIT
 	}
-
+	
+	public enum Difficulty {
+		EASY, MEDIUM, HARD
+	}
+	
+	public Difficulty gameDifficulty = Difficulty.EASY;
+	
 	private State gameState;
 	private Game game;
 
@@ -46,6 +52,16 @@ public class GameState {
 		bullets = new ArrayList<Bullet>();
 
 		ship = new Ship(new Point.Double(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
+		
+		if (gameDifficulty == Difficulty.HARD) {
+			proDifficulty();
+		}
+		else if (gameDifficulty == Difficulty.MEDIUM) {
+			regularDifficulty();
+		}
+		else {
+			beginnerDifficulty();
+		}
 	}
 
 	public State getState() {
@@ -118,9 +134,44 @@ public class GameState {
 		gameState = State.MENU;
 	}
 	
+	public void proDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(25);
+		ship.setLevelIncreaseAmmo(10);
+		Bullet.RELOAD_TIME_MS = 500;
+		ship.setAmmo(10);
+		Physics.randomDyMax = 6;
+		Physics.randomDyMin = 2;
+		Physics.difficultyMult = 15;
+	}
+	
+	public void regularDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(10);
+		ship.setLevelIncreaseAmmo(25);
+		Bullet.RELOAD_TIME_MS = 250;
+		ship.setAmmo(25);
+		Physics.randomDyMax = 4;
+		Physics.randomDyMin = 1;
+		Physics.difficultyMult = 10;
+	}
+	
+	public void beginnerDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(5);
+		ship.setLevelIncreaseAmmo(50);
+		Bullet.RELOAD_TIME_MS = 100;
+		ship.setAmmo(100);
+		Physics.randomDyMax = 3;
+		Physics.randomDyMin = 1;
+		Physics.difficultyMult = 5;
+	}
+	
+	
 	public void addBullet() {
 		long curTime = System.currentTimeMillis();
-		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
+		if ((curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) && (ship.getAmmo() > 0)) {
+			ship.useAmmo();
 			Point.Double shipPose = (Double) ship.getPosition().clone();
 			shipPose.x += ship.width/2;
 			Bullet bullet = new Bullet(shipPose, -10, ship.dx);
