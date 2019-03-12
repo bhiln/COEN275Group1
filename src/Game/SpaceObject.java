@@ -130,7 +130,6 @@ public abstract class SpaceObject {
 	public void setSound(String filename, double rate) {
 		 // initialize a new Thread using Counter as the task
         sound = new Sound(filename);
-        sound.setRate(rate);
 	}
 	
 	public void playSound() {
