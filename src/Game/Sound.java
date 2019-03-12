@@ -17,7 +17,6 @@ public class Sound implements Runnable {
 	
 	public void play() {
 		MediaPlayer soundPlayer = new MediaPlayer(new Media(uriString));
-		soundPlayer.seek(Duration.ZERO);
 		soundPlayer.play();
 	}
 
