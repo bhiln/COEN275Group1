@@ -8,19 +8,15 @@ import javafx.util.Duration;
 
 public class Sound implements Runnable {
 
-	private MediaPlayer soundPlayer;
+	private String uriString;
 	
 	public Sound (String filename) {
 		new javafx.embed.swing.JFXPanel();
-	    String uriString = new File(filename).toURI().toString();
-	    soundPlayer = new MediaPlayer(new Media(uriString));
-	}
-	
-	public void setRate(double rate) {
-		soundPlayer.setRate(rate);
+	    uriString = new File(filename).toURI().toString();
 	}
 	
 	public void play() {
+		MediaPlayer soundPlayer = new MediaPlayer(new Media(uriString));
 		soundPlayer.seek(Duration.ZERO);
 		soundPlayer.play();
 	}
