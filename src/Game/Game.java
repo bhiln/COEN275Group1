@@ -21,7 +21,7 @@ public class Game {
 	private Menu menu;
 	private Renderer renderer;
 	private Leaderboard leaderboard;
-	//private Thread physics;
+//	private Thread physics;
 	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
@@ -96,26 +96,26 @@ public class Game {
 	// game has been lost, switch to lose state
 	public void endGame() {
 		state.endGame();
-//		JButton btnRestart = new JButton("Restart");
-//		JButton btnExitToMenu = new JButton("Exit to menu");
-//		JPanel pnlButtons = new JPanel();
-//		pnlButtons.setLayout(new FlowLayout());
-//		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
-//		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
-//
-//		btnExitToMenu.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				exitGame();
-//			}
-//		});
-//
-//		btnRestart.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				startGame();
-//			}
-//		});
+		JButton btnRestart = new JButton("Restart");
+		JButton btnExitToMenu = new JButton("Exit to menu");
+		JPanel pnlButtons = new JPanel();
+		pnlButtons.setLayout(new FlowLayout());
+		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
+		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
+
+		btnExitToMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frame.remove(pnlButtons);
+				exitGame();
+			}
+		});
+
+		btnRestart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				frame.remove(pnlButtons);
+				startGame();
+			}
+		});
 
 		//frame.add(pnlButtons, BorderLayout.SOUTH);
 		//frame.repaint();
@@ -147,7 +147,22 @@ public class Game {
 	}
 	
 	public void passLevel() {
-		state.setLevel(state.getLevel() + 1);
+		int newLevel = state.getLevel() + 1;
+		state.setLevel(newLevel);
+		//toggle new color for background
+		
+		switch(newLevel) {
+			case 1:	setBackground(new Color(0,0,100));
+					break;
+			case 2: setBackground(new Color(0,0,130));
+					break;
+			case 3: setBackground(new Color(0,0,160));
+					break;
+			//case 4: setBackground(new Color())
+		
+		}
+		
+		//setBackground(new Color(0,0,128));
 	}
 	
 	public void evaluateWall() {

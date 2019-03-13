@@ -4,10 +4,13 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import Game.GameState.State;
-import javafx.scene.control.ScrollPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import Game.GameState.State;
+import javafx.scene.control.ScrollPane;
+//import org.json.JSONArray;
+//import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -70,7 +73,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         leaderboardBody = new JPanel();
         leaderboardBody.setPreferredSize(new Dimension(game.getSize().width,game.getSize().height/2+75));
-        //leaderboardBody.setBackground(new Color(Color.TRANSLUCENT));
+        leaderboardBody.setBackground(new Color(Color.TRANSLUCENT));
         leaderboardBody.setOpaque(false);
 
 
@@ -199,6 +202,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         }
     }
+
     private void setup(){
 
         leaderboardTable.removeAll();
@@ -207,7 +211,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         JPanel scores = new JPanel();
         scores.setLayout(new BoxLayout(scores,BoxLayout.Y_AXIS));
 
-//        scores.setMinimumSize(scores.getPreferredSize());
+        scores.setMinimumSize(scores.getPreferredSize());
 
         JSONArray scoresArray = leaderboard.getJSONArray("scores");
 
@@ -234,10 +238,10 @@ public class Leaderboard extends JPanel implements ActionListener {
         JScrollPane scoresScroll = new JScrollPane(scores);
         scoresScroll.setPreferredSize(new Dimension(game.getSize().width/2+20,game.getSize().height/2));
 
-        //scoresScroll.setViewportView(scores);
+        scoresScroll.setViewportView(scores);
 
-        //scoresScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-//        scoresScroll.setBorder(null);
+        scoresScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scoresScroll.setBorder(null);
 
         leaderboardTable.add(scoresScroll);
 
@@ -251,6 +255,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         }
         return sb.toString();
     }
+
     private JSONObject getRequest(URL url) throws Exception{
         if(!goodURL){
             return new JSONObject();
