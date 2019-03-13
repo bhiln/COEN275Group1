@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class Renderer extends JPanel implements ActionListener {
 	private Game game;
-	private GameState state;
 	
 	private int delay = 20;
 	protected Timer timer;
@@ -28,28 +27,27 @@ public class Renderer extends JPanel implements ActionListener {
 	
 	KeyInput input;
 
-	public Renderer(Game game, GameState state, KeyInput input) {
+	public Renderer(Game game, KeyInput input) {
 		this.game = game;
-		this.state = state;
 		this.input = input;
 
 		timer = new Timer(delay, this);
 		restartTimer();
 
 		Font statFont = new Font("SanSerif", Font.BOLD, 16);
-		lblLevel = new JLabel("Level " + state.getLevel());
+		lblLevel = new JLabel("Level " + game.getState().getLevel());
 		lblLevel.setForeground(Color.WHITE);
 		lblLevel.setFont(statFont);
 		lblLevel.setHorizontalAlignment(JLabel.CENTER);
-		lblScore = new JLabel("Score: " + state.getScore());
+		lblScore = new JLabel("Score: " + game.getState().getScore());
 		lblScore.setForeground(Color.WHITE);
 		lblScore.setFont(statFont);
 		lblScore.setHorizontalAlignment(JLabel.CENTER);
-		lblHealth = new JLabel("Health: " + state.getShip().getHealth());
+		lblHealth = new JLabel("Health: " + game.getState().getShip().getHealth());
 		lblHealth.setForeground(Color.GREEN);
 		lblHealth.setFont(statFont);
 		lblHealth.setHorizontalAlignment(JLabel.CENTER);
-		lblAmmo = new JLabel("Ammo: " + state.getShip().getAmmo());
+		lblAmmo = new JLabel("Ammo: " + game.getState().getShip().getAmmo());
 		lblAmmo.setForeground(Color.WHITE);
 		lblAmmo.setFont(statFont);
 		lblAmmo.setHorizontalAlignment(JLabel.CENTER);
@@ -84,16 +82,16 @@ public class Renderer extends JPanel implements ActionListener {
 		Graphics2D g2d = (Graphics2D) g.create();
 
 		// calculate time alive. Only update label if it's a new second
-		state.setTimeAlive(System.currentTimeMillis() - state.getStartTime());
+		game.getState().setTimeAlive(System.currentTimeMillis() - game.getState().getStartTime());
 
-		Ship ship = state.getShip();
+		Ship ship = game.getState().getShip();
 		
 		g2d.drawImage(ship.getTexture(), (int)ship.getPosition().x, (int)ship.getPosition().y, null);
 		//standard methods to draw solid color in shape
 		//g2d.setColor(ship.getDrawColor());
 		//g2d.fill(ship.getShape());
 
-		ArrayList<Star> stars = state.getStars();
+		ArrayList<Star> stars = game.getState().getStars();
 		for (Star s : stars) {
 			
 			g2d.setColor(s.getDrawColor());
@@ -101,7 +99,7 @@ public class Renderer extends JPanel implements ActionListener {
 			g2d.fill(s.getShape());
 		}
 
-		ArrayList<Asteroid> asteroids = state.getAsteroids();
+		ArrayList<Asteroid> asteroids = game.getState().getAsteroids();
 		for (Asteroid a : asteroids) {
 			g2d.rotate(a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
 			g2d.drawImage(a.getTexture(), (int)a.getPosition().x, (int)a.getPosition().y, null);
@@ -109,16 +107,16 @@ public class Renderer extends JPanel implements ActionListener {
 			g2d.rotate(-a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
 		}
 		
-		ArrayList<Bullet> bullets = state.getBullets();
+		ArrayList<Bullet> bullets = game.getState().getBullets();
 		for (Bullet b : bullets) {
 			g2d.setColor(b.getDrawColor());
 			g2d.fill(b.getShape());
 		}
 		
-		state.setScore((long) (state.dodgeCount*(0.9+state.getLevel()/10.)*state.getDifficulty()));
+		game.getState().setScore((long) (game.getState().dodgeCount*(0.9+game.getState().getLevel()/10.)*game.getState().getDifficulty()));
 
-		lblScore.setText("Score " + state.getScore());
-		lblLevel.setText("Level " + state.getLevel());
+		lblScore.setText("Score " + game.getState().getScore());
+		lblLevel.setText("Level " + game.getState().getLevel());
 
 		// updates health label and changes color if low health
 		int shipHealth = ship.getHealth();

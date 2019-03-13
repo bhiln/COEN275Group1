@@ -27,6 +27,8 @@ public class Game {
 	private Thread physicsThread;
 
 	private Random rand = new Random();
+	private Sound sound;
+	Thread soundThread;
 
 	public Game() {
 		frame = new JFrame("Asteroids!");
@@ -40,7 +42,7 @@ public class Game {
 		state = new GameState(this);
 
 		menu = new Menu(this, state);
-		renderer = new Renderer(this, state, input);
+		renderer = new Renderer(this, input);
 		leaderboard = new Leaderboard(this);
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
@@ -55,6 +57,16 @@ public class Game {
 		frame.setVisible(true); // display frame
 		frame.setResizable(false);
 		frame.setFocusable(true);
+		
+		//https://www.dl-sounds.com/royalty-free/power-bots-loop/
+		sound = new Sound("assets/PowerBotsLoop.wav", true);
+		try {
+			soundThread = new Thread(sound);
+			soundThread.start();
+		}
+		catch(Exception e) {
+			System.out.println("SOUND ERROR");
+		}
 
 	}
 
@@ -97,36 +109,12 @@ public class Game {
 	// game has been lost, switch to lose state
 	public void endGame() {
 		state.endGame();
-//		JButton btnRestart = new JButton("Restart");
-//		JButton btnExitToMenu = new JButton("Exit to menu");
-//		JPanel pnlButtons = new JPanel();
-//		pnlButtons.setLayout(new FlowLayout());
-//		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
-//		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
-//
-//		btnExitToMenu.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				exitGame();
-//			}
-//		});
-//
-//		btnRestart.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				startGame();
-//			}
-//		});
 
-		// frame.add(pnlButtons, BorderLayout.SOUTH);
-		// frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
 
 		leaderboard.refresh();
 		cl.show(panel, "Leaderboard");
-
-		// TODO: set stats on menu
 	}
 
 	public void showLeaderboard() {

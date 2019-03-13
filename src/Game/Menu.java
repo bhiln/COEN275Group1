@@ -92,6 +92,8 @@ public class Menu extends JPanel implements ActionListener {
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
 
+		JLabel difficultyTitle = new JLabel("D I F F I C U L T Y");
+		difficultyTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel easyLabel = new JLabel("T R A I N E E");
 		easyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		easy = new JRadioButton();
@@ -113,6 +115,7 @@ public class Menu extends JPanel implements ActionListener {
 
 
 		difficultyPanel.add( Box.createVerticalGlue() );
+		difficultyPanel.add(difficultyTitle);
 		difficultyPanel.add(easyLabel);
 		difficultyPanel.add(easy);
 		difficultyPanel.add(mediumLabel);
