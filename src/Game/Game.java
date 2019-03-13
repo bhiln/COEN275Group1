@@ -138,6 +138,17 @@ public class Game {
 	public void passLevel() {
 		state.setLevel(state.getLevel() + 1);
 		state.getShip().setAmmo(state.getShip().getAmmo() + state.getShip().getLevelIncreaseAmmo());
+		
+		switch(state.getLevel()) {
+	        case 2: setBackground(new Color(0,0,100)); break;
+	        case 3: setBackground(new Color(0,0,130)); break;
+	        case 4: setBackground(new Color(0,0,160)); break;
+	        case 5: setBackground(new Color(0,0,190)); break;
+	        case 6: setBackground(new Color(100,0,160)); break;
+	        case 7: setBackground(new Color(130,0,130)); break;
+	        case 8: setBackground(new Color(160,0,100)); break;
+	        case 9: setBackground(new Color(200,0,0)); break;
+		}
 	}
 
 	public void evaluateWall() {
