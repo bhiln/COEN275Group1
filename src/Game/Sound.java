@@ -29,6 +29,7 @@ public class Sound implements Runnable {
 			@Override
 			public void run() {
 				soundPlayer.stop();
+				soundPlayer.seek(new Duration(0));
 			}
 
 		});
@@ -40,13 +41,9 @@ public class Sound implements Runnable {
 			soundPlayer.play();
 			if (loop) {
 				try {
-					while (soundPlayer.getStatus().equals(Status.PLAYING)) {
-						System.out.println("Still playing");
-						Thread.sleep(100);
-					}
-					soundPlayer.seek(new Duration(0));
-					System.out.println("reseting");
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
