@@ -110,8 +110,8 @@ public class Physics implements Runnable, ActionListener {
 			stars.remove(removeAsteroid);
 		}
 
-		if (rand.nextInt(1000) > 950) {
-			int speed = rand.nextInt(5) + 1;
+		if (rand.nextInt(1000) > 900) {
+			int speed = rand.nextInt(7) + 1;
 			Point.Double pose = new Point.Double(rand.nextInt(game.getSize().width), 0);
 			stars.add(new Star(pose, speed));
 		}
