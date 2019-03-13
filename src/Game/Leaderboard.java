@@ -6,8 +6,8 @@ import javax.swing.border.LineBorder;
 
 import Game.GameState.State;
 import javafx.scene.control.ScrollPane;
-import org.json.JSONArray;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class Leaderboard extends JPanel implements ActionListener {
     private String recordScoreURL = urlBase + "/recordScore?";
     private boolean goodURL;
     private boolean validLeaderboard;
-    private JSONObject leaderboard;
+//    private JSONObject leaderboard;
     private JLabel connecting;
 
     private JPanel leaderboardBody;
@@ -163,9 +163,9 @@ public class Leaderboard extends JPanel implements ActionListener {
         try {
             url = new URL(urlString);
             goodURL = true;
-            leaderboard = getRequest(url);
+//            leaderboard = getRequest(url);
             validLeaderboard = true;
-            this.setup();
+//            this.setup();
             leaderboardTable.remove(connecting);
         } catch (Exception e) {
             System.out.println("bad leaderboard url");
@@ -184,7 +184,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         try {
             url = new URL(scoreRecordString);
 
-            leaderboard = getRequest(url);
+//            leaderboard = getRequest(url);
             validLeaderboard = true;
             this.setup();
             leaderboardTable.remove(connecting);
@@ -199,6 +199,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         }
     }
+/*
     private void setup(){
 
         leaderboardTable.removeAll();
@@ -209,13 +210,13 @@ public class Leaderboard extends JPanel implements ActionListener {
 
 //        scores.setMinimumSize(scores.getPreferredSize());
 
-        JSONArray scoresArray = leaderboard.getJSONArray("scores");
+//        JSONArray scoresArray = leaderboard.getJSONArray("scores");
 
-        for(int s = 0; s< scoresArray.length(); s++){
-            scores.add(Box.createRigidArea(new Dimension(10,10)));
+//        for(int s = 0; s< scoresArray.length(); s++){
+//            scores.add(Box.createRigidArea(new Dimension(10,10)));
 
             JPanel row = getRowPanel();
-            JSONObject score = scoresArray.getJSONObject(s);
+//            JSONObject score = scoresArray.getJSONObject(s);
 
             JLabel nameField = new JLabel(score.getString("name"));
             nameField.setFont(scoreFont);
@@ -228,21 +229,21 @@ public class Leaderboard extends JPanel implements ActionListener {
             scores.add(row);
 
         }
+*/
 
 
-
-        JScrollPane scoresScroll = new JScrollPane(scores);
-        scoresScroll.setPreferredSize(new Dimension(game.getSize().width/2+20,game.getSize().height/2));
+//        JScrollPane scoresScroll = new JScrollPane(scores);
+//        scoresScroll.setPreferredSize(new Dimension(game.getSize().width/2+20,game.getSize().height/2));
 
         //scoresScroll.setViewportView(scores);
 
         //scoresScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 //        scoresScroll.setBorder(null);
 
-        leaderboardTable.add(scoresScroll);
+//        leaderboardTable.add(scoresScroll);
 
 
-    }
+//    }
     private static String readJSON(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -251,6 +252,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         }
         return sb.toString();
     }
+/*
     private JSONObject getRequest(URL url) throws Exception{
         if(!goodURL){
             return new JSONObject();
@@ -275,7 +277,7 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         return json;
     }
-
+*/
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMenu) {
 

@@ -147,7 +147,22 @@ public class Game {
 	}
 	
 	public void passLevel() {
-		state.setLevel(state.getLevel() + 1);
+		int newLevel = state.getLevel() + 1;
+		state.setLevel(newLevel);
+		//toggle new color for background
+		
+		switch(newLevel) {
+			case 1:	setBackground(new Color(0,0,100));
+					break;
+			case 2: setBackground(new Color(0,0,130));
+					break;
+			case 3: setBackground(new Color(0,0,160));
+					break;
+			case 4: setBackground(new Color())
+		
+		}
+		
+		//setBackground(new Color(0,0,128));
 	}
 	
 	public void evaluateWall() {
