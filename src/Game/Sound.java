@@ -24,14 +24,28 @@ public class Sound implements Runnable {
 	
 	public void play() {
 		MediaPlayer soundPlayer = new MediaPlayer(new Media(uriString));
+		soundPlayer.setOnEndOfMedia(new Runnable() {
+
+			@Override
+			public void run() {
+				soundPlayer.stop();
+			}
+
+		});
+
 		do {
 			if (loop) {
 				soundPlayer.setVolume(0.1);
 			}
 			soundPlayer.play();
-			if (loop) {			
+			if (loop) {
 				try {
-					Thread.sleep(45000);
+					while (soundPlayer.getStatus().equals(Status.PLAYING)) {
+						System.out.println("Still playing");
+						Thread.sleep(100);
+					}
+					soundPlayer.seek(new Duration(0));
+					System.out.println("reseting");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
