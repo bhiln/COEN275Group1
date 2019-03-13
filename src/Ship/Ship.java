@@ -1,32 +1,39 @@
 package Ship;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
-
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-import Game.Sound;
 import Game.SpaceObject;
 
+/**
+ * The Class Ship.
+ */
 public class Ship extends SpaceObject {
 
+	/** The draw color. */
 	private Color drawColor = Color.CYAN;
+	
+	/** The max speed. */
 	private double maxSpeed = 5;
+	
+	/** The acceleration. */
 	private double acceleration = .5;
+	
+	/** The x cord. */
 	int[] xCord;
+	
+	/** The y cord. */
 	int[] yCord;
 
+	/**
+	 * Instantiates a new ship.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 */
 	public Ship(Point.Double pose, double speed) {
 		
 
@@ -66,6 +73,12 @@ public class Ship extends SpaceObject {
 
 	}
 	
+	/**
+	 * Apply force.
+	 *
+	 * @param forceX the force X
+	 * @param forceY the force Y
+	 */
 	public void applyForce(int forceX, int forceY){
 		dx += acceleration * forceX;
 		dx *= .99;//slow down over time
@@ -80,11 +93,23 @@ public class Ship extends SpaceObject {
 
 	}
 
+	/**
+	 * Instantiates a new ship.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 * @param initialHealth the initial health
+	 */
 	public Ship(Point.Double pose, double speed, int initialHealth) {
 		this(pose, speed);
 		setHealth(initialHealth);
 	}
 
+	/**
+	 * Gets the draw color.
+	 *
+	 * @return the draw color
+	 */
 	public Color getDrawColor() {
 		return drawColor;
 	}

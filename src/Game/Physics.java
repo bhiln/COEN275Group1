@@ -14,36 +14,73 @@ import java.awt.geom.Area;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * The Class Physics.
+ */
 public class Physics implements Runnable, ActionListener {
+	
+	/** The game. */
 	private Game game;
+	
+	/** The timer. */
 	private Timer timer;
+	
+	/** The random dy max. */
 	public static int randomDyMax = 3;//int for random generator max
+	
+	/** The random dy min. */
 	public static int randomDyMin = 1; //int for minimum asteroid speed
+	
+	/** The difficulty mult. */
 	public static int difficultyMult = 5; //multiplier for difficulty; 5 was default before
 	
+	/** The delay. */
 	private final int delay = 20;
+	
+	/** The rand. */
 	private Random rand = new Random();
+	
+	/** The input. */
 	private KeyInput input;
+	
+	/**
+	 * Instantiates a new physics.
+	 *
+	 * @param game the game
+	 * @param input the input
+	 */
 	public Physics(Game game, KeyInput input) {
 		this.game = game;
 		this.input = input;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run() {
 		timer = new Timer(delay, this);
 		timer.start(); // start the timer
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (game.getState().getState() == State.GAME) {
 			update();
 		}
 	}
 
+	/**
+	 * Check boundaries.
+	 */
 	private void checkBoundaries() {
 
 	}
 
+	/**
+	 * Update.
+	 */
 	private void update() {
 		int width = game.getSize().width;
 		int height = game.getSize().height;
@@ -222,6 +259,13 @@ public class Physics implements Runnable, ActionListener {
 		}
 	}
 
+	/**
+	 * Detect collisions.
+	 *
+	 * @param object the object
+	 * @param asteroids the asteroids
+	 * @return the array list
+	 */
 	private ArrayList<Asteroid> detectCollisions(SpaceObject object, ArrayList<Asteroid> asteroids) {
 		ArrayList<Asteroid> collisions = new ArrayList<Asteroid>();
 		ArrayList<Asteroid> AsteroidsToRemove = new ArrayList<Asteroid>();
@@ -240,10 +284,16 @@ public class Physics implements Runnable, ActionListener {
 		return AsteroidsToRemove;
 	}
 
+	/**
+	 * Restart timer.
+	 */
 	public void restartTimer() {
 		timer.restart();
 	}
 
+	/**
+	 * Stop timer.
+	 */
 	public void stopTimer() {
 		timer.stop();
 	}

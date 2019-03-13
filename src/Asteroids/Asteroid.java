@@ -10,22 +10,46 @@ import javax.imageio.ImageIO;
 
 import Game.SpaceObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Asteroid.
+ */
 public class Asteroid extends SpaceObject {
 
+	/** The scale. */
 	public double scale = 1;
+	
+	/** The wall. */
 	public boolean wall = false;
+	
+	/** The width. */
 	public static int width = 30; //asteroid width
+	
+	/** The rand. */
 	private Random rand = new Random();
 
 	
+	/** The sound files. */
 	private String[] soundFiles = {"boomb","boome","boomr","boomj","boomt","boom_word","boom_big","adios","bubye","bye","seeya"};
 	
+	/**
+	 * Gets the draw color.
+	 *
+	 * @return the draw color
+	 */
 	public Color getDrawColor() {
 		return drawColor;
 	}
 
+	/** The draw color. */
 	private Color drawColor = Color.RED;
 
+	/**
+	 * Instantiates a new asteroid.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 */
 	public Asteroid(Point.Double pose, int speed) {
 		super(pose);
 		
