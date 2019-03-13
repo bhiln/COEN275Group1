@@ -35,6 +35,7 @@ public class Leaderboard extends JPanel implements ActionListener {
     private boolean validLeaderboard;
     private JSONObject leaderboard;
     private JLabel connecting;
+    private JLabel lblScore;
 
     private JPanel leaderboardBody;
     private JPanel leaderboardTable;
@@ -112,8 +113,12 @@ public class Leaderboard extends JPanel implements ActionListener {
         leaderboardForm.setVisible(game.getState().getState() == State.DEATH);
 
         leaderboardForm.setLayout(new BoxLayout(leaderboardForm,BoxLayout.LINE_AXIS));
-
+        
         leaderboardForm.add(Box.createHorizontalGlue());
+        lblScore = new JLabel("Score: " + game.getState().getScore() + "\t\t\t");
+        Font f = lblScore.getFont();
+        lblScore.setFont(f.deriveFont(f.getStyle() | Font.BOLD));
+        leaderboardForm.add(lblScore);
         leaderboardForm.add(new JLabel("Name: "));
         name = new JTextField(3);
         name.setMaximumSize(name.getPreferredSize());
@@ -167,6 +172,7 @@ public class Leaderboard extends JPanel implements ActionListener {
             validLeaderboard = true;
             this.setup();
             leaderboardTable.remove(connecting);
+            lblScore.setText("Score: " + game.getState().getScore() + "\t\t\t");
         } catch (Exception e) {
             System.out.println("bad leaderboard url");
             goodURL = false;
@@ -177,9 +183,10 @@ public class Leaderboard extends JPanel implements ActionListener {
             leaderboardTable.add(unable);
 
         }
+        leaderboardForm.updateUI();
     }
     private void recordScore(){
-        String scoreRecordString = recordScoreURL + "name=" + name.getText() +"&score=" + game.getState().getTimeAlive();
+        String scoreRecordString = recordScoreURL + "name=" + name.getText() +"&score=" + game.getState().getScore();
 
         try {
             url = new URL(scoreRecordString);
