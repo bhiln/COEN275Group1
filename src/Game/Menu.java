@@ -22,22 +22,54 @@ import javax.swing.border.LineBorder;
 import Game.GameState.Difficulty;
 import Game.GameState.State;
 
+/**
+ * The Class Menu.
+ */
 public class Menu extends JPanel implements ActionListener {
 
+	/** The game. */
 	private Game game;
+	
+	/** The state. */
 	private GameState state;
+	
+	/** The start button. */
 	private JButton startButton;
+	
+	/** The stop button. */
 	private JButton stopButton;
+	
+	/** The credits button. */
 	private JButton creditsButton;
+	
+	/** The leaderboard button. */
 	private JButton leaderboardButton;
+	
+	/** The easy. */
 	private JRadioButton easy;
+	
+	/** The medium. */
 	private JRadioButton medium;
+	
+	/** The hard. */
 	private JRadioButton hard;
+	
+	/** The select difficulty buttons. */
 	private ButtonGroup selectDifficultyButtons;
+	
+	/** The back ground. */
 	private Image backGround;
+	
+	/** The difficulty panel. */
 	private JPanel difficultyPanel;
 
 
+	/**
+	 * Instantiates a new menu.
+	 *
+	 * @param game the game
+	 * @param state the state
+	 */
 	public Menu(Game game, GameState state) {
 		this.game = game;
 		this.state = state;
@@ -143,20 +175,33 @@ public class Menu extends JPanel implements ActionListener {
         hard.addActionListener(this);
 	}
 	
+	/**
+	 * Pause.
+	 */
 	public void pause() {
 		difficultyPanel.setVisible(false);
 		startButton.setText("R E S U M E");
 	}
 	
+	/**
+	 * Resume.
+	 */
 	public void resume() {
 		startButton.setText("S T A R T");
 		difficultyPanel.setVisible(true);
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(backGround, 0, 0, this);
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == stopButton) {
 			System.exit(0);

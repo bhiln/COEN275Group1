@@ -16,17 +16,35 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The Class Renderer.
+ */
 public class Renderer extends JPanel implements ActionListener {
+	
+	/** The game. */
 	private Game game;
 	
+	/** The delay. */
 	private int delay = 20;
+	
+	/** The timer. */
 	protected Timer timer;
 
+	/** The lbl ammo. */
 	JLabel lblLevel, lblScore, lblHealth, lblAmmo;
+	
+	/** The pnl stats. */
 	JPanel pnlStats;
 	
+	/** The input. */
 	KeyInput input;
 
+	/**
+	 * Instantiates a new renderer.
+	 *
+	 * @param game the game
+	 * @param input the input
+	 */
 	public Renderer(Game game, KeyInput input) {
 		this.game = game;
 		this.input = input;
@@ -69,6 +87,9 @@ public class Renderer extends JPanel implements ActionListener {
 		setBackground(Color.BLACK);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// will run when the timer fires
         repaint();
@@ -77,6 +98,9 @@ public class Renderer extends JPanel implements ActionListener {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g); // call superclass's paintComponent
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -149,10 +173,16 @@ public class Renderer extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Stop timer.
+	 */
 	public void stopTimer() {
 		timer.stop();
 	}
 
+	/**
+	 * Restart timer.
+	 */
 	public void restartTimer() {
 		timer.restart();
 	}

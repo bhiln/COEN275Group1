@@ -1,15 +1,10 @@
 package Game;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
-
-import Game.GameState.State;
-import javafx.scene.control.ScrollPane;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -19,41 +14,97 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.net.ssl.HttpsURLConnection;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import Game.GameState.State;
 
+/**
+ * The Class Leaderboard.
+ */
 public class Leaderboard extends JPanel implements ActionListener {
 
+    /** The game. */
     private Game game;
+    
+    /** The return to menu. */
     private JButton returnToMenu;
+    
+    /** The url. */
     private URL url;
+    
+    /** The url base. */
     private String urlBase = "https://blog.jacksonjw.com";//a subdomain jackson no longer uses
+    
+    /** The url string. */
     private String urlString = urlBase + "/getleaderboard";
+    
+    /** The record score URL. */
     private String recordScoreURL = urlBase + "/recordScore?";
+    
+    /** The good URL. */
     private boolean goodURL;
+    
+    /** The valid leaderboard. */
     private boolean validLeaderboard;
+    
+    /** The leaderboard. */
     private JSONObject leaderboard;
+    
+    /** The connecting. */
     private JLabel connecting;
+    
+    /** The lbl score. */
     private JLabel lblScore;
 
+    /** The leaderboard body. */
     private JPanel leaderboardBody;
+    
+    /** The leaderboard table. */
     private JPanel leaderboardTable;
+    
+    /** The leaderboard form. */
     private JPanel leaderboardForm;
+    
+    /** The leaderboard header. */
     private JPanel leaderboardHeader;
 
+    /** The title font. */
     private static Font titleFont = new Font("Helvetica", Font.BOLD, 35);
+    
+    /** The header font. */
     private static Font headerFont = new Font("Helvetica", Font.BOLD, 18);
+    
+    /** The score font. */
     private static Font scoreFont = new Font("Helvetica", Font.PLAIN, 16);
 
 
+    /** The name. */
     private JTextField name;
+    
+    /** The submit score. */
     private JButton submitScore;
 
+    /** The back ground. */
     private Image backGround;
 
 
 
+    /**
+     * Instantiates a new leaderboard.
+     *
+     * @param game the game
+     */
     public Leaderboard(Game game) {
         this.game = game;
         validLeaderboard = false;
@@ -148,10 +199,20 @@ public class Leaderboard extends JPanel implements ActionListener {
 
 
     }
+    
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(backGround, 0, 0, this);
     }
+    
+    /**
+     * Gets the row panel.
+     *
+     * @return the row panel
+     */
     private JPanel getRowPanel(){
         JPanel row = new JPanel();
         row.setFont(scoreFont);
@@ -162,6 +223,9 @@ public class Leaderboard extends JPanel implements ActionListener {
         return row;
     }
 
+    /**
+     * Refresh.
+     */
     public void refresh(){
         leaderboardForm.setVisible(game.getState().getState() == State.DEATH);
 
@@ -185,6 +249,10 @@ public class Leaderboard extends JPanel implements ActionListener {
         }
         leaderboardForm.updateUI();
     }
+    
+    /**
+     * Record score.
+     */
     private void recordScore(){
         String scoreRecordString = recordScoreURL + "name=" + name.getText() +"&score=" + game.getState().getScore();
 
@@ -206,6 +274,10 @@ public class Leaderboard extends JPanel implements ActionListener {
 
         }
     }
+    
+    /**
+     * Setup.
+     */
     private void setup(){
 
         leaderboardTable.removeAll();
@@ -250,6 +322,14 @@ public class Leaderboard extends JPanel implements ActionListener {
 
 
     }
+    
+    /**
+     * Read JSON.
+     *
+     * @param rd the rd
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static String readJSON(Reader rd) throws IOException {
         StringBuilder sb = new StringBuilder();
         int cp;
@@ -258,6 +338,14 @@ public class Leaderboard extends JPanel implements ActionListener {
         }
         return sb.toString();
     }
+    
+    /**
+     * Gets the request.
+     *
+     * @param url the url
+     * @return the request
+     * @throws Exception the exception
+     */
     private JSONObject getRequest(URL url) throws Exception{
         if(!goodURL){
             return new JSONObject();
@@ -283,6 +371,9 @@ public class Leaderboard extends JPanel implements ActionListener {
         return json;
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnToMenu) {
 
