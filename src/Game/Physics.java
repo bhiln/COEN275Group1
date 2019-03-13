@@ -199,7 +199,6 @@ public class Physics implements Runnable, ActionListener {
 							game.getState().dodgeCount += asteroidsHit.size();
 						}
 					}
-					game.evaluateWall();
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
 			}

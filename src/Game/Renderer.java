@@ -23,7 +23,8 @@ public class Renderer extends JPanel implements ActionListener {
 	private int delay = 20;
 	protected Timer timer;
 
-	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth, lblAmmo;
+	JLabel lblLevel, lblScore, lblHealth, lblAmmo;
+	JPanel pnlStats;
 	
 	KeyInput input;
 
@@ -35,23 +36,36 @@ public class Renderer extends JPanel implements ActionListener {
 		timer = new Timer(delay, this);
 		restartTimer();
 
+		Font statFont = new Font("SanSerif", Font.BOLD, 16);
 		lblLevel = new JLabel("Level " + state.getLevel());
 		lblLevel.setForeground(Color.WHITE);
-		lblDodge = new JLabel("Dodged " + state.dodgeCount + " Asteroids!");
-		lblDodge.setForeground(Color.WHITE);
-		lblTimeAlive = new JLabel("Time alive: " + state.getTimeAlive());
-		lblTimeAlive.setForeground(Color.WHITE);
+		lblLevel.setFont(statFont);
+		lblLevel.setHorizontalAlignment(JLabel.CENTER);
+		lblScore = new JLabel("Score: " + state.getScore());
+		lblScore.setForeground(Color.WHITE);
+		lblScore.setFont(statFont);
+		lblScore.setHorizontalAlignment(JLabel.CENTER);
 		lblHealth = new JLabel("Health: " + state.getShip().getHealth());
 		lblHealth.setForeground(Color.GREEN);
+		lblHealth.setFont(statFont);
+		lblHealth.setHorizontalAlignment(JLabel.CENTER);
 		lblAmmo = new JLabel("Ammo: " + state.getShip().getAmmo());
 		lblAmmo.setForeground(Color.WHITE);
-
+		lblAmmo.setFont(statFont);
+		lblAmmo.setHorizontalAlignment(JLabel.CENTER);
+		
+		pnlStats = new JPanel();
+		pnlStats.setLayout(new GridLayout(1,4));
+		pnlStats.setPreferredSize(new Dimension(this.game.getSize().width,20));
+		pnlStats.setOpaque(false);
+		
 		// add level and score labels to frame
-		add(lblLevel, BorderLayout.NORTH);
-		add(lblDodge, BorderLayout.NORTH);
-		add(lblTimeAlive, BorderLayout.NORTH);
-		add(lblHealth, BorderLayout.NORTH);
-		add(lblAmmo, BorderLayout.NORTH);
+		pnlStats.add(lblLevel, BorderLayout.CENTER);//, BorderLayout.NORTH);
+		pnlStats.add(lblScore, BorderLayout.CENTER);//, BorderLayout.NORTH);
+		pnlStats.add(lblHealth, BorderLayout.CENTER);//, BorderLayout.NORTH);
+		pnlStats.add(lblAmmo, BorderLayout.CENTER);//, BorderLayout.NORTH);
+		
+		add(pnlStats, BorderLayout.NORTH);
 
 		// set background to dark gray
 		setBackground(Color.BLACK);
@@ -71,7 +85,6 @@ public class Renderer extends JPanel implements ActionListener {
 
 		// calculate time alive. Only update label if it's a new second
 		state.setTimeAlive(System.currentTimeMillis() - state.getStartTime());
-		lblTimeAlive.setText("Time alive: " + state.getTimeAlive()/1000L);
 
 		Ship ship = state.getShip();
 		
@@ -94,9 +107,6 @@ public class Renderer extends JPanel implements ActionListener {
 			g2d.drawImage(a.getTexture(), (int)a.getPosition().x, (int)a.getPosition().y, null);
 			//have to undo rotation for x/y translation otherwise velocity vector will be rotated too
 			g2d.rotate(-a.getRotation(),((int)a.getPosition().x + a.width/2), (int)a.getPosition().y + a.width/2);
-			
-
-			
 		}
 		
 		ArrayList<Bullet> bullets = state.getBullets();
@@ -104,8 +114,10 @@ public class Renderer extends JPanel implements ActionListener {
 			g2d.setColor(b.getDrawColor());
 			g2d.fill(b.getShape());
 		}
+		
+		state.setScore((long) (state.dodgeCount*(0.9+state.getLevel()/10.)*state.getDifficulty()));
 
-		lblDodge.setText("Dodged " + state.dodgeCount + " Asteroids!");
+		lblScore.setText("Score " + state.getScore());
 		lblLevel.setText("Level " + state.getLevel());
 
 		// updates health label and changes color if low health

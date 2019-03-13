@@ -179,7 +179,7 @@ public class Leaderboard extends JPanel implements ActionListener {
         }
     }
     private void recordScore(){
-        String scoreRecordString = recordScoreURL + "name=" + name.getText() +"&score=" + game.getState().getTimeAlive();
+        String scoreRecordString = recordScoreURL + "name=" + name.getText() +"&score=" + game.getState().getScore();
 
         try {
             url = new URL(scoreRecordString);

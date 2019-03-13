@@ -21,19 +21,18 @@ public class Game {
 	private Menu menu;
 	private Renderer renderer;
 	private Leaderboard leaderboard;
-	//private Thread physics;
+	// private Thread physics;
 	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
-	
+
 	private Random rand = new Random();
 
 	public Game() {
-		frame = new JFrame("Avoid the Asteroid!");
+		frame = new JFrame("Asteroids!");
 		frame.setSize(1280, 720); // set frame size
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		input = new KeyInput(frame);
-
 
 		cl = new CardLayout();
 		panel = new JPanel(cl);
@@ -66,14 +65,13 @@ public class Game {
 	public Dimension getSize() {
 		return frame.getSize();
 	}
-	
 
 	// starts a new game
 	public void startGame() {
 		state.startGame();
 		resumeGame();
 	}
-	
+
 	public void pauseGame() {
 		menu.pause();
 		cl.show(panel, "Menu");
@@ -120,30 +118,26 @@ public class Game {
 //			}
 //		});
 
-		//frame.add(pnlButtons, BorderLayout.SOUTH);
-		//frame.repaint();
+		// frame.add(pnlButtons, BorderLayout.SOUTH);
+		// frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
 
 		leaderboard.refresh();
 		cl.show(panel, "Leaderboard");
 
-
-		//TODO: set stats on menu
+		// TODO: set stats on menu
 	}
 
-	public void showLeaderboard(){
-		if(getState().getState() == GameState.State.MENU){
+	public void showLeaderboard() {
+		if (getState().getState() == GameState.State.MENU) {
 			leaderboard.refresh();
 			cl.show(panel, "Leaderboard");
 		}
 
 	}
 	// return to menu
-	
 
-	
-	
 	public void exitGame() {
 		state.exitGame();
 		cl.show(panel, "Menu");
@@ -152,16 +146,16 @@ public class Game {
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
 	}
-	
+
 	public void passLevel() {
 		state.setLevel(state.getLevel() + 1);
 		state.getShip().setAmmo(state.getShip().getAmmo() + state.getShip().getLevelIncreaseAmmo());
 	}
-	
+
 	public void evaluateWall() {
 		// 10 dodges = 1 level increase
 		if (state.dodgeCount % 10 == 0) {
-			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
+			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40 - state.getLevel()), state.getLevel()));
 			if (state.getLevel() == 10) {
 				finishGame();
 			}

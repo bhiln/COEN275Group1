@@ -92,15 +92,15 @@ public class Menu extends JPanel implements ActionListener {
 		difficultyPanel.setOpaque(true);
 		difficultyPanel.setLayout(new BoxLayout(difficultyPanel, BoxLayout.PAGE_AXIS));
 
-		JLabel easyLabel = new JLabel("B E G I N N E R");
+		JLabel easyLabel = new JLabel("T R A I N E E");
 		easyLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		easy = new JRadioButton();
 		easy.setAlignmentX(Component.CENTER_ALIGNMENT);
-		JLabel mediumLabel= new JLabel("R E G U L A R");
+		JLabel mediumLabel= new JLabel("A I R M A N");
 		mediumLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		medium = new JRadioButton();
 		medium.setAlignmentX(Component.CENTER_ALIGNMENT);
-		JLabel hardLabel = new JLabel("P R O");
+		JLabel hardLabel = new JLabel("A C E");
 		hardLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		hard = new JRadioButton();
 		hard.setAlignmentX(Component.CENTER_ALIGNMENT);
