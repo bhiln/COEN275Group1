@@ -29,6 +29,8 @@ public class GameState {
 	private long startTime;
 	private long timeAlive = 0L;
 	private long lastBulletTime = 0L;
+	private long score = 0;
+	private int difficulty = 100;
 
 	public GameState(Game game) {
 		this.game = game;
@@ -37,7 +39,7 @@ public class GameState {
 	}
 
 	private void resetState() {
-		level = 0;
+		level = 1;
 		lastAsteroidIter = 0;
 		startTime = 0L;
 		dodgeCount = 0;
@@ -118,6 +120,43 @@ public class GameState {
 		gameState = State.MENU;
 	}
 	
+	public void proDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(25);
+		ship.setLevelIncreaseAmmo(10);
+		Bullet.RELOAD_TIME_MS = 500;
+		ship.setAmmo(10);
+		Physics.randomDyMax = 6;
+		Physics.randomDyMin = 2;
+		Physics.difficultyMult = 15;
+		difficulty = 50;
+	}
+	
+	public void regularDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(10);
+		ship.setLevelIncreaseAmmo(25);
+		Bullet.RELOAD_TIME_MS = 250;
+		ship.setAmmo(25);
+		Physics.randomDyMax = 4;
+		Physics.randomDyMin = 1;
+		Physics.difficultyMult = 10;
+		difficulty = 75;
+	}
+	
+	public void beginnerDifficulty() {
+		ship.setHealth(100);
+		ship.setCollisionDamage(5);
+		ship.setLevelIncreaseAmmo(50);
+		Bullet.RELOAD_TIME_MS = 100;
+		ship.setAmmo(100);
+		Physics.randomDyMax = 3;
+		Physics.randomDyMin = 1;
+		Physics.difficultyMult = 5;
+		difficulty = 100;
+	}
+	
+	
 	public void addBullet() {
 		long curTime = System.currentTimeMillis();
 		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
@@ -132,5 +171,21 @@ public class GameState {
 	
 	public ArrayList<Bullet> getBullets() {
 		return bullets;
+	}
+	
+	public long getScore() {
+		return score;
+	}
+	
+	public void setScore(long score) {
+		this.score = score;
+	}
+	
+	public int getDifficulty() {
+		return difficulty;
+	}
+	
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }

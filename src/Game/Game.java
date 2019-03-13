@@ -21,19 +21,20 @@ public class Game {
 	private Menu menu;
 	private Renderer renderer;
 	private Leaderboard leaderboard;
-	//private Thread physics;
+	// private Thread physics;
 	private KeyInput input;
 	private Physics physics;
 	private Thread physicsThread;
-	
+
 	private Random rand = new Random();
+	private Sound sound;
+	Thread soundThread;
 
 	public Game() {
-		frame = new JFrame("Avoid the Asteroid!");
+		frame = new JFrame("Asteroids!");
 		frame.setSize(1280, 720); // set frame size
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		input = new KeyInput(frame);
-
 
 		cl = new CardLayout();
 		panel = new JPanel(cl);
@@ -41,7 +42,7 @@ public class Game {
 		state = new GameState(this);
 
 		menu = new Menu(this, state);
-		renderer = new Renderer(this, state, input);
+		renderer = new Renderer(this, input);
 		leaderboard = new Leaderboard(this);
 		panel.add(menu, "Menu");
 		panel.add(renderer, "Game");
@@ -56,6 +57,16 @@ public class Game {
 		frame.setVisible(true); // display frame
 		frame.setResizable(false);
 		frame.setFocusable(true);
+		
+		//https://www.dl-sounds.com/royalty-free/power-bots-loop/
+		sound = new Sound("assets/PowerBotsLoop.wav", true);
+		try {
+			soundThread = new Thread(sound);
+			soundThread.start();
+		}
+		catch(Exception e) {
+			System.out.println("SOUND ERROR");
+		}
 
 	}
 
@@ -72,7 +83,7 @@ public class Game {
 		state.startGame();
 		resumeGame();
 	}
-	
+
 	public void pauseGame() {
 		cl.show(panel, "Menu");
 		frame.repaint();
@@ -96,47 +107,23 @@ public class Game {
 	// game has been lost, switch to lose state
 	public void endGame() {
 		state.endGame();
-//		JButton btnRestart = new JButton("Restart");
-//		JButton btnExitToMenu = new JButton("Exit to menu");
-//		JPanel pnlButtons = new JPanel();
-//		pnlButtons.setLayout(new FlowLayout());
-//		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
-//		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
-//
-//		btnExitToMenu.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				exitGame();
-//			}
-//		});
-//
-//		btnRestart.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				startGame();
-//			}
-//		});
 
-		//frame.add(pnlButtons, BorderLayout.SOUTH);
-		//frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
 
 		leaderboard.refresh();
 		cl.show(panel, "Leaderboard");
-
-
-		//TODO: set stats on menu
 	}
 
-	public void showLeaderboard(){
-		if(getState().getState() == GameState.State.MENU){
+	public void showLeaderboard() {
+		if (getState().getState() == GameState.State.MENU) {
 			leaderboard.refresh();
 			cl.show(panel, "Leaderboard");
 		}
 
 	}
 	// return to menu
+
 	public void exitGame() {
 		state.exitGame();
 		cl.show(panel, "Menu");
@@ -145,30 +132,27 @@ public class Game {
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
 	}
-	
+
 	public void passLevel() {
-		int newLevel = state.getLevel() + 1;
-		state.setLevel(newLevel);
-		//toggle new color for background
-
-		switch(newLevel) {
-			case 1:	setBackground(new Color(0,0,100));
-					break;
-			case 2: setBackground(new Color(0,0,130));
-					break;
-			case 3: setBackground(new Color(0,0,160));
-					break;
-			//case 4: setBackground(new Color())
-
+		state.setLevel(state.getLevel() + 1);
+		state.getShip().setAmmo(state.getShip().getAmmo() + state.getShip().getLevelIncreaseAmmo());
+		
+		switch(state.getLevel()) {
+	        case 2: setBackground(new Color(0,0,100)); break;
+	        case 3: setBackground(new Color(0,0,130)); break;
+	        case 4: setBackground(new Color(0,0,160)); break;
+	        case 5: setBackground(new Color(0,0,190)); break;
+	        case 6: setBackground(new Color(100,0,160)); break;
+	        case 7: setBackground(new Color(130,0,130)); break;
+	        case 8: setBackground(new Color(160,0,100)); break;
+	        case 9: setBackground(new Color(200,0,0)); break;
 		}
-
-		//setBackground(new Color(0,0,128));
 	}
-	
+
 	public void evaluateWall() {
 		// 10 dodges = 1 level increase
 		if (state.dodgeCount % 10 == 0) {
-			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40-state.getLevel()), state.getLevel()));
+			state.getAsteroids().addAll(new AsteroidWall(rand.nextInt(40 - state.getLevel()), state.getLevel()));
 			if (state.getLevel() == 10) {
 				finishGame();
 			}

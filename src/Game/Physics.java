@@ -71,7 +71,7 @@ public class Physics implements Runnable, ActionListener {
 			ship.dx = Math.abs(ship.dx);
 		else if (ship.getPosition().x + ship.width + ship.dx > game.getSize().width)
 			ship.dx = -Math.abs(ship.dx);
-		if (ship.getPosition().y + ship.dy < game.getSize().height /2)
+		if (ship.getPosition().y + ship.dy < 0)
 			ship.dy = Math.abs(ship.dy)/10;
 		else if (ship.getPosition().y + ship.width*2 + ship.dy > game.getSize().height)
 			ship.dy = -Math.abs(ship.dy)/10;
@@ -106,8 +106,8 @@ public class Physics implements Runnable, ActionListener {
 			stars.remove(removeAsteroid);
 		}
 
-		if (rand.nextInt(1000) > 950) {
-			int speed = rand.nextInt(5) + 1;
+		if (rand.nextInt(1000) > 900) {
+			int speed = rand.nextInt(7) + 1;
 			Point.Double pose = new Point.Double(rand.nextInt(game.getSize().width), 0);
 			stars.add(new Star(pose, speed));
 		}
@@ -190,8 +190,11 @@ public class Physics implements Runnable, ActionListener {
 				ArrayList<Asteroid> asteroidsHit = detectCollisions(bullet, asteroids);
 				if (asteroidsHit.size() > 0) {
 					bulletsToRemove.add(bullet);
-
-					game.getState().dodgeCount += asteroidsHit.size();
+					for (Asteroid a : asteroidsHit) {
+						if (!a.wall) {
+							game.getState().dodgeCount += asteroidsHit.size();
+						}
+					}
 				}
 				AsteroidsToRemove.addAll(asteroidsHit);
 			}

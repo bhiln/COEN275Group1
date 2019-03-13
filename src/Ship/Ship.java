@@ -26,8 +26,6 @@ public class Ship extends SpaceObject {
 	private double acceleration = .5;
 	int[] xCord;
 	int[] yCord;
-	
-	MediaPlayer laserPlayer;
 
 	public Ship(Point.Double pose, double speed) {
 		
@@ -89,10 +87,4 @@ public class Ship extends SpaceObject {
 	public Color getDrawColor() {
 		return drawColor;
 	}
-	
-	public void laserSound() {
-		laserPlayer.seek(Duration.ZERO);
-		laserPlayer.play();
-	}
-
 }
