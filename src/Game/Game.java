@@ -1,33 +1,55 @@
 package Game;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Random;
-
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import Asteroids.AsteroidWall;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-
+/**
+ * The Class Game.
+ */
 public class Game {
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The panel. */
 	private JPanel panel;
+	
+	/** The cl. */
 	private CardLayout cl;
 
+	/** The state. */
 	private GameState state;
+	
+	/** The menu. */
 	private Menu menu;
+	
+	/** The renderer. */
 	private Renderer renderer;
+	
+	/** The leaderboard. */
 	private Leaderboard leaderboard;
+	
+	/** The input. */
 	//private Thread physics;
 	private KeyInput input;
+	
+	/** The physics. */
 	private Physics physics;
+	
+	/** The physics thread. */
 	private Thread physicsThread;
 	
+	/** The rand. */
 	private Random rand = new Random();
 
+	/**
+	 * Instantiates a new game.
+	 */
 	public Game() {
 		frame = new JFrame("Avoid the Asteroid!");
 		frame.setSize(1280, 720); // set frame size
@@ -59,21 +81,37 @@ public class Game {
 
 	}
 
+	/**
+	 * Gets the state.
+	 *
+	 * @return the state
+	 */
 	public GameState getState() {
 		return this.state;
 	}
 
+	/**
+	 * Gets the size.
+	 *
+	 * @return the size
+	 */
 	public Dimension getSize() {
 		return frame.getSize();
 	}
 	
 
+	/**
+	 * Start game.
+	 */
 	// starts a new game
 	public void startGame() {
 		state.startGame();
 		resumeGame();
 	}
 	
+	/**
+	 * Pause game.
+	 */
 	public void pauseGame() {
 		menu.pause();
 		cl.show(panel, "Menu");
@@ -82,6 +120,9 @@ public class Game {
 		renderer.stopTimer();
 	}
 
+	/**
+	 * Resume game.
+	 */
 	// if game is paused, resume game
 	public void resumeGame() {
 		menu.resume();
@@ -91,37 +132,20 @@ public class Game {
 		cl.show(panel, "Game");
 	}
 
+	/**
+	 * Finish game.
+	 */
 	// game has been won, switch to win state
 	public void finishGame() {
 
 	}
 
+	/**
+	 * End game.
+	 */
 	// game has been lost, switch to lose state
 	public void endGame() {
 		state.endGame();
-//		JButton btnRestart = new JButton("Restart");
-//		JButton btnExitToMenu = new JButton("Exit to menu");
-//		JPanel pnlButtons = new JPanel();
-//		pnlButtons.setLayout(new FlowLayout());
-//		pnlButtons.add(btnRestart, BorderLayout.SOUTH);
-//		pnlButtons.add(btnExitToMenu, BorderLayout.SOUTH);
-//
-//		btnExitToMenu.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				exitGame();
-//			}
-//		});
-//
-//		btnRestart.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent event) {
-//				frame.remove(pnlButtons);
-//				startGame();
-//			}
-//		});
-
-		//frame.add(pnlButtons, BorderLayout.SOUTH);
-		//frame.repaint();
 		physics.stopTimer();
 		renderer.stopTimer();
 
@@ -132,32 +156,47 @@ public class Game {
 		//TODO: set stats on menu
 	}
 
+	/**
+	 * Show leaderboard.
+	 */
 	public void showLeaderboard(){
 		if(getState().getState() == GameState.State.MENU){
 			leaderboard.refresh();
 			cl.show(panel, "Leaderboard");
 		}
-
 	}
-	// return to menu
 	
 
 	
 	
+	/**
+	 * Exit game.
+	 */
 	public void exitGame() {
 		state.exitGame();
 		cl.show(panel, "Menu");
 	}
 
+	/**
+	 * Sets the background.
+	 *
+	 * @param backgroundColor the new background
+	 */
 	public void setBackground(Color backgroundColor) {
 		renderer.setBackground(backgroundColor);
 	}
 	
+	/**
+	 * Pass level.
+	 */
 	public void passLevel() {
 		state.setLevel(state.getLevel() + 1);
 		state.getShip().setAmmo(state.getShip().getAmmo() + state.getShip().getLevelIncreaseAmmo());
 	}
 	
+	/**
+	 * Evaluate wall.
+	 */
 	public void evaluateWall() {
 		// 10 dodges = 1 level increase
 		if (state.dodgeCount % 10 == 0) {

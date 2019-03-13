@@ -1,32 +1,50 @@
 package Game;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 import Asteroids.Asteroid;
 import Projectiles.Bullet;
 import Ship.Ship;
 import Stars.Star;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
+/**
+ * The Class Renderer.
+ */
 public class Renderer extends JPanel implements ActionListener {
+	
+	/** The game. */
 	private Game game;
+	
+	/** The state. */
 	private GameState state;
 	
+	/** The delay. */
 	private int delay = 20;
+	
+	/** The timer. */
 	protected Timer timer;
 
+	/** The lbl ammo. */
 	JLabel lblLevel, lblDodge, lblTimeAlive, lblHealth, lblAmmo;
 	
+	/** The input. */
 	KeyInput input;
 
+	/**
+	 * Instantiates a new renderer.
+	 *
+	 * @param game the game
+	 * @param state the state
+	 * @param input the input
+	 */
 	public Renderer(Game game, GameState state, KeyInput input) {
 		this.game = game;
 		this.state = state;
@@ -57,6 +75,9 @@ public class Renderer extends JPanel implements ActionListener {
 		setBackground(Color.BLACK);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// will run when the timer fires
         repaint();
@@ -65,6 +86,9 @@ public class Renderer extends JPanel implements ActionListener {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g); // call superclass's paintComponent
 		Graphics2D g2d = (Graphics2D) g.create();
@@ -139,10 +163,16 @@ public class Renderer extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * Stop timer.
+	 */
 	public void stopTimer() {
 		timer.stop();
 	}
 
+	/**
+	 * Restart timer.
+	 */
 	public void restartTimer() {
 		timer.restart();
 	}

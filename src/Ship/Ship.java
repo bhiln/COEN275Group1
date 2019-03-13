@@ -19,16 +19,36 @@ import javafx.util.Duration;
 import Game.Sound;
 import Game.SpaceObject;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Ship.
+ */
 public class Ship extends SpaceObject {
 
+	/** The draw color. */
 	private Color drawColor = Color.CYAN;
+	
+	/** The max speed. */
 	private double maxSpeed = 5;
+	
+	/** The acceleration. */
 	private double acceleration = .5;
+	
+	/** The x cord. */
 	int[] xCord;
+	
+	/** The y cord. */
 	int[] yCord;
 	
+	/** The laser player. */
 	MediaPlayer laserPlayer;
 
+	/**
+	 * Instantiates a new ship.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 */
 	public Ship(Point.Double pose, double speed) {
 		
 
@@ -68,6 +88,12 @@ public class Ship extends SpaceObject {
 
 	}
 	
+	/**
+	 * Apply force.
+	 *
+	 * @param forceX the force X
+	 * @param forceY the force Y
+	 */
 	public void applyForce(int forceX, int forceY){
 		dx += acceleration * forceX;
 		dx *= .99;//slow down over time
@@ -82,15 +108,30 @@ public class Ship extends SpaceObject {
 
 	}
 
+	/**
+	 * Instantiates a new ship.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 * @param initialHealth the initial health
+	 */
 	public Ship(Point.Double pose, double speed, int initialHealth) {
 		this(pose, speed);
 		setHealth(initialHealth);
 	}
 
+	/**
+	 * Gets the draw color.
+	 *
+	 * @return the draw color
+	 */
 	public Color getDrawColor() {
 		return drawColor;
 	}
 	
+	/**
+	 * Laser sound.
+	 */
 	public void laserSound() {
 		laserPlayer.seek(Duration.ZERO);
 		laserPlayer.play();

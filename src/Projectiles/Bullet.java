@@ -7,18 +7,39 @@ import java.util.Random;
 
 import Game.SpaceObject;
 
+/**
+ * The Class Bullet.
+ */
 public class Bullet extends SpaceObject {
 
+	/**
+	 * Gets the draw color.
+	 *
+	 * @return the draw color
+	 */
 	public Color getDrawColor() {
 		return drawColor;
 	}
 
+	/** The draw color. */
 	private Color drawColor = Color.YELLOW;
+	
+	/** The reload time ms. */
 	static public int RELOAD_TIME_MS = 200;
 	
+	/** The rand. */
 	private Random rand = new Random();
+	
+	/** The sound files. */
 	private String[] soundFiles = {"pew","pewb","pewe","pewr","pewj","pewt","pew_word"};
 	
+	/**
+	 * Instantiates a new bullet.
+	 *
+	 * @param pose the pose
+	 * @param speed the speed
+	 * @param lateralSpeed the lateral speed
+	 */
 	public Bullet(Point.Double pose, int speed, double lateralSpeed) {
 		super(pose);
 		
