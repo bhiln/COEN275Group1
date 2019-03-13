@@ -75,7 +75,7 @@ public class Physics implements Runnable, ActionListener {
 			ship.dx = Math.abs(ship.dx);
 		else if (ship.getPosition().x + ship.width + ship.dx > game.getSize().width)
 			ship.dx = -Math.abs(ship.dx);
-		if (ship.getPosition().y + ship.dy < game.getSize().height /2)
+		if (ship.getPosition().y + ship.dy < 0)
 			ship.dy = Math.abs(ship.dy)/10;
 		else if (ship.getPosition().y + ship.width*2 + ship.dy > game.getSize().height)
 			ship.dy = -Math.abs(ship.dy)/10;
