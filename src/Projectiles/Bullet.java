@@ -14,10 +14,10 @@ public class Bullet extends SpaceObject {
 	}
 
 	private Color drawColor = Color.YELLOW;
-	static public int RELOAD_TIME_MS = 200;
+	static public final int RELOAD_TIME_MS = 100;
 	
 	private Random rand = new Random();
-	private String[] soundFiles = {"pew","pewb","pewe","pewr","pewj","pewt","pew_word"};
+	private String[] soundFiles = {"pewb.wav","pewe.wav","pewr.wav","pew_word.wav"};
 	
 	public Bullet(Point.Double pose, int speed, double lateralSpeed) {
 		super(pose);
@@ -35,6 +35,6 @@ public class Bullet extends SpaceObject {
 		dx = lateralSpeed;
 		width = 5;
 		
-		setSound("assets/bullet/"+soundFiles[rand.nextInt(7)]+".wav", 1);
+		setSound("assets/"+soundFiles[rand.nextInt(4)], 1);
 	}
 }

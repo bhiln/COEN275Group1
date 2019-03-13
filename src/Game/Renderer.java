@@ -121,23 +121,12 @@ public class Renderer extends JPanel implements ActionListener {
 		// updates health label and changes color if low health
 		int shipHealth = ship.getHealth();
 		lblHealth.setText("Health: " + shipHealth);
-		if (shipHealth > 50) {
+		if (shipHealth >= 20) {
 			lblHealth.setForeground(Color.GREEN);
-		} else if (shipHealth <= 25) {
+		} else if (ship.getHealth() < 10) {
 			lblHealth.setForeground(Color.RED);
-		} else if (shipHealth <= 50) {
+		} else if (ship.getHealth() < 20) {
 			lblHealth.setForeground(Color.ORANGE);
-		}
-		
-		lblAmmo.setText("Ammo: " + ship.getAmmo());
-		if(ship.getAmmo() < 1) {
-			lblAmmo.setForeground(Color.RED);
-		}
-		else if(ship.getAmmo() < 10) {
-			lblAmmo.setForeground(Color.ORANGE);
-		}
-		else {
-			lblAmmo.setForeground(Color.WHITE);
 		}
 		
 		if(input.getKey("Escape")){

@@ -46,7 +46,6 @@ public class Ship extends SpaceObject {
 		dx = speed;
 
 		setHealth(100);
-		
 
 		
 		

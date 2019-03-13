@@ -13,13 +13,7 @@ public class GameState {
 	public enum State {
 		MENU, GAME, PAUSED, DEATH, WIN, EXIT
 	}
-	
-	public enum Difficulty {
-		EASY, MEDIUM, HARD
-	}
-	
-	public Difficulty gameDifficulty = Difficulty.EASY;
-	
+
 	private State gameState;
 	private Game game;
 
@@ -54,16 +48,6 @@ public class GameState {
 		bullets = new ArrayList<Bullet>();
 
 		ship = new Ship(new Point.Double(game.getSize().width / 2, (int) (game.getSize().height * 0.8)), 2);
-		
-		if (gameDifficulty == Difficulty.HARD) {
-			proDifficulty();
-		}
-		else if (gameDifficulty == Difficulty.MEDIUM) {
-			regularDifficulty();
-		}
-		else {
-			beginnerDifficulty();
-		}
 	}
 
 	public State getState() {
@@ -175,8 +159,7 @@ public class GameState {
 	
 	public void addBullet() {
 		long curTime = System.currentTimeMillis();
-		if ((curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) && (ship.getAmmo() > 0)) {
-			ship.useAmmo();
+		if (curTime-lastBulletTime >= Bullet.RELOAD_TIME_MS) {
 			Point.Double shipPose = (Double) ship.getPosition().clone();
 			shipPose.x += ship.width/2;
 			Bullet bullet = new Bullet(shipPose, -10, ship.dx);

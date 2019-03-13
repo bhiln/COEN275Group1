@@ -85,7 +85,6 @@ public class Game {
 	}
 
 	public void pauseGame() {
-		menu.pause();
 		cl.show(panel, "Menu");
 		frame.repaint();
 		physics.stopTimer();
@@ -94,7 +93,6 @@ public class Game {
 
 	// if game is paused, resume game
 	public void resumeGame() {
-		menu.resume();
 		state.resumeGame();
 		physics.restartTimer();
 		renderer.restartTimer();

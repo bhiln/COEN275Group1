@@ -22,6 +22,10 @@ public class Sound implements Runnable {
 	    this.loop = loop;
 	}
 	
+	public void setRate(double rate) {
+		soundPlayer.setRate(rate);
+	}
+	
 	public void play() {
 		MediaPlayer soundPlayer = new MediaPlayer(new Media(uriString));
 		soundPlayer.setOnEndOfMedia(new Runnable() {
