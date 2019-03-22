@@ -228,4 +228,10 @@ public class Game {
 			}
 		}
 	}
+
+  public Menu getMenu() {
+    return menu;
+  }
+
+	
 }

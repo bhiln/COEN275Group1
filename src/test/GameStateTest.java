@@ -3,13 +3,11 @@ package test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import Game.Game;
 import Game.GameState;
 import Game.Physics;
-import Projectiles.Bullet;
 
 public class GameStateTest {
 
@@ -22,26 +20,26 @@ public class GameStateTest {
   }
 
   @Test
-  public void startGameTest() {
+  public void testStartGame() {
     gameState.startGame();
     assertTrue(gameState.dodgeCount == 0);
   }
 
   @Test
-  public void endGametest() {
+  public void testEndGame() {
     gameState.endGame();
     assertTrue(gameState.getState() == GameState.State.DEATH);
   }
 
   @Test
-  public void pauseGameTest() {
+  public void testPauseGame() {
     gameState.startGame();
     gameState.pauseGame();
     assertTrue(gameState.getState() == GameState.State.PAUSED);
   }
   
   @Test
-  public void basicDifficultyTest() {
+  public void testBasicDifficulty() {
     gameState.startGame();
     gameState.beginnerDifficulty();
     assertThat(gameState.getShip().getHealth(), is(100));
@@ -54,7 +52,7 @@ public class GameStateTest {
   }
   
   @Test
-  public void aceDifficultyTest() {
+  public void testAceDifficulty() {
     gameState.startGame();
     gameState.regularDifficulty();
     assertThat(gameState.getShip().getHealth(), is(100));
@@ -67,7 +65,7 @@ public class GameStateTest {
   }
   
   @Test
-  public void proDifficultyTest() {
+  public void testProDifficulty() {
     gameState.startGame();
     gameState.proDifficulty();
     assertThat(gameState.getShip().getHealth(), is(100));
@@ -78,5 +76,4 @@ public class GameStateTest {
     assertThat(Physics.difficultyMult, is(15));
     assertThat(gameState.getDifficulty(), is(50));
   }
-
 }
