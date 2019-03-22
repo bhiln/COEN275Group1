@@ -143,8 +143,8 @@ public class Physics implements Runnable, ActionListener {
 		}
 
 		// remove asteroid from tracked list
-		for (Star removeAsteroid : starsToRemove) {
-			stars.remove(removeAsteroid);
+		for (Star removeStar : starsToRemove) {
+			stars.remove(removeStar);
 		}
 
 		if (rand.nextInt(1000) > 900) {
