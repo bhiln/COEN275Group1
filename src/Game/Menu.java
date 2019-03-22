@@ -237,4 +237,9 @@ public class Menu extends JPanel implements ActionListener {
 			state.gameDifficulty = Difficulty.HARD;
 		}
 	}
+
+  public JPanel getDifficultyPanel() {
+    return difficultyPanel;
+  }
+	
 }
